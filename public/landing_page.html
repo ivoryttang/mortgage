@@ -154,16 +154,14 @@
     <main class="page-wrapper">
       <!-- Navbar. Remove 'fixed-top' class to make the navigation bar scrollable with the page-->
       <header class="navbar navbar-expand-lg fixed-top">
-        <div class="container"><a class="navbar-brand pe-sm-3" href="index.html"><span class="text-primary flex-shrink-0 me-2">
-              <svg version="1.1" width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
-                <path fill="currentColor" d="M35.6,29c-1.1,3.4-5.4,4.4-7.9,1.9c-2.3-2.2-6.1-3.7-9.4-3.7c-3.1,0-7.5,1.8-10,4.1c-2.2,2-5.8,1.5-7.3-1.1c-1-1.8-1.2-4.1,0-6.2l0.6-1.1l0,0c0.6-0.7,4.4-5.2,12.5-5.7c0.5,1.8,2,3.1,3.9,3.1c2.2,0,4.1-1.9,4.1-4.2s-1.8-4.2-4.1-4.2c-2,0-3.6,1.4-4,3.3H7.7c-0.8,0-1.3-0.9-0.9-1.6l5.6-9.8c2.5-4.5,8.8-4.5,11.3,0L35.1,24C36,25.7,36.1,27.5,35.6,29z"></path>
-              </svg></span>Domus</a>
+        <div class="container"><a class="navbar-brand pe-sm-3" href="index.html"><span class="text-primary flex-shrink-0 ">
+          <img src="assets/img/logo.png" alt="Logo" style="height: 30px; width: auto;" /></span>omus</a>
           <div class="form-check form-switch mode-switch order-lg-2 me-3 me-lg-4 ms-auto" data-bs-toggle="mode">
             <input class="form-check-input" type="checkbox" id="theme-mode">
             <label class="form-check-label" for="theme-mode"><i class="ai-sun fs-lg"></i></label>
             <label class="form-check-label" for="theme-mode"><i class="ai-moon fs-lg"></i></label>
           </div>
-          <a class="btn btn-primary btn-sm fs-sm order-lg-3 d-none d-sm-inline-flex" href="https://themes.getbootstrap.com/product/around-multipurpose-template-ui-kit/" target="_blank" rel="noopener">Start applying</a>
+          <a class="btn btn-primary btn-sm fs-sm order-lg-3 d-none d-sm-inline-flex" href="/dashboard" >Start applying</a>
           <button class="navbar-toggler ms-sm-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span class="navbar-toggler-icon"></span></button>
           <nav class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav navbar-nav-scroll me-auto" style="--ar-scroll-height: 520px;">
@@ -271,7 +269,7 @@
               <li class="nav-item"><a class="nav-link" href="components/typography.html">Blog</a></li>
               <li class="nav-item"><a class="nav-link" href="docs/getting-started.html">FAQs</a></li>
             </ul>
-            <div class="d-sm-none p-3 mt-n3"><a class="btn btn-primary w-100  mb-1" href="https://themes.getbootstrap.com/product/around-multipurpose-template-ui-kit/" target="_blank" rel="noopener"><i class="ai-cart fs-xl me-2 ms-n1"></i>Start Applying</a></div>
+            <div class="d-sm-none p-3 mt-n3"><a class="btn btn-primary w-100  mb-1" href="/dashboard" target="_blank" rel="noopener"><i class="ai-cart fs-xl me-2 ms-n1"></i>Start Applying</a></div>
           </nav>
         </div>
       </header>
@@ -447,9 +445,10 @@
               <div class="card border-0 h-100">
                 <div class="card-img-top overflow-hidden"><img class="rounded-5 rounded-end-0" src="assets/img/landing/business-consulting/industries/01.png" alt="Image"></div>
                 <div class="card-body">
-                  <h3 class="h4 card-title">Get an assessment</h3>
-                  To get a mortgage rate quote online and see what lenders you qualify for, simply answer a few questions about yourself and see estimated loan options.
-                  <u>Check my rates</u>
+                  <h3 class="h4 card-title">1. Get an assessment</h3>
+                  Fill out a short questionaire and instantly get a quote. We'll let you know what loans you qualify for and help you understand your borrowing situation.
+                  <br>
+                  <!-- <button class="mt-2 btn btn-secondary">Check my rates</button> -->
                 </div>
               </div>
             </div>
@@ -458,10 +457,10 @@
               <div class="card border-0 h-100">
                 <div class="card-img-top overflow-hidden"><img class="rounded-5 rounded-end-0" src="assets/img/landing/business-consulting/industries/02.png" alt="Image"></div>
                 <div class="card-body">
-                  <h3 class="h4 card-title">Apply in minutes</h3>
+                  <h3 class="h4 card-title">2. Apply in minutes</h3>
                   Our secure, online application is fast and straightforward — you can complete the process in about 10 minutes.
-                  <br>
-                  <u>Apply Now</u>
+                  We'll take care of the paperwork of filing your application, and all you need to do is focus on securing your dream home.
+                  <!-- <button class="mt-2 btn btn-secondary" href="dashboard">Apply now</button> -->
                 </div>
               </div>
             </div>
@@ -470,7 +469,7 @@
               <div class="card border-0 h-100">
                 <div class="card-img-top overflow-hidden"><img class="rounded-5 rounded-end-0" src="assets/img/landing/business-consulting/industries/03.png" alt="Image"></div>
                 <div class="card-body">
-                  <h3 class="h4 card-title">Get mortgage</h3>
+                  <h3 class="h4 card-title">3. Get mortgage</h3>
                   Once you've submitted all your information, we will build your loan application for you, process it quickly (often instantly) and let you know what loans you qualify for. If approved, you immediately can go close your purchase.
                 </div>
               </div>
@@ -600,12 +599,12 @@
             <!-- CEO quote-->
             <div class="col-md-5 d-flex flex-column align-items-center mb-4 mb-md-0">
               <div class="position-relative" style="max-width: 416px;">
-              <!-- <img class="d-block position-relative zindex-2" src="assets/img/landing/business-consulting/ceo.png" alt="Nicolas Black"> -->
-                <div class="bg-primary position-absolute start-0 bottom-0 w-100" style="height: 85.4%; border-radius: 2.25rem 8rem 2.25rem 2.25rem;"></div>
+                <img  src="assets/img/landing/business-consulting/industries/04.png" alt="Image">
+                <!-- <div class="bg-primary position-absolute start-0 bottom-0 w-100" style="height: 85.4%; border-radius: 2.25rem 8rem 2.25rem 2.25rem;"></div> -->
               </div>
               <div class="text-center text-md-start pt-3 mt-3">
                 <h2 class="mb-2">It only takes a few minutes to get started</h2>
-                <p class="fs-xl text-muted mb-2">Domus it the most efficient online mortgage broker</p>
+                <p class="fs-xl text-muted mb-2">Domus is the most efficient online mortgage broker</p>
                 <div class="position-relative pt-4" style="max-width: 500px;">
                   <div class="position-absolute top-0 start-0 w-100 text-center text-md-start ms-md-1">
                     <svg class="text-border" width="155" height="111" viewBox="0 0 155 111" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -826,10 +825,8 @@
     <footer class="footer pt-lg-5 pt-4 pb-5">
       <div class="container pt-3 mt-md-2 mt-lg-3">
         <div class="row gy-md-5 gy-4 mb-md-5 mb-4 pb-lg-2">
-          <div class="col-lg-3"><a class="navbar-brand d-inline-flex align-items-center mb-lg-4 mb-3" href="index.html"><span class="text-primary flex-shrink-0 me-2">
-                <svg version="1.1" width="35" height="32" viewBox="0 0 36 33" xmlns="http://www.w3.org/2000/svg">
-                  <path fill="currentColor" d="M35.6,29c-1.1,3.4-5.4,4.4-7.9,1.9c-2.3-2.2-6.1-3.7-9.4-3.7c-3.1,0-7.5,1.8-10,4.1c-2.2,2-5.8,1.5-7.3-1.1c-1-1.8-1.2-4.1,0-6.2l0.6-1.1l0,0c0.6-0.7,4.4-5.2,12.5-5.7c0.5,1.8,2,3.1,3.9,3.1c2.2,0,4.1-1.9,4.1-4.2s-1.8-4.2-4.1-4.2c-2,0-3.6,1.4-4,3.3H7.7c-0.8,0-1.3-0.9-0.9-1.6l5.6-9.8c2.5-4.5,8.8-4.5,11.3,0L35.1,24C36,25.7,36.1,27.5,35.6,29z"></path>
-                </svg></span><span class="text-nav">Domus</span></a>
+          <div class="col-lg-3"><a class="navbar-brand d-inline-flex align-items-center mb-lg-4 mb-3" href="index.html"><span class="text-primary flex-shrink-0 ">
+            <img src="assets/img/logo.png" alt="Logo" style="height: 30px; width: auto;" /> </span><span class="text-nav">omus</span></a>
             <p class="mb-4 pb-lg-1 fs-xs text-muted" style="max-width: 306px;">The mortgage agency powered by latest technology to get you the best rates right away.</p>
             <div class="mt-n3 ms-n3"><a class="btn btn-secondary btn-icon btn-sm btn-instagram rounded-circle mt-3 ms-3" href="#"><i class="ai-instagram"></i></a><a class="btn btn-secondary btn-icon btn-sm btn-facebook rounded-circle mt-3 ms-3" href="#"><i class="ai-facebook"></i></a><a class="btn btn-secondary btn-icon btn-sm btn-linkedin rounded-circle mt-3 ms-3" href="#"><i class="ai-linkedin"></i></a></div>
           </div>
