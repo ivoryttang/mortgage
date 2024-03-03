@@ -56,29 +56,31 @@ export type InvoicesTable = {
   status: 'pending' | 'paid';
 };
 
-export type CustomersTableType = {
+export type DocumentsTableType = {
   id: string;
   name: string;
-  email: string;
-  image_url: string;
-  total_invoices: number;
-  total_pending: number;
-  total_paid: number;
+  upload_date: string;
+  description: string;
+  due_date: string;
+  status: string;
 };
 
-export type FormattedCustomersTable = {
+export type FormattedDocumentsTable = {
   id: string;
   name: string;
-  email: string;
-  image_url: string;
-  total_invoices: number;
-  total_pending: string;
-  total_paid: string;
+  upload_date: string;
+  description: string;
+  due_date: string;
+  status: string;
 };
 
-export type CustomerField = {
+export type DocumentField = {
   id: string;
   name: string;
+  upload_date: string;
+  description: string;
+  due_date: string;
+  status: string;
 };
 
 export type InvoiceForm = {

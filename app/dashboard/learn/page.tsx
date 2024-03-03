@@ -1,3 +1,5 @@
+import Homie from "@/app/ui/learn/homie";
+
 export default function Page() {
-    return <p>Learn Page</p>;
+    return <div><Homie/></div>
   }

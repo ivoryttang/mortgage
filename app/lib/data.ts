@@ -1,8 +1,8 @@
 import { unstable_noStore as noStore } from 'next/cache';
 import { sql } from '@vercel/postgres';
 import {
-  CustomerField,
-  CustomersTableType,
+  DocumentField,
+  DocumentsTableType,
   InvoiceForm,
   InvoicesTable,
   LatestInvoiceRaw,
@@ -170,56 +170,60 @@ export async function fetchInvoiceById(id: string) {
   }
 }
 
-export async function fetchCustomers() {
+export async function fetchDocuments() {
   try {
-    const data = await sql<CustomerField>`
+    const data = await sql<DocumentField>`
       SELECT
         id,
-        name
-      FROM customers
+        name,
+        description, 
+        upload_date,
+        due_date,
+        status
+      FROM documents
       ORDER BY name ASC
     `;
 
-    const customers = data.rows;
-    return customers;
+    const documents = data.rows;
+    return documents;
   } catch (err) {
     console.error('Database Error:', err);
     throw new Error('Failed to fetch all customers.');
   }
 }
 
-export async function fetchFilteredCustomers(query: string) {
-  try {
-    const data = await sql<CustomersTableType>`
-		SELECT
-		  customers.id,
-		  customers.name,
-		  customers.email,
-		  customers.image_url,
-		  COUNT(invoices.id) AS total_invoices,
-		  SUM(CASE WHEN invoices.status = 'pending' THEN invoices.amount ELSE 0 END) AS total_pending,
-		  SUM(CASE WHEN invoices.status = 'paid' THEN invoices.amount ELSE 0 END) AS total_paid
-		FROM customers
-		LEFT JOIN invoices ON customers.id = invoices.customer_id
-		WHERE
-		  customers.name ILIKE ${`%${query}%`} OR
-        customers.email ILIKE ${`%${query}%`}
-		GROUP BY customers.id, customers.name, customers.email, customers.image_url
-		ORDER BY customers.name ASC
-	  `;
+// export async function fetchFilteredCustomers(query: string) {
+//   try {
+//     const data = await sql<DocumentsTableType>`
+// 		SELECT
+// 		  customers.id,
+// 		  customers.name,
+// 		  customers.email,
+// 		  customers.image_url,
+// 		  COUNT(invoices.id) AS total_invoices,
+// 		  SUM(CASE WHEN invoices.status = 'pending' THEN invoices.amount ELSE 0 END) AS total_pending,
+// 		  SUM(CASE WHEN invoices.status = 'paid' THEN invoices.amount ELSE 0 END) AS total_paid
+// 		FROM customers
+// 		LEFT JOIN invoices ON customers.id = invoices.customer_id
+// 		WHERE
+// 		  customers.name ILIKE ${`%${query}%`} OR
+//         customers.email ILIKE ${`%${query}%`}
+// 		GROUP BY customers.id, customers.name, customers.email, customers.image_url
+// 		ORDER BY customers.name ASC
+// 	  `;
 
-    const customers = data.rows.map((customer) => ({
-      ...customer,
-      total_pending: formatCurrency(customer.total_pending),
-      total_paid: formatCurrency(customer.total_paid),
-    }));
+//     const customers = data.rows.map((customer) => ({
+//       ...customer,
+//       total_pending: formatCurrency(customer.total_pending),
+//       total_paid: formatCurrency(customer.total_paid),
+//     }));
 
-    return customers;
-  } catch (err) {
-    console.error('Database Error:', err);
-    throw new Error('Failed to fetch customer table.');
-  }
-}
+//     return customers;
+//   } catch (err) {
+//     console.error('Database Error:', err);
+//     throw new Error('Failed to fetch customer table.');
+//   }
+// }
 
 export async function getUser(email: string) {
   try {
