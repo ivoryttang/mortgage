@@ -1,5 +1,4 @@
 "use client"
-
 // app/page.tsx
 
 // import { useEffect, useState } from "react"
@@ -29,11 +28,11 @@
 // }
 
 
-
 export default function Page() {
   return (
-    
+    <div>
     <iframe src="/landing_page.html" width="100%" style={{height: "100vh"}} />
+    </div>
    
   );
 }
