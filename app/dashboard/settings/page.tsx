@@ -1,4 +1,4 @@
-export default function Page() {
+export default async function Page() {
     return <div>
 
 <iframe src="/account-settings.html" width="100%" style={{height: "100vh"}} />

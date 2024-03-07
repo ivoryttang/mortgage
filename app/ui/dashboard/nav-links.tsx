@@ -27,7 +27,7 @@ const links = [
   { name: 'Settings', href: '/dashboard/settings', icon: Cog8ToothIcon },
 ];
 
-export default function NavLinks() {
+export default async function NavLinks() {
   const pathname = usePathname();
   return (
     <>

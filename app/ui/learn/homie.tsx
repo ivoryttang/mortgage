@@ -1,8 +1,27 @@
-"use client"
-import { useState } from "react";
+import React, { useState } from "react";
 
-export default async function Homie() {
-const [newMessage, setNewMessage] = useState("")
+export default function Homie() {
+    const [newMessage, setNewMessage] = useState("")
+    const [response, setResponse] = useState("")
+    const ask = async () => {
+        console.log("called")
+        fetch(`http://4.236.201.138/ask?newMessage=${newMessage}`, {
+            method: "POST",
+            headers: {
+                "Accept": "application/json"
+            },
+            body: JSON.stringify({})
+        })
+        .then(response => response.text())
+        .then(data => {
+            console.log("success")
+            setResponse(data);
+        })
+        .catch(error => {
+            console.log("gpt response error: ", error);
+        });
+        console.log("after")
+    };
     return <div className="mt-5">
         <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }} className="mb-3">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-10 h-10">
@@ -72,6 +91,53 @@ const [newMessage, setNewMessage] = useState("")
               Is now a good time to buy a house?
 
             </div>
+            
+
+            <div
+                style={{
+                    margin: "5px",
+                    padding: "10px",
+                    maxWidth: "70%",
+                    borderRadius: "5px",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignSelf: "flex-start",
+                    textAlign: "left",
+                    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                    backgroundColor: "green" ,
+                    color: "white",
+                    whiteSpace: "pre-line",
+                }}
+                className={`message group`}
+            >
+              {newMessage}
+
+            </div>
+            <div
+                style={{
+                    margin: "5px",
+                    padding: "10px",
+                    maxWidth: "70%",
+                    borderRadius: "5px",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignSelf: "flex-end",
+                    textAlign: "right",
+                    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                    backgroundColor: "#000" ,
+                    color: "#fff",
+                    whiteSpace: "pre-line",
+                }}
+                className={`message group`}
+            >
+              {response}
+
+            </div>
+
+
+
+
+
             <div style={{
                 position: 'fixed',
                 bottom: 0,
@@ -91,6 +157,7 @@ const [newMessage, setNewMessage] = useState("")
                             onKeyPress={(e) => {
                                 if (e.key === "Enter" && e.shiftKey === false) {
                                     e.preventDefault();
+                                    ask()
                                 }
                             }}
                     />
