@@ -2,7 +2,7 @@ import React from "react";
 import "./navbar.css";
 const Navbar = () => {
     return (
-        <header className="navbar navbar-expand-lg fixed-top">
+        <header className="navbar navbar-expand-lg fixed-top z-20 bg-white">
         <div className="container">
           <a className="flex navbar-brand pe-sm-3" href="/">
             <span className="text-primary flex-shrink-0">

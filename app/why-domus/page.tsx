@@ -30,7 +30,7 @@ Use the Information: Use the credit report findings to evaluate the applicant's 
 <br></br>
 <br></br>
 3.  Shop for the best rate based on the given information.	
-The hardest is to write a program to understand the different formats of the rate sheet. This is part of our secret sauce.
+Analyzing the rate sheets that change multiple times a day is just one part of our secret sauce.
 <br></br>
 <br></br>
 4.  If the consumer agrees on the rate, lock the rate then
