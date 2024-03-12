@@ -1,3 +1,4 @@
+//@ts-nocheck
 import Navbar from "../ui/Navbar"
 export default function Page() {
   
@@ -5,7 +6,8 @@ export default function Page() {
     { id: 1, question: 'Can I get a residential mortgage with Domus?', answer: 'Yes, at Domus, we specialize in getting you the best residential mortgage rates and help you along the way.' },
     { id: 2, question: 'Can I remortgage and borrow more?', answer: 'Yes! You will be able to borrow more than your current balance, subject to meeting our eligibility criteria. Please be aware that in this case, we will only be able to lend up to 75% of the property value.' },
     {id:3, question: 'What is the maximum term I can borrow?', answer: 'The minimum term you can borrow with us is 5 years. \n The maximum term you can borrow with us is over 35 years.'},
-    {id: 4, question: 'What are the current rates on Domus?',answer: 'Please refer to the mortgages page for our latest products and rates. \n Why not see how much you are likely to be able to borrow and at what rate with our mortgage calculator?'}
+    {id: 4, question: 'What are the current rates on Domus?',answer: 'Please refer to the mortgages page for our latest products and rates. \n Why not see how much you are likely to be able to borrow and at what rate with our mortgage calculator?'},
+    {id: 5, question: 'How does Domus outperform a traditional brokerage service?',answer: 'By utilizing AI algorithms to match our large pool of lender rates to your unique financial scenario along with automating manual back-office processing, we can close your loan quicker and provide greater value than traditional loan companies.'}
   ];
   return (
     <div>

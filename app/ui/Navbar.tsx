@@ -20,26 +20,26 @@ const Navbar = () => {
 </a>
                 <div className="dropdown-menu overflow-hidden p-0">
                   <div className="d-lg-flex">
-                    <div className="mega-dropdown-column pt-1 pt-lg-2 pb-lg-4">
+                  <div className="mega-dropdown-column pt-1 pt-lg-2 pb-lg-4">
                       <ul className="list-unstyled mb-0">
                         <li className="p-3">Resources</li>
-                        <li><a className="dropdown-item" href="">Pre-approval</a></li>
-                        <li><a className="dropdown-item" href="">Refinance</a></li>
-                        <li><a className="dropdown-item" href="">Renewal</a></li>
-                        <li><a className="dropdown-item" href="">Rent to Own</a></li>
-                        <li><a className="dropdown-item" href="">Home Equity Line of Credit</a></li>
-                        <li><a className="dropdown-item" href="">Second Mortgage</a></li>
-                        <li><a className="dropdown-item" href="">Private Mortgage</a></li>
-                        <li><a className="dropdown-item" href="">Closing Costs</a></li>
+                        <li><a className="dropdown-item" href="/preapproval">Pre-approval</a></li>
+                        <li><a className="dropdown-item" href="/refinance">Refinance</a></li>
+                        <li><a className="dropdown-item" href="/renewal">Renewal</a></li>
+                        <li><a className="dropdown-item" href="/rent-to-own">Rent to Own</a></li>
+                        <li><a className="dropdown-item" href="/heloc">Home Equity Line of Credit</a></li>
+                        <li><a className="dropdown-item" href="/second-mortgage">Second Mortgage</a></li>
+                        <li><a className="dropdown-item" href="/private-mortgage">Private Mortgage</a></li>
+                        <li><a className="dropdown-item" href="/closing-costs">Closing Costs</a></li>
                       </ul>
                     </div>
                     <div className="mega-dropdown-column pb-2 pt-lg-2 pb-lg-4">
                       <ul className="list-unstyled mb-0">
                         <li className="p-3">Calculators</li>
-                        <li><a className="dropdown-item" href="">GDS and TDS</a></li>
-                        <li><a className="dropdown-item" href="">Mortgage</a></li>
-                        <li><a className="dropdown-item" href="">Mortgage Affordability</a></li>
-                        <li><a className="dropdown-item" href="">Land Transfer Taxes</a></li>
+                        <li><a className="dropdown-item" href="/gds-tds">GDS and TDS</a></li>
+                        <li><a className="dropdown-item" href="/mortgage-calc">Mortgage</a></li>
+                        <li><a className="dropdown-item" href="/mortgage-affordability">Mortgage Affordability</a></li>
+                        <li><a className="dropdown-item" href="/taxes">Land Transfer Taxes</a></li>
                       </ul>
                     </div>
                    
@@ -50,24 +50,24 @@ const Navbar = () => {
   <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
 </svg></a>
                 <ul className="dropdown-menu">
-                  <li className="dropdown"><a className="dropdown-item" href="#" data-bs-toggle="dropdown" aria-expanded="false">How Domus Works <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-4 h-4"  style={{ display: 'inline-block' }}>
+                  <li className="dropdown"><a className="dropdown-item" href="/why-domus">How Domus Works <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-4 h-4"  style={{ display: 'inline-block' }}>
   <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
 </svg>
 </a>
-                    <ul className="dropdown-menu">
+                    {/* <ul className="dropdown-menu">
                       <li><a className="dropdown-item" href="">Application Process</a></li>
                       <li><a className="dropdown-item" href="">Underwriting</a></li>
                       <li><a className="dropdown-item" href="">Mortgage Education</a></li>
                       <li><a className="dropdown-item" href="">Rate Locking</a></li>
-                    </ul>
+                    </ul> */}
                   </li>
                   <li className="dropdown"><a className="dropdown-item" href="#" data-bs-toggle="dropdown" aria-expanded="false">Products <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-4 h-4"  style={{ display: 'inline-block' }}>
   <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
 </svg></a>
                     <ul className="dropdown-menu">
-                      <li><a className="dropdown-item" href="">24/7 AI Loan Agent</a></li>
-                      <li><a className="dropdown-item" href="">Document Intelligence</a></li>
-                      <li><a className="dropdown-item" href="">Communications Automation</a></li>
+                    <li><a className="dropdown-item" href="/ai-agent">24/7 AI Loan Agent</a></li>
+                      <li><a className="dropdown-item" href="/document-processing">Intelliget Document Processing</a></li>
+                      <li><a className="dropdown-item" href="/mortgage-pricing">Advanced Mortgage Pricing</a></li>
                     </ul>
                   </li>
                   
@@ -79,7 +79,7 @@ const Navbar = () => {
                 <ul className="dropdown-menu">
                   <li className="dropdown"><a className="dropdown-item" href="#">Join as an agent</a>
                   </li>
-                  <li><a className="dropdown-item" href="account-overview.html">Login as an agent</a></li>
+                  <li><a className="dropdown-item" href="account-signin.html">Login as an agent</a></li>
                 </ul>
               </li>
             <li className="nav-item "><a className="nav-link" href="/blog">Blog</a></li>

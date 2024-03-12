@@ -47,24 +47,22 @@ export default async function LoanOptions({
               >
                 <div className="flex items-center">
                   
-                  <div className="min-w-0">
-                    <p className="truncate text-sm font-semibold md:text-base">
-                      {invoice.lender}
-                    </p>
-                  </div>
+                <div className="flex w-[150px]">
+                  <p className={`${lusitana.className} truncate text-sm font-medium md:text-base`}>
+                    <b>{invoice.lender}</b>
+                  </p>
                 </div>
-                <div className="flex items-center">
-                  
-                  <div className="min-w-0">
-                    {invoice.term} 
-                    
-                  </div>
                 </div>
-                <p
-                  className={`${lusitana.className} truncate text-sm font-medium md:text-base`}
-                >
-                  {invoice.rate}%
-                </p>
+                <div className="flex w-[110px]">
+                  <p className={`${lusitana.className} truncate text-sm font-medium md:text-base`}>
+                    {invoice.term}
+                  </p>
+                </div>
+                <div className="flex w-[100px]">
+                  <p className={`${lusitana.className} truncate text-sm font-medium md:text-base`}>
+                    {invoice.rate}%
+                  </p>
+                </div>
                 <p
                   className={`${lusitana.className} truncate text-sm font-medium md:text-base`}
                 >

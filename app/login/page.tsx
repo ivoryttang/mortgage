@@ -1,3 +1,4 @@
+//@ts-nocheck
 'use client'
  
 import { authenticate } from '@/app/lib/actions'

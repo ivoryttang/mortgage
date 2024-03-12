@@ -5,6 +5,16 @@ export default function Homie() {
     const [response, setResponse] = useState("")
     const ask = async () => {
         console.log("called")
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append('Access-Control-Allow-Origin', 'https://localhost:3001');
+        myHeaders.append('Access-Control-Allow-Origin', 'http://4.236.201.138');
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            redirect: 'follow'
+        };
         fetch(`http://4.236.201.138/ask?newMessage=${newMessage}`, {
             method: "POST",
             headers: {
