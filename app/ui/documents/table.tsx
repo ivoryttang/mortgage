@@ -36,7 +36,7 @@ export default function DocumentsTable({
                   <button className="close-btn rounded border px-2 " onClick={() => setShowPopup(false)}>X</button>
                   <h2>{selectedPdfType}</h2>
                   {/* <p>{uploadedFile?.name}</p> */}
-                  {selectedPdfType == "Paystub" ? 
+                  {selectedPdfType == "Paystubs" ? 
                   <div className="flex">
                     <img src="/assets/img/paystub.jpg"/>
                     <div>

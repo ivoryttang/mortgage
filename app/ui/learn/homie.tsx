@@ -2,7 +2,8 @@ import React, { useState } from "react";
 
 export default function Homie() {
     const [newMessage, setNewMessage] = useState("")
-    const [response, setResponse] = useState("")
+    const [messageHistory, setMessageHistory] = useState<string[]>([]);
+
     const ask = async () => {
         console.log("called")
         var requestOptions = {
@@ -18,7 +19,7 @@ export default function Homie() {
         .then(response => response.text())
         .then(data => {
             console.log("success")
-            setResponse(data);
+            setMessageHistory(prevHistory => [...prevHistory, data]);
         })
         .catch(error => {
             console.log("gpt response error: ", error);
@@ -73,7 +74,12 @@ export default function Homie() {
               Hi, I am your friendly loan assistant. How may I help you?
 
             </div>
-            <div
+            
+            
+            {messageHistory.map((message, index) => (
+                index % 2 == 0 ? 
+                <div
+                key={message}
                 style={{
                     margin: "5px",
                     padding: "10px",
@@ -90,12 +96,11 @@ export default function Homie() {
                 }}
                 className={`message group`}
             >
-              Is now a good time to buy a house?
+              {message}
 
-            </div>
-            
-
-            <div
+            </div> :
+                <div
+                key={message}
                 style={{
                     margin: "5px",
                     padding: "10px",
@@ -112,29 +117,11 @@ export default function Homie() {
                 }}
                 className={`message group`}
             >
-              {newMessage}
+              {message}
 
             </div>
-            <div
-                style={{
-                    margin: "5px",
-                    padding: "10px",
-                    maxWidth: "70%",
-                    borderRadius: "5px",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignSelf: "flex-end",
-                    textAlign: "right",
-                    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-                    backgroundColor: "#000" ,
-                    color: "#fff",
-                    whiteSpace: "pre-line",
-                }}
-                className={`message group`}
-            >
-              {response}
+            ))}
 
-            </div>
 
 
 
@@ -155,11 +142,12 @@ export default function Homie() {
 
                     <input type="text" className="w-full p-3 rounded-lg text-black" placeholder="Type your message..."
                             value={newMessage}
-                            onChange={(e) => setNewMessage(e.target.value)}
+                            onChange={(e) => {setNewMessage(e.target.value)}}
                             onKeyPress={(e) => {
                                 if (e.key === "Enter" && e.shiftKey === false) {
                                     e.preventDefault();
                                     ask()
+                                    setMessageHistory(prevHistory => [...prevHistory, newMessage]);
                                 }
                             }}
                     />

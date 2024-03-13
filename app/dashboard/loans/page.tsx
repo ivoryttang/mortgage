@@ -6,7 +6,6 @@ import {
 export default async function Page() {
     const latestInvoices = await fetchLatestInvoices();
     return (
-    
       <LoanOptions latestInvoices={latestInvoices} />
     )
   }
