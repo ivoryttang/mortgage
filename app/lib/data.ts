@@ -181,7 +181,7 @@ export async function fetchDocuments() {
         due_date,
         status
       FROM documents
-      ORDER BY name ASC
+      
     `;
 
     const documents = data.rows;

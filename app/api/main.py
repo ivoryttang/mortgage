@@ -13,7 +13,8 @@ app.add_middleware(
     allow_origins=["*"],
     allow_methods=["*"],
     allow_headers=["*"],
-    expose_headers=["*"]
+    expose_headers=["*"],
+    allow_credentials=True
 )
 
 @app.post("/ask")

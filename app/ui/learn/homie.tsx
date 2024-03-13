@@ -5,23 +5,16 @@ export default function Homie() {
     const [response, setResponse] = useState("")
     const ask = async () => {
         console.log("called")
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
-        myHeaders.append('Access-Control-Allow-Origin', 'https://localhost:3001');
-        myHeaders.append('Access-Control-Allow-Origin', 'http://4.236.201.138');
-
         var requestOptions = {
             method: 'POST',
-            headers: myHeaders,
-            redirect: 'follow'
-        };
-        fetch(`http://4.236.201.138/ask?newMessage=${newMessage}`, {
-            method: "POST",
             headers: {
-                "Accept": "application/json"
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Accept': 'application/json',
+                'Access-Control-Allow-Origin': '*',
             },
-            body: JSON.stringify({})
-        })
+            body: ''
+        };
+        fetch(`https://app.domusnow.com/ask?newMessage=${newMessage}`, requestOptions)
         .then(response => response.text())
         .then(data => {
             console.log("success")
@@ -30,7 +23,6 @@ export default function Homie() {
         .catch(error => {
             console.log("gpt response error: ", error);
         });
-        console.log("after")
     };
     return <div className="mt-5">
         <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }} className="mb-3">
@@ -39,7 +31,7 @@ export default function Homie() {
             </svg>
 
             <b><h1>Homie</h1></b>
-            <h2>Your friendly 24/7 loan agent</h2>
+            <h2>Your friendly 24/7 loan advisor</h2>
         </div>
         <div
             // ref={(ref) => setScrollContainerRef(ref)}

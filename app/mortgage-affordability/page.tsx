@@ -28,15 +28,15 @@ Keep in mind that the actual amounts are dependent on your submitted documents a
 <br></br>
     <br></br>
     
- {income > 150000  ? "✅" : "❌"} Income required: ${0.8*purchasePrice > 300000 ? 150000: 80000}
+ {income >= 150000  ? "✅" : "❌"} Income required: ${0.8*purchasePrice > 300000 ? 150000: 80000}
 <br></br>
-{downPayment < purchasePrice ? "✅" : "❌"} Down payment is less than purchase price
+{downPayment <= purchasePrice ? "✅" : "❌"} Down payment is less than purchase price
 <br></br>
-{downPayment > 0.2*purchasePrice ? "✅" : "❌"} Min. down payment: ${0.2*purchasePrice}
+{downPayment >= 0.2*purchasePrice ? "✅" : "❌"} Min. down payment: ${0.2*purchasePrice}
 <br></br>
-{downPayment > 0.2*purchasePrice ? "✅" : "❌"} Min. loan amount: ${0.8*purchasePrice}
+{downPayment >= 0.2*purchasePrice ? "✅" : "❌"} Min. loan amount: ${0.8*purchasePrice}
 <br></br>
-{creditScore > 700 ? "✅" : "❌"} Min. credit score: {0.8*purchasePrice > 300000 ? 700 : 620}
+{creditScore >= 700 ? "✅" : "❌"} Min. credit score: {0.8*purchasePrice > 300000 ? 700 : 620}
     <br></br>
     <br></br>
 Update the amounts below to see how much you can afford.
