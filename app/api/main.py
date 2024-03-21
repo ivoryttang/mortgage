@@ -2,6 +2,9 @@ from fastapi import FastAPI
 import os
 import openai 
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi import Request
+import requests
+import json
 
 openai.api_key = "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"
 
@@ -50,3 +53,26 @@ async def rate_sheet_analysis(all_summaries: str):
     )
 
     return response["choices"][0]["message"].get("content", "")
+
+
+@app.post("/webhook/call")
+async def webhookEvent(request: Request):
+    body = await request.json()
+    headers = request.headers
+    webhookMessage = body.get('message','{}')
+    call_id = webhookMessage.get("call",'{}').get("id","")
+
+    response = requests.request("POST", "https://webhook.site/87cc942a-d36a-41a9-8e4f-54fbe24ee601", headers=headers, data=json.dumps({**body}))
+
+    if webhookMessage.get("status","") == "started":
+        # already handled by vapi_call function
+        pass
+
+    # option 2: if "arguments" or "name" in webhookMessage (functions)
+    elif webhookMessage.get("type","") == "function-call":
+        pass
+    # TRANSFER CALL CONTEXT
+    elif webhookMessage.get("type","") == "status-update" and webhookMessage.get("status","") == "forwarding":
+        pass
+    # live call transcript
+    

@@ -5,6 +5,7 @@ import {
   DocumentsTableType,
   FormattedDocumentsTable,
 } from '@/app/lib/definitions';
+import {addDocument} from '@/app/lib/data'
 
 export default function DocumentsTable({
   documents,
@@ -17,8 +18,9 @@ export default function DocumentsTable({
     const file = event.target.files ? event.target.files[0] : null;
     setUploadedFile(file ?? undefined)
   }
-  function handleFileUpload() {
+  async function handleFileUpload() {
     // perform sql operation and add uploaded file to database
+    await addDocument(selectedPdfType, selectedPdfType, new Date().toISOString(),  new Date().toISOString(),'Completed')
   }
   function handlePdfTypeChange(event: React.ChangeEvent<HTMLSelectElement>) {
     setSelectedPdfType(event.target.value)

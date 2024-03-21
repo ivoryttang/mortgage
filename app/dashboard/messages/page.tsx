@@ -1,6 +1,8 @@
-export default async function Page() {
-    return <div>
+import Messages from "@/app/ui/messages/Messages"
 
-<iframe src="/account-chat.html" width="130%" style={{height: "100vh"}} />
-    </div>
+
+
+export default async function Page() {
+    return <div><Messages /></div>
+
 }

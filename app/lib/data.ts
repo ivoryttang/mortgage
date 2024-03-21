@@ -11,6 +11,9 @@ import {
 } from './definitions';
 import { formatCurrency } from './utils';
 
+
+
+
 export async function fetchRevenue() {
   // Add noStore() here to prevent the response from being cached.
   // This is equivalent to in fetch(..., {cache: 'no-store'}).
@@ -231,5 +234,19 @@ export async function getUser(email: string) {
   } catch (error) {
     console.error('Failed to fetch user:', error);
     throw new Error('Failed to fetch user.');
+  }
+}
+
+
+export async function addDocument(name: string, description: string, uploadDate: string, dueDate: string, status: string) {
+  try {
+    const data = await sql`
+      INSERT INTO documents (name, description, upload_date, due_date, status)
+      VALUES (${name}, ${description}, ${uploadDate}, ${dueDate}, ${status})
+    `;
+    return data.rows[0];
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to add document to the table.');
   }
 }
