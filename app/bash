@@ -1,0 +1,4 @@
+export RESOURCE_GROUP=“mortgage”
+export LOCATION="Australia East"
+export ENVIRONMENT="managedEnvironment-mortgage-abd7"
+export API_NAME=“mortgage-api"

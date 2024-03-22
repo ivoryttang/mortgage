@@ -1,5 +1,7 @@
 import DocumentsTable from '@/app/ui/documents/table';
-import { fetchDocuments } from '@/app/lib/data';
+import { fetchDocuments, addDocument } from '@/app/lib/data';
+
+
 export default async function Page() {
     const documents = await fetchDocuments()
     const formattedDocuments = documents.map(doc => ({
@@ -10,5 +12,6 @@ export default async function Page() {
       due_date: new Date(doc.due_date).toISOString().split('T')[0],
       status: doc.status
     }));
-    return <DocumentsTable documents={formattedDocuments} />;
+    
+    return <DocumentsTable documents={formattedDocuments}/>;
   }

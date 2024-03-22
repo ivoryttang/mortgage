@@ -5,7 +5,8 @@ import {
   DocumentsTableType,
   FormattedDocumentsTable,
 } from '@/app/lib/definitions';
-import {addDocument} from '@/app/lib/data'
+import {addDocument} from '@/app/lib/data';
+
 
 export default function DocumentsTable({
   documents,
@@ -17,11 +18,28 @@ export default function DocumentsTable({
   function handleSetFile(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files ? event.target.files[0] : null;
     setUploadedFile(file ?? undefined)
+    
   }
-  async function handleFileUpload() {
-    // perform sql operation and add uploaded file to database
-    await addDocument(selectedPdfType, selectedPdfType, new Date().toISOString(),  new Date().toISOString(),'Completed')
+
+  function handleUpload(){
+    fetch('https://app.domusnow.com/add_document',{
+      method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    name: selectedPdfType,
+    description: selectedPdfType,
+    upload_date: new Date().toISOString(),
+    due_date: new Date().toISOString(),
+    status: 'completed'
+  }),
+    })
+      .then(response => response.json())
+      .catch(error => console.error('Error:', error));
   }
+  
+  
   function handlePdfTypeChange(event: React.ChangeEvent<HTMLSelectElement>) {
     setSelectedPdfType(event.target.value)
   }
@@ -106,8 +124,9 @@ export default function DocumentsTable({
     <option value="credit">Credit Report</option>
         </select> 
         <div className='flex'>
-        <input className="ml-4 w-[250px] mt-1" type="file" id="pdfUpload" accept=".pdf" onChange={handleSetFile}/></div>
-        <button type="button" className='rounded bg-gray-400 text-white p-2' onClick={handleFileUpload}>Upload </button>
+        <input className="ml-4 w-[250px] mt-1" type="file" id="pdfUpload" onChange={handleSetFile}/>
+        </div>
+        <button type="button" className='rounded bg-gray-400 text-white p-2' onClick={handleUpload}>Upload </button>
         <button type="button" className='rounded bg-gray-400 text-white p-2 ml-4' >Connect Account </button>
         </div>
       <div className="mt-6 flow-root">

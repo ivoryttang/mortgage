@@ -5,6 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi import Request
 import requests
 import json
+import sqlite3
 
 openai.api_key = "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"
 
@@ -54,6 +55,20 @@ async def rate_sheet_analysis(all_summaries: str):
 
     return response["choices"][0]["message"].get("content", "")
 
+@app.post("/add_document")
+async def addDocument(name: str,description: str, uploadDate: str, dueDate: str, status: str):
+
+    
+    conn = sqlite3.connect('your_database.db')
+    cursor = conn.cursor()
+
+
+    cursor.execute("INSERT INTO documents (name, description, upload_date, due_date, status) VALUES (?, ?, ?, ?, ?)", (name, description, uploadDate, dueDate, status))
+
+    # Commit the transaction and close the connection
+    conn.commit()
+    conn.close()
+    
 
 @app.post("/webhook/call")
 async def webhookEvent(request: Request):
