@@ -1,5 +1,5 @@
 import { unstable_noStore as noStore } from 'next/cache';
-import { sql } from '@vercel/postgres';
+import { sql,db } from '@vercel/postgres';
 import {
   DocumentField,
   DocumentsTableType,
@@ -183,6 +183,7 @@ export async function fetchDocuments() {
         due_date,
         status
       FROM documents
+      ORDER BY upload_date DESC
       
     `;
 
@@ -190,7 +191,7 @@ export async function fetchDocuments() {
     return documents;
   } catch (err) {
     console.error('Database Error:', err);
-    throw new Error('Failed to fetch all customers.');
+    throw new Error('Failed to fetch all documents.');
   }
 }
 
@@ -237,16 +238,3 @@ export async function getUser(email: string) {
   }
 }
 
-
-export async function addDocument(name: string, description: string, uploadDate: string, dueDate: string, status: string) {
-  try {
-    const data = await sql`
-      INSERT INTO documents (name, description, upload_date, due_date, status)
-      VALUES (${name}, ${description}, ${uploadDate}, ${dueDate}, ${status})
-    `;
-    return data.rows[0];
-  } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to add document to the table.');
-  }
-}

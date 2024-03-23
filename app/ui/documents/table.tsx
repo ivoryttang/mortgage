@@ -5,8 +5,6 @@ import {
   DocumentsTableType,
   FormattedDocumentsTable,
 } from '@/app/lib/definitions';
-import {addDocument} from '@/app/lib/data';
-
 
 export default function DocumentsTable({
   documents,
@@ -21,22 +19,34 @@ export default function DocumentsTable({
     
   }
 
-  function handleUpload(){
-    fetch('https://app.domusnow.com/add_document',{
-      method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({
-    name: selectedPdfType,
-    description: selectedPdfType,
-    upload_date: new Date().toISOString(),
-    due_date: new Date().toISOString(),
-    status: 'completed'
-  }),
-    })
-      .then(response => response.json())
-      .catch(error => console.error('Error:', error));
+  async function handleUpload(){
+    const apiUrl = "/api/add_document"; // Endpoint for the server-side API
+    const data = {
+        name: selectedPdfType,
+        description: selectedPdfType,
+        uploadDate: new Date().toISOString(),
+        dueDate: new Date().toISOString(),
+        status: 'completed'
+    };
+
+    try {
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        });
+
+        if (response.ok) {
+            const responseData = await response.json();
+            console.log(responseData); // Handle the response data as needed
+        } else {
+            console.error('Error:', response.statusText);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
   }
   
   
@@ -127,7 +137,7 @@ export default function DocumentsTable({
         <input className="ml-4 w-[250px] mt-1" type="file" id="pdfUpload" onChange={handleSetFile}/>
         </div>
         <button type="button" className='rounded bg-gray-400 text-white p-2' onClick={handleUpload}>Upload </button>
-        <button type="button" className='rounded bg-gray-400 text-white p-2 ml-4' >Connect Account </button>
+        {/* <button type="button" className='rounded bg-gray-400 text-white p-2 ml-4' >Connect Account </button> */}
         </div>
       <div className="mt-6 flow-root">
         <div className="overflow-x-auto">

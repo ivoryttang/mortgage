@@ -9,6 +9,8 @@
     "seed": "node -r dotenv/config ./scripts/seed.js"
   },
   "dependencies": {
+    "@azure/identity": "^4.0.1",
+    "@azure/storage-blob": "^12.17.0",
     "@heroicons/react": "^2.0.18",
     "@material-tailwind/react": "^2.1.9",
     "@radix-ui/themes": "^2.0.3",
@@ -35,6 +37,7 @@
     "react-dom": "18.2.0",
     "tailwindcss": "3.3.3",
     "typescript": "5.2.2",
+    "uuid": "^9.0.1",
     "zod": "^3.22.4",
     "zustand": "^4.5.2"
   },
@@ -44,7 +47,7 @@
     "@types/react-dom": "18.2.14",
     "@vercel/node": "^3.0.21",
     "@vercel/style-guide": "^5.0.1",
-    "dotenv": "^16.3.1",
+    "dotenv": "^16.4.5",
     "eslint": "^8.57.0",
     "eslint-config-next": "^14.0.0",
     "eslint-config-prettier": "9.0.0",

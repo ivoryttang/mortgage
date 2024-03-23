@@ -5,11 +5,26 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi import Request
 import requests
 import json
-import sqlite3
+from azure.storage.blob import BlobServiceClient
+from azure.core.exceptions import ResourceExistsError
+from azure.identity import DefaultAzureCredential
+from dotenv import load_dotenv
+from fastapi.responses import StreamingResponse
+
+load_dotenv()
+
+
+account_url = os.environ['AZURE_STORAGE_URL']
+
+# create a credential 
+credentials = DefaultAzureCredential()
 
 openai.api_key = "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"
 
 # run: uvicorn main:app --reload --port 8000
+
+# storage_connection_string = 'DefaultEndpointsProtocol=https;AccountName=mortgageb7d8;AccountKey=XOJYRtpeuW3q+VT2bmYJ6mD5b6vS+akqQ3LIJEMYMep/U+ZE4uMtCDRFtCXbY8DJITA0rdGesJi7+AStQAloJA=='
+
 
 app = FastAPI()
 app.add_middleware(
@@ -55,20 +70,50 @@ async def rate_sheet_analysis(all_summaries: str):
 
     return response["choices"][0]["message"].get("content", "")
 
-@app.post("/add_document")
-async def addDocument(name: str,description: str, uploadDate: str, dueDate: str, status: str):
 
-    
-    conn = sqlite3.connect('your_database.db')
-    cursor = conn.cursor()
+@app.post("/upload_document")
+def uploadDocument(name: str, file_data: bytes):
+    container_name = 'documents'
 
+    # set client to access azure storage container
+    blob_service_client = BlobServiceClient(account_url=account_url, credential=credentials)
 
-    cursor.execute("INSERT INTO documents (name, description, upload_date, due_date, status) VALUES (?, ?, ?, ?, ?)", (name, description, uploadDate, dueDate, status))
+    # get the container client
+    container_client = blob_service_client.get_container_client(container=container_name)
 
-    # Commit the transaction and close the connection
-    conn.commit()
-    conn.close()
-    
+    # upload the file data to the blob storage container
+    container_client.upload_blob(name=name, data=file_data)
+
+@app.get("/get_document/{name}")
+def get_document(name: str):
+    container_name = 'documents'
+    blob_name = name
+
+    # set client to access azure storage container
+    blob_service_client = BlobServiceClient(account_url=account_url, credential=credentials)
+
+    # get the container client
+    container_client = blob_service_client.get_container_client(container=container_name)
+
+    # download blob data
+    blob_client = container_client.get_blob_client(blob=blob_name)
+
+    data = blob_client.download_blob()
+
+    return StreamingResponse(data.content_as_bytes(), media_type='application/pdf')
+
+# def list_documents():
+#     container_name = 'storagecommoncontainer'
+
+#     # set client to access azure storage container
+#     blob_service_client = BlobServiceClient(account_url= account_url, credential= credentials)
+
+#     # get the container client 
+#     container_client = blob_service_client.get_container_client(container=container_name)
+
+#     for blob in container_client.list_blobs():
+#         print(blob.name)
+
 
 @app.post("/webhook/call")
 async def webhookEvent(request: Request):
