@@ -5,6 +5,7 @@ import {
   DocumentsTableType,
   FormattedDocumentsTable,
 } from '@/app/lib/definitions';
+import {TrashIcon} from '@heroicons/react/24/outline';
 
 
 export default function DocumentsTable({
@@ -15,6 +16,46 @@ export default function DocumentsTable({
   const [selectedPdfType, setSelectedPdfType] = useState("Paystub")
   const [uploadedFile, setUploadedFile] = useState<undefined | File>(undefined)
   
+  const [currDocuments, setCurrDocuments] = useState<FormattedDocumentsTable[]>(documents);
+
+  // Function to fetch and update documents
+  const refreshDocuments = async () => {
+    const apiUrl = "/api/get_documents"; 
+      try {
+          const response = await fetch(apiUrl, {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: '',
+          });
+
+          if (response.ok) {
+              const responseData = await response.json();
+              console.log(responseData)
+              console.log("HERE",responseData.documents.rows)
+              if (responseData) {
+                const formattedDocuments: FormattedDocumentsTable[] = responseData.documents.rows.map((doc: any) => ({
+                    id: doc.id,
+                    name: doc.name,
+                    upload_date: new Date(doc.upload_date).toISOString().split('T')[0],
+                    description: doc.description,
+                    due_date: new Date(doc.due_date).toISOString().split('T')[0],
+                    status: doc.status
+                }));
+                setCurrDocuments(formattedDocuments);
+            } else {
+                console.error('Error: responseData.rows is undefined');
+            }
+             
+          } else {
+              console.error('Error:', response.statusText);
+          }
+      } catch (error) {
+          console.error('Error:', error);
+      }
+      
+  };
 
   function handleSetFile(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files ? event.target.files[0] : null;
@@ -35,15 +76,14 @@ export default function DocumentsTable({
         body: pdfData
     };
     fetch(`https://app.domusnow.com/upload_document?name=${selectedPdfType}`, requestOptions)
-    .then(response => response.text())
-    .then(data => {
-        console.log("success")
-    })
+    .then(response => {response.text(); addDocument()})
     .catch(error => {
         console.log("upload azure error: ", error);
     });
     
+  }
 
+  async function addDocument(){
     const apiUrl = "/api/add_document"; // Endpoint for the server-side API
     const data = {
         name: selectedPdfType,
@@ -71,6 +111,32 @@ export default function DocumentsTable({
     } catch (error) {
         console.error('Error:', error);
     }
+
+    await refreshDocuments()
+  }
+
+  async function deleteDocument(name: string) {
+    const apiUrl = "/api/delete_document"; 
+
+    try {
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({name: name}),
+        });
+
+        if (response.ok) {
+            const responseData = await response.json();
+            console.log(responseData); // Handle the response data as needed
+        } else {
+            console.error('Error:', response.statusText);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+    await refreshDocuments()
   }
   
   
@@ -80,6 +146,18 @@ export default function DocumentsTable({
   const [showPopup, setShowPopup] = useState(false);
 
   const handleOpen = (document:string) => {
+    var requestOptions = {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+        }
+    };
+    fetch(`http://app.domusnow.com/get_document?name=${selectedPdfType}`, requestOptions)
+    .then(response => response.text())
+    .catch(error => {
+        console.log("get document error: ", error);
+    });
     setShowPopup(true);
     setSelectedPdfType(document)
   };
@@ -91,7 +169,13 @@ export default function DocumentsTable({
                   <button className="close-btn rounded border px-2 " onClick={() => setShowPopup(false)}>X</button>
                   <h2>{selectedPdfType}</h2>
                   {/* <p>{uploadedFile?.name}</p> */}
-                  {selectedPdfType == "Paystubs" ? 
+                  <iframe
+                    title="PDF Viewer"
+                    src={`../temp_show_file.pdf`}
+                    width="100%"
+                    height="600px"
+                ></iframe>
+                  {/* {selectedPdfType == "Paystubs" ? 
                   <div className="flex">
                     <img src="/assets/img/paystub.jpg"/>
                     <div>
@@ -147,7 +231,7 @@ export default function DocumentsTable({
                         <li>- Make sure to not incur any more 30 day delinquencies between now and when the loan is officially closed</li>
                       </ul>
                     </div>
-                  </div></>}
+                  </div></>} */}
                 </div>
               )}
       <Search placeholder="Search documents..." />
@@ -187,11 +271,12 @@ export default function DocumentsTable({
                     <th scope="col" className="px-4 py-5 font-medium">
                       Status
                     </th>
+                    <th></th>
                   </tr>
                 </thead>
 
                 <tbody className="divide-y divide-gray-200 text-gray-900">
-                  {documents.map((document) => (
+                  {currDocuments.map((document) => (
                     <tr key={document.id} onClick={() => handleOpen(document.name)}>
                       <td className="whitespace-nowrap bg-white py-5 pl-4 pr-3 text-sm text-black group-first-of-type:rounded-md group-last-of-type:rounded-md sm:pl-6">
                           {document.name}
@@ -207,6 +292,9 @@ export default function DocumentsTable({
                       </td>
                       <td className="whitespace-nowrap bg-white px-4 py-5 text-sm group-first-of-type:rounded-md group-last-of-type:rounded-md">
                         {document.status}
+                      </td>
+                      <td className="whitespace-nowrap bg-white px-4 py-5">
+                        <button onClick={(e) => {e.stopPropagation(); deleteDocument(document.name)}}><TrashIcon className="w-[15px] " /></button>
                       </td>
                     </tr>
                   ))}

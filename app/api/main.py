@@ -83,9 +83,10 @@ def uploadDocument(name: str, file_data: UploadFile = File(...)):
     container_client = blob_service_client.get_container_client(container=container_name)
 
     # upload the file data to the blob storage container
-    container_client.upload_blob(name=name, data=file_data)
+    file_bytes = file_data.file.read()
+    container_client.upload_blob(name=name, data=file_bytes)
 
-@app.get("/get_document/{name}")
+@app.get("/get_document")
 def get_document(name: str):
     container_name = 'documents'
     blob_name = name
@@ -99,9 +100,10 @@ def get_document(name: str):
     # download blob data
     blob_client = container_client.get_blob_client(blob=blob_name)
 
-    data = blob_client.download_blob()
+    with open(file=os.path.join(r'./public/', 'temp_show_file.pdf'), mode="wb") as sample_blob:
+        download_stream = blob_client.download_blob()
+        sample_blob.write(download_stream.readall())
 
-    return StreamingResponse(data.content_as_bytes(), media_type='application/pdf')
 
 # def list_documents():
 #     container_name = 'storagecommoncontainer'

@@ -183,9 +183,7 @@ export async function fetchDocuments() {
         due_date,
         status
       FROM documents
-
-      ORDER BY upload_date DESC
-      
+      ORDER BY upload_date ASC
     `;
 
     const documents = data.rows;
