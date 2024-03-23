@@ -1,10 +1,11 @@
 "use client"
 import Search from '@/app/ui/search';
-import { useState } from 'react';
+import { useState, ChangeEvent } from 'react';
 import {
   DocumentsTableType,
   FormattedDocumentsTable,
 } from '@/app/lib/definitions';
+
 
 export default function DocumentsTable({
   documents,
@@ -13,13 +14,36 @@ export default function DocumentsTable({
 }) {
   const [selectedPdfType, setSelectedPdfType] = useState("Paystub")
   const [uploadedFile, setUploadedFile] = useState<undefined | File>(undefined)
+  
+
   function handleSetFile(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files ? event.target.files[0] : null;
     setUploadedFile(file ?? undefined)
-    
   }
 
   async function handleUpload(){
+    const pdfData = new FormData();
+    if (uploadedFile) {
+        pdfData.append('file_data', uploadedFile);
+    }
+    var requestOptions = {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+        },
+        body: pdfData
+    };
+    fetch(`https://app.domusnow.com/upload_document?name=${selectedPdfType}`, requestOptions)
+    .then(response => response.text())
+    .then(data => {
+        console.log("success")
+    })
+    .catch(error => {
+        console.log("upload azure error: ", error);
+    });
+    
+
     const apiUrl = "/api/add_document"; // Endpoint for the server-side API
     const data = {
         name: selectedPdfType,
@@ -61,6 +85,7 @@ export default function DocumentsTable({
   };
   return (
     <div className="w-full mt-5">
+      
       {showPopup && (
                 <div className="popup">
                   <button className="close-btn rounded border px-2 " onClick={() => setShowPopup(false)}>X</button>
@@ -134,7 +159,7 @@ export default function DocumentsTable({
     <option value="credit">Credit Report</option>
         </select> 
         <div className='flex'>
-        <input className="ml-4 w-[250px] mt-1" type="file" id="pdfUpload" onChange={handleSetFile}/>
+        <input className="ml-4 w-[250px] mt-1" type="file" id="pdfUpload" accept=".pdf" onChange={handleSetFile}/>
         </div>
         <button type="button" className='rounded bg-gray-400 text-white p-2' onClick={handleUpload}>Upload </button>
         {/* <button type="button" className='rounded bg-gray-400 text-white p-2 ml-4' >Connect Account </button> */}

@@ -1,4 +1,5 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, File, UploadFile
+from typing import List
 import os
 import openai 
 from fastapi.middleware.cors import CORSMiddleware
@@ -14,10 +15,10 @@ from fastapi.responses import StreamingResponse
 load_dotenv()
 
 
-account_url = os.environ['AZURE_STORAGE_URL']
+account_url = "https://mortgageb7d8.blob.core.windows.net/"
 
 # create a credential 
-credentials = DefaultAzureCredential()
+credentials = "KPnwrykAKqxo2oJBt2KNqU+TPafM2pn28rYzxwMO8D4LV1/0ZRMwyGBY/8/wBKUjlNeuYgxeAAaA+AStzlb7Gg=="
 
 openai.api_key = "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"
 
@@ -72,7 +73,7 @@ async def rate_sheet_analysis(all_summaries: str):
 
 
 @app.post("/upload_document")
-def uploadDocument(name: str, file_data: bytes):
+def uploadDocument(name: str, file_data: UploadFile = File(...)):
     container_name = 'documents'
 
     # set client to access azure storage container
