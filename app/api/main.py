@@ -11,11 +11,13 @@ from azure.core.exceptions import ResourceExistsError
 from azure.identity import DefaultAzureCredential
 from dotenv import load_dotenv
 from fastapi.responses import StreamingResponse
-# from selenium import webdriver
-# from selenium.webdriver.chrome.service import Service
-# import time 
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+import time 
+from exa_py import Exa
 
 load_dotenv()
+
 
 #selenium
 # service = Service(executable_path="chromedriver.exe")
@@ -32,6 +34,9 @@ account_url = "https://mortgageb7d8.blob.core.windows.net/"
 credentials = "KPnwrykAKqxo2oJBt2KNqU+TPafM2pn28rYzxwMO8D4LV1/0ZRMwyGBY/8/wBKUjlNeuYgxeAAaA+AStzlb7Gg=="
 
 openai.api_key = "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"
+
+
+exa = Exa("921e8f7b-2af9-41eb-a138-dfc5d418d547")
 
 # run: uvicorn main:app --reload --port 8000
 
@@ -149,4 +154,12 @@ async def webhookEvent(request: Request):
     elif webhookMessage.get("type","") == "status-update" and webhookMessage.get("status","") == "forwarding":
         pass
     # live call transcript
-    
+
+
+@app.post("/search")
+async def search(query: str):
+    response = exa.search(
+        query,
+        num_results=10,
+        use_autoprompt=True,
+    )

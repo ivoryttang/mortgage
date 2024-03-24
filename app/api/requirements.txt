@@ -11,3 +11,4 @@ azure-identity
 python-dotenv
 python-multipart
 selenium
+exa-py
