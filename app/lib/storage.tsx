@@ -5,3 +5,8 @@ export const useClickedConversationStore = create((set) => ({
     clicked: 0,
     setClicked: (clicked) => set({ clicked })
   }));
+
+  export const useStepConversationStore = create((set) => ({
+    step: 1,
+    setStep: (step) => set({ step })
+  }));

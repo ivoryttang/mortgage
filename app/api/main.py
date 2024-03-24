@@ -11,9 +11,20 @@ from azure.core.exceptions import ResourceExistsError
 from azure.identity import DefaultAzureCredential
 from dotenv import load_dotenv
 from fastapi.responses import StreamingResponse
+# from selenium import webdriver
+# from selenium.webdriver.chrome.service import Service
+# import time 
 
 load_dotenv()
 
+#selenium
+# service = Service(executable_path="chromedriver.exe")
+# driver = webdriver.Chrome(service=service)
+
+# driver.get("https://google.com")
+
+# time.sleep(10)
+# driver.quit()
 
 account_url = "https://mortgageb7d8.blob.core.windows.net/"
 

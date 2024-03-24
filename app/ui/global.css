@@ -35,3 +35,16 @@ input[type='number']::-webkit-outer-spin-button {
   right: 5px;
   cursor: pointer;
 }
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+th {
+  background-color: #f2f2f2; /* Header color */
+}
+th, td {
+  border: 1px solid gray;
+  padding: 8px;
+  text-align: left;
+}

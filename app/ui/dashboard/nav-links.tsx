@@ -4,6 +4,7 @@ import {
   CurrencyDollarIcon,
   HomeIcon,
   DocumentDuplicateIcon,
+  FlagIcon,
   ChatBubbleLeftEllipsisIcon,
   Cog8ToothIcon,
   AcademicCapIcon
@@ -23,8 +24,9 @@ const links = [
   },
   { name: 'Learn', href: '/dashboard/learn', icon: AcademicCapIcon },
   { name: 'Documents', href: '/dashboard/documents', icon: DocumentDuplicateIcon },
+  { name: 'Reports', href: '/dashboard/reports', icon: FlagIcon },
   { name: 'Messages', href: '/dashboard/messages', icon: ChatBubbleLeftEllipsisIcon },
-  { name: 'Settings', href: '/dashboard/settings', icon: Cog8ToothIcon },
+  // { name: 'Settings', href: '/dashboard/settings', icon: Cog8ToothIcon },
 ];
 
 export default async function NavLinks() {

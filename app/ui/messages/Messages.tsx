@@ -49,13 +49,13 @@ return (
                     </div>
                     <div className="card-body px-0 pb-4 pb-xl-0 pt-1 ">
                       
-                    <CallRecord id={1} caption="Hello, my name is..." topic="Onboarding" time="3:01" />
-                    <CallRecord id={2} caption="Hello, my name is..." topic="Onboarding" time="3:01" />
-                    <CallRecord id={3} caption="Hello, my name is..." topic="Onboarding" time="3:01"/>
-                    <CallRecord id={4} caption="Hello, my name is..." topic="Onboarding" time="3:01"/>
-                    <CallRecord id={5} caption="Hello, my name is..." topic="Onboarding" time="3:01"/>
-                    <CallRecord id={6} caption="Hello, my name is..." topic="Onboarding" time="3:01"/>
-                    <CallRecord id={7} caption="Hello, my name is..." topic="Onboarding" time="3:01"/>
+                    <CallRecord id={1} caption="Hello, my name is..." topic="Onboarding Call" time="3:01" />
+                    <CallRecord id={2} caption="Hello, my name is..." topic="Attorney" time="3:01" />
+                    <CallRecord id={3} caption="Hello, my name is..." topic="Lender" time="3:01"/>
+                    <CallRecord id={4} caption="Hello, my name is..." topic="Title" time="3:01"/>
+                    <CallRecord id={5} caption="Hello, my name is..." topic="Escrow" time="3:01"/>
+                    <CallRecord id={6} caption="Hello, my name is..." topic="Borrower Details Call" time="3:01"/>
+                    <CallRecord id={7} caption="Hello, my name is..." topic="Borrower Questions Call" time="3:01"/>
 
                     </div>
                   </div>
@@ -163,7 +163,7 @@ return (
 
 
 
-            <div style={{
+            {/* <div style={{
                 position: 'fixed',
                 bottom: 0,
                 width: '100%',
@@ -188,7 +188,7 @@ return (
                             }}
                     />
                 </div>
-            </div>
+            </div> */}
         </div>
         </div>
         
