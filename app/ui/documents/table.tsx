@@ -13,11 +13,11 @@ export default function DocumentsTable({
 }: {
   documents: FormattedDocumentsTable[];
 }) {
-  const [selectedPdfType, setSelectedPdfType] = useState("Paystub")
+  const [selectedPdfType, setSelectedPdfType] = useState("paystub")
   const [uploadedFile, setUploadedFile] = useState<undefined | File>(undefined)
   
   const [currDocuments, setCurrDocuments] = useState<FormattedDocumentsTable[]>(documents);
-
+  var url = ""
   // Function to fetch and update documents
   const refreshDocuments = async () => {
     const apiUrl = "/api/get_documents"; 
@@ -150,7 +150,7 @@ export default function DocumentsTable({
   }
   const [showPopup, setShowPopup] = useState(false);
 
-  const handleOpen = (document:string) => {
+  const handleOpen = (document_uploaded:string) => {
     var requestOptions = {
         method: 'GET',
         headers: {
@@ -158,13 +158,29 @@ export default function DocumentsTable({
             'Access-Control-Allow-Origin': '*',
         }
     };
-    fetch(`https://app.domusnow.com/get_document?name=${selectedPdfType}`, requestOptions)
-    .then(response => response.text())
-    .catch(error => {
-        console.log("get document error: ", error);
-    });
+    var requestOptions = {
+          method: 'GET',
+          headers: {
+              'Accept': 'application/json',
+              'Access-Control-Allow-Origin': '*',
+          }
+    };
+    fetch(`https://app.domusnow.com/get_document?name=${document_uploaded}`, requestOptions)
+    .then(response => response.blob())
+        .then(blob => {
+          // Create a URL for the blob
+          url = URL.createObjectURL(blob);
+          
+          // Display the PDF in an iframe or embed element
+            const pdfViewer = document.querySelector('#pdfViewer');
+          if (pdfViewer instanceof HTMLIFrameElement) {
+              pdfViewer.src = url;
+          }
+      })
+      .catch(error => {
+          console.log("get document error: ", error);
+      });
     setShowPopup(true);
-    setSelectedPdfType(document)
   };
   return (
     <div className="w-full mt-5">
@@ -174,12 +190,19 @@ export default function DocumentsTable({
                   <button className="close-btn rounded border px-2 " onClick={() => setShowPopup(false)}>X</button>
                   <h2>{selectedPdfType}</h2>
                   {/* <p>{uploadedFile?.name}</p> */}
-                  <iframe
+                  {/* <iframe
                     title="PDF Viewer"
                     src={`../temp_show_file.pdf`}
                     width="100%"
                     height="600px"
-                ></iframe>
+                ></iframe> */}
+                <iframe
+                id="pdfViewer"
+    title="PDF Viewer"
+    src={url}
+    width="100%"
+    height="600px"
+></iframe>
                   {/* {selectedPdfType == "Paystubs" ? 
                   <div className="flex">
                     <img src="/assets/img/paystub.jpg"/>

@@ -4,6 +4,7 @@ import os
 import openai 
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import Request
+from fastapi.responses import Response
 import requests
 import json
 from azure.storage.blob import BlobServiceClient
@@ -107,23 +108,34 @@ async def uploadDocument(name: str, file_data: UploadFile = File(...)):
     file_bytes = file_data.file.read()
     container_client.upload_blob(name=name, data=file_bytes)
 
+
+
+def download_stream_generator(download_stream):
+    while chunk := download_stream.readall():
+        yield chunk
+
 @app.get("/get_document")
 async def get_document(name: str):
     container_name = 'documents'
     blob_name = name
 
-    # set client to access azure storage container
     blob_service_client = BlobServiceClient(account_url=account_url, credential=credentials)
-
-    # get the container client
     container_client = blob_service_client.get_container_client(container=container_name)
-
-    # download blob data
     blob_client = container_client.get_blob_client(blob=blob_name)
 
-    with open(file=os.path.join(r'./public/', 'temp_show_file.pdf'), mode="wb") as sample_blob:
+    try:
         download_stream = blob_client.download_blob()
-        sample_blob.write(download_stream.readall())
+    except Exception as e:
+        # Handle exceptions, such as BlobNotFound
+        raise HTTPException(status_code=404, detail=f"Document not found: {name}")
+
+    # Use the generator to create an iterable from the download stream
+    content = download_stream_generator(download_stream)
+
+    return StreamingResponse(content, media_type='application/pdf')
+    # with open(file=os.path.join(r'./public/', 'temp_show_file.pdf'), mode="wb") as sample_blob:
+    #     download_stream = blob_client.download_blob()
+    #     sample_blob.write(download_stream.readall())
 
 
 # def list_documents():
