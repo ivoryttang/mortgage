@@ -144,7 +144,12 @@ const Header = () => {
                 
                 <div className='flex'>
                 
-                    <button onClick={startCall} className="border bg-black/20 rounded-lg px-2 py-1 flex">{isCalling ? <div className="flex"><PhoneIcon className="mr-2 mt-1" style={{width: '20px',height:'20px'}}/>Call in Progress</div> : <div>Talk to Loan Expert</div>}</button>
+                    <button onClick={startCall} 
+                    style={{ transition: 'all 0.3s', boxShadow: '0 0 10px rgba(0,0,0,0.2)' }}
+                    onMouseEnter={(e: React.MouseEvent<HTMLButtonElement>) => e.currentTarget.style.transform = 'scale(1.1)'}
+                onMouseLeave={(e: React.MouseEvent<HTMLButtonElement>) => e.currentTarget.style.transform = 'scale(1)'}
+                
+                    className="border bg-black/20 rounded-lg px-2 py-1 flex">{isCalling ? <div className="flex"><PhoneIcon className="mr-2 mt-1" style={{width: '20px',height:'20px'}}/>Call in Progress</div> : <div>Talk to Loan Expert</div>}</button>
                     <UserIcon className="ml-10 mr-1 mt-2 " style={{width: '20px',height:'20px'}}/><div className="mt-1">Guest</div>
                     <button onClick={toggleDropdown} className="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <ChevronDownIcon className="ml-3" style={{width: '20px',height:'20px'}}/>

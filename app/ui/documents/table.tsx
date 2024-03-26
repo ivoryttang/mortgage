@@ -63,6 +63,8 @@ export default function DocumentsTable({
   }
 
   async function handleUpload(){
+    console.log("handleUpload function called"); 
+    console.log("upload clicked", uploadedFile); 
     const pdfData = new FormData();
     if (uploadedFile) {
         pdfData.append('file_data', uploadedFile);
@@ -76,8 +78,11 @@ export default function DocumentsTable({
         body: pdfData
     };
     fetch(`https://app.domusnow.com/upload_document?name=${selectedPdfType}`, requestOptions)
-    .then(response => {response.text(); addDocument()})
+    .then(response => response.text())
+    .then(data => alert(data))
+    .then(() => addDocument())
     .catch(error => {
+        alert('Upload failed. Please try again.');
         console.log("upload azure error: ", error);
     });
     
@@ -153,7 +158,7 @@ export default function DocumentsTable({
             'Access-Control-Allow-Origin': '*',
         }
     };
-    fetch(`http://app.domusnow.com/get_document?name=${selectedPdfType}`, requestOptions)
+    fetch(`https://app.domusnow.com/get_document?name=${selectedPdfType}`, requestOptions)
     .then(response => response.text())
     .catch(error => {
         console.log("get document error: ", error);
@@ -237,16 +242,32 @@ export default function DocumentsTable({
       <Search placeholder="Search documents..." />
       <br></br>
       <div className='flex'><select className="rounded" value={selectedPdfType} onChange={handlePdfTypeChange}>
-      <option value="paystub">Paystub</option>
-    <option value="bank">Bank Statement</option>
-    <option value="w2">W-2</option>
-    <option value="credit">Credit Report</option>
+      <option value="paystub">Pay Stubs</option>
+      <option value="bank-statements">Bank Statements</option>
+      <option value="w-2">W-2</option>
+      <option value="credit">Credit Report</option>
+      <option value="id">Personal Identification</option>
+      <option value="social-security">Social Security</option>
+      <option value="tax">Tax Documents</option>
+      <option value="investments">Investment Account Statements</option>
+      <option value="debt">List of Monthly Debts</option>
+      <option value="rental">Rental Information and Landlord References</option>
+      <option value="gift">Gift Letters</option>
         </select> 
         <div className='flex'>
         <input className="ml-4 w-[250px] mt-1" type="file" id="pdfUpload" accept=".pdf" onChange={handleSetFile}/>
         </div>
-        <button type="button" className='rounded bg-gray-400 text-white p-2' onClick={handleUpload}>Upload </button>
-        {/* <button type="button" className='rounded bg-gray-400 text-white p-2 ml-4' >Connect Account </button> */}
+        <button 
+    type="button" 
+    className='rounded bg-gray-400 text-white p-2' 
+    onClick={() => handleUpload()}
+    style={{ transition: 'all 0.3s', boxShadow: '0 0 10px rgba(0,0,0,0.2)' }}
+    onMouseEnter={(e: React.MouseEvent<HTMLButtonElement>) => e.currentTarget.style.transform = 'scale(1.1)'}
+onMouseLeave={(e: React.MouseEvent<HTMLButtonElement>) => e.currentTarget.style.transform = 'scale(1)'}
+>
+    Upload
+</button>
+{/* <button type="button" className='rounded bg-gray-400 text-white p-2 ml-4' >Connect Account </button> */}
         </div>
       <div className="mt-6 flow-root">
         <div className="overflow-x-auto">

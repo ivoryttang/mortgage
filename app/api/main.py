@@ -94,7 +94,7 @@ async def rate_sheet_analysis(all_summaries: str):
 
 
 @app.post("/upload_document")
-def uploadDocument(name: str, file_data: UploadFile = File(...)):
+async def uploadDocument(name: str, file_data: UploadFile = File(...)):
     container_name = 'documents'
 
     # set client to access azure storage container
@@ -108,7 +108,7 @@ def uploadDocument(name: str, file_data: UploadFile = File(...)):
     container_client.upload_blob(name=name, data=file_bytes)
 
 @app.get("/get_document")
-def get_document(name: str):
+async def get_document(name: str):
     container_name = 'documents'
     blob_name = name
 

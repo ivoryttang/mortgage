@@ -12,3 +12,4 @@ python-dotenv
 python-multipart
 selenium
 exa-py
+playwright
