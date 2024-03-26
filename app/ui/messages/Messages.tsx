@@ -1,12 +1,49 @@
+//ts-nocheck
 "use client"
 import CallRecord from "../components/call-record";
-import {useState} from "react";
-
+import {useState, useEffect} from "react";
+import {useTranscriptStore} from "../../lib/storage";
 
 export default function Messages(){
 
     const [newMessage, setNewMessage] = useState("")
     const [messageHistory, setMessageHistory] = useState<string[]>([]);
+    const [callRecords, setCallRecords] = useState<[]>([]);
+    const {transcript, setTranscript} = useTranscriptStore() as { transcript: { [key: string]: any }, setTranscript: (id: { [key: string]: any }) => void };
+
+    async function getCalls(){
+        const url = 'https://api.retellai.com/list-calls';
+    
+        const response = await fetch(`${url}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer 24aefdf4-cb00-4da2-809b-18747c9ff77d`
+            }
+        });
+        return response.json()
+    }
+    useEffect(() => {
+        
+        const getCallsData = async () => {
+            try {
+                const calls = await getCalls();
+                console.log(calls)
+                const specificValues = calls.map((call: { call_id:string, start_timestamp: string, transcript: string[] }) => {
+                    // var reducted_transcript = call.transcript.slice(0, 10)
+                    return {
+                        call_id: call.call_id,
+                        start_timestamp: new Date(call.start_timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                        transcript: call.transcript ? call.transcript.slice(0, 80).concat("...") : ""
+                    };
+                });
+                setCallRecords(specificValues)
+                // Handle the fetched data here
+            } catch (error) {
+                console.error("Error fetching calls:", error);
+            }
+        };
+        getCallsData();
+    }, []);
     
 
     const ask = () => {
@@ -49,14 +86,9 @@ return (
                     </div>
                     <div className="card-body px-0 pb-4 pb-xl-0 pt-1 ">
                       
-                    <CallRecord id={1} caption="Hello, my name is..." topic="Onboarding Call" time="3:01" />
-                    <CallRecord id={2} caption="Hello, my name is..." topic="Attorney" time="3:01" />
-                    <CallRecord id={3} caption="Hello, my name is..." topic="Lender" time="3:01"/>
-                    <CallRecord id={4} caption="Hello, my name is..." topic="Title" time="3:01"/>
-                    <CallRecord id={5} caption="Hello, my name is..." topic="Escrow" time="3:01"/>
-                    <CallRecord id={6} caption="Hello, my name is..." topic="Borrower Details Call" time="3:01"/>
-                    <CallRecord id={7} caption="Hello, my name is..." topic="Borrower Questions Call" time="3:01"/>
-
+                    {callRecords.map(({call_id, start_timestamp, transcript}, index) => (
+                        <CallRecord key={index} call_id={call_id} caption={transcript} topic="Web Call" time={start_timestamp} />
+                    ))}
                     </div>
                   </div>
                 </div>
@@ -67,8 +99,7 @@ return (
      
     <div className="mt-5 w-[1000px]">
         <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }} className="mb-3">
-            <b><h1>Call Log</h1></b>
-            <h2>Onboarding | 3:01 5/21/2023</h2>
+            <b><h1 className="text-xl">Call Log</h1></b>
         </div>
         <div
             // ref={(ref) => setScrollContainerRef(ref)}
@@ -90,7 +121,7 @@ return (
             className="chat-messages scroll-container"
         >
            
-            <div
+            {/* <div
                 style={{
                     margin: "5px",
                     padding: "10px",
@@ -109,13 +140,13 @@ return (
             >
               Hi, I'm here to assist you with your mortgage today. How may I help you?
 
-            </div>
+            </div> */}
             
             
-            {messageHistory.map((message, index) => (
-                index % 2 == 0 ? 
+            {transcript?.map(({role, content}: {role: string, content: string}) => (
+                role == "user" ? 
                 <div
-                key={message}
+                key={content}
                 style={{
                     margin: "5px",
                     padding: "10px",
@@ -132,11 +163,11 @@ return (
                 }}
                 className={`message group`}
             >
-              {message}
+              {content}
 
             </div> :
                 <div
-                key={message}
+                key={content}
                 style={{
                     margin: "5px",
                     padding: "10px",
@@ -153,7 +184,7 @@ return (
                 }}
                 className={`message group`}
             >
-              {message}
+              {content}
 
             </div>
             ))}

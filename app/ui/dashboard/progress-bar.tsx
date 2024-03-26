@@ -21,11 +21,12 @@ export default function ProgressBar(){
         setStep(item);
     };
     return (
+        <div>
 <ol className="mt-5 mb-5 flex items-center w-full text-sm font-medium text-center text-gray-500 dark:text-gray-400 sm:text-base">
     {steps.map((currStep,idx) => {
         return ( <>
         <Link
-            key={currStep.name}
+            key={`${currStep.name}-${idx}`}
             href={currStep.href}>
           
     <li onClick={() => handleItemClick(idx+1)}  key={idx} className={`flex md:w-full items-center ${step === idx+1 ? 'text-green-500' : ''}`}>
@@ -41,7 +42,7 @@ export default function ProgressBar(){
     })
     }
     
-</ol>
+</ol></div>
     )
 }
 

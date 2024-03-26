@@ -1,4 +1,4 @@
-from fastapi import FastAPI, File, UploadFile
+from fastapi import FastAPI, File, UploadFile, HTTPException
 from typing import List
 import os
 import openai 
@@ -15,6 +15,11 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 import time 
 from exa_py import Exa
+import subprocess
+from playwright.async_api import async_playwright
+import traceback
+
+
 
 load_dotenv()
 
@@ -134,26 +139,6 @@ def get_document(name: str):
 #         print(blob.name)
 
 
-@app.post("/webhook/call")
-async def webhookEvent(request: Request):
-    body = await request.json()
-    headers = request.headers
-    webhookMessage = body.get('message','{}')
-    call_id = webhookMessage.get("call",'{}').get("id","")
-
-    response = requests.request("POST", "https://webhook.site/87cc942a-d36a-41a9-8e4f-54fbe24ee601", headers=headers, data=json.dumps({**body}))
-
-    if webhookMessage.get("status","") == "started":
-        # already handled by vapi_call function
-        pass
-
-    # option 2: if "arguments" or "name" in webhookMessage (functions)
-    elif webhookMessage.get("type","") == "function-call":
-        pass
-    # TRANSFER CALL CONTEXT
-    elif webhookMessage.get("type","") == "status-update" and webhookMessage.get("status","") == "forwarding":
-        pass
-    # live call transcript
 
 
 @app.post("/search")
@@ -163,3 +148,28 @@ async def search(query: str):
         num_results=10,
         use_autoprompt=True,
     )
+
+
+@app.get("/fill_form")
+async def fillForm(values:dict):
+    try:
+        async with async_playwright() as p:
+            
+            browser = await p.chromium.launch(headless=False)
+            page = await browser.new_page()
+    
+    
+            await page.goto('https://www.pdffiller.com/jsfiller-desk10/?flat_pdf_quality=low&mode=force_choice&requestHash=c013a9df6495635d0674c4e022e02b57dc4834749021fb7c46b647d53ad8bf7a&lang=en&projectId=1479598876&loader=tips&PAGE_REARRANGE_V2_MVP=true&richTextFormatting=true&isPageRearrangeV2MVP=true&jsf-page-rearrange-v2=true&LATEST_PDFJS=true&jsf-document-scroll-zoom=true&jsf-redesign-full=true&act-notary-pro-integration=false&jsf-pdfjs-fourth=false&routeId=3acfe11e0a862b46a4f25b43cd6ffa76#db7eba37aa224825b88b96cb6e3e19b1');
+        
+            # await page.fill('textarea#fillable-field--1-3', 'Ivory Tang');
+            for (key, value) in values:
+                await page.fill(key, value);
+            
+            await page.waitForTimeout(10000);
+            # Close the browser when done
+            await browser.close()
+
+            
+    except Exception as e:
+        exception_message = traceback.format_exc()  # Get the formatted exception message
+        raise HTTPException(status_code=500, detail=f"An error occurred while executing the Playwright function: {exception_message}")

@@ -10,5 +10,8 @@
   "devDependencies": {
     "@playwright/test": "^1.42.1",
     "@types/node": "^20.11.30"
+  },
+  "dependencies": {
+    "retell-client-js-sdk": "^1.3.2"
   }
 }
