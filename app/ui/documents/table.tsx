@@ -79,7 +79,7 @@ export default function DocumentsTable({
     };
     fetch(`https://app.domusnow.com/upload_document?name=${selectedPdfType}`, requestOptions)
     .then(response => response.text())
-    .then(data => alert(data))
+    .then(data => alert("Successfully Uploaded Document"))
     .then(() => addDocument())
     .catch(error => {
         alert('Upload failed. Please try again.');

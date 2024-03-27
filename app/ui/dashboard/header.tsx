@@ -5,14 +5,8 @@ import Link from 'next/link';
 import Logo from '../acme-logo';
 import { UserIcon, ChevronDownIcon, PhoneIcon } from '@heroicons/react/24/outline';
 import { useState, useEffect } from 'react';
-import Vapi from '@vapi-ai/web';
 import { RetellWebClient } from "retell-client-js-sdk";
 
-declare global {
-    interface Window {
-        vapiSDK: any;
-    }
-}
 interface RegisterCallResponse {
     callId?: string;
     sampleRate: number;

@@ -1,0 +1,8 @@
+table {
+    table-layout: fixed;
+    width: 100%;
+  }
+  
+  th, td {
+    width: 33.33%; /* Divide the width equally among columns */
+  }

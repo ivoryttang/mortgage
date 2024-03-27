@@ -2,7 +2,7 @@
 import {useState} from "react";
 import {CheckIcon, XMarkIcon, ShieldExclamationIcon} from '@heroicons/react/24/outline';
 import "../global.css"
-
+import './reports.css';
 export default function Reports(){
 
    
@@ -13,7 +13,7 @@ return (
         <link rel="stylesheet" media="screen" href="assets/vendor/simplebar/dist/simplebar.min.css" />
         <link rel="stylesheet" media="screen" href="assets/css/theme.min.css" />
         
-        <h1 className="bold mt-5 mb-5">Compliance Check Summary</h1>
+        <h1 className="bold mt-5 mb-10 text-xl">Compliance Check Summary</h1>
     <div className="flex ">
         
         <div className="mr-10 text-lg w-[150px]">

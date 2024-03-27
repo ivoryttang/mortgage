@@ -175,13 +175,7 @@ export async function fetchInvoiceById(id: string) {
 export async function fetchDocuments() {
   try {
     const data = await sql<DocumentField>`
-      SELECT
-        id,
-        name,
-        description, 
-        upload_date,
-        due_date,
-        status
+      SELECT *
       FROM documents
       ORDER BY upload_date DESC
     `;

@@ -1,10 +1,11 @@
-from fastapi import FastAPI, File, UploadFile, HTTPException
+from fastapi import FastAPI, File, UploadFile, HTTPException, Request, WebSocket
 from typing import List
 import os
 import openai 
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import Request
-from fastapi.responses import Response
+from fastapi.responses import Response, JSONResponse, PlainTextResponse
+from fastapi.websockets import WebSocketState, WebSocketDisconnect
 import requests
 import json
 from azure.storage.blob import BlobServiceClient
@@ -19,10 +20,7 @@ from exa_py import Exa
 import subprocess
 from playwright.async_api import async_playwright
 import traceback
-
-
-
-load_dotenv()
+import asyncio
 
 
 #selenium
@@ -185,3 +183,65 @@ async def fillForm(values:dict):
     except Exception as e:
         exception_message = traceback.format_exc()  # Get the formatted exception message
         raise HTTPException(status_code=500, detail=f"An error occurred while executing the Playwright function: {exception_message}")
+    
+
+# remember to import the dummy class you just wrote
+beginSentence = "How may I help you?"
+
+class LlmDummyMock:
+    def __init__(self):
+        pass
+    
+    def draft_begin_messsage(self):
+        return {
+            "response_id": 0,
+            "content": beginSentence,
+            "content_complete": True,
+            "end_call": False,
+        }
+
+    def draft_response(self, request):      
+        yield {
+            "response_id": request['response_id'],
+            "content": "I am sorry, can you say that again?",
+            "content_complete": True,
+            "end_call": False,
+        }
+
+
+@app.websocket("/llm-websocket/{call_id}")
+async def websocket_handler(websocket: WebSocket, call_id: str):
+    await websocket.accept()
+    print(f"Handle llm ws for: {call_id}")
+    
+    llm_client = LlmDummyMock()
+
+    # send first message to signal ready of server
+    response_id = 0
+    first_event = llm_client.draft_begin_messsage()
+    await websocket.send_text(json.dumps(first_event))
+
+    async def stream_response(request):
+        nonlocal response_id
+        for event in llm_client.draft_response(request):
+            await websocket.send_text(json.dumps(event))
+            if request['response_id'] < response_id:
+                return # new response needed, abondon this one
+    try:
+        while True:
+            message = await websocket.receive_text()
+            request = json.loads(message)
+            # print out transcript
+            os.system('cls' if os.name == 'nt' else 'clear')
+            print(json.dumps(request, indent=4))
+            
+            if 'response_id' not in request:
+                continue # no response needed, process live transcript update if needed
+            response_id = request['response_id']
+            asyncio.create_task(stream_response(request))
+    except WebSocketDisconnect:
+        print(f"LLM WebSocket disconnected for {call_id}")
+    except Exception as e:
+        print(f'LLM WebSocket error for {call_id}: {e}')
+    finally:
+        print(f"LLM WebSocket connection closed for {call_id}")
