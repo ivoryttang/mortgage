@@ -32,10 +32,21 @@ export default async function Page() {
         <Card title="Documents" value={numberOfInvoices} type="invoices" />
       </a>
       </div>
-      <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8">
-        <RevenueChart revenue={revenue} />
+      <div className="mt-6 flex">
+        {/* <RevenueChart revenue={revenue} /> */}
         
+        <div className="mr-10 mnd-rates-widget" style={{ width: '500px', height: '340px', fontSize: '12px' }}>
+          <div className="w-header" style={{ textAlign: 'center', padding: '4px 0', backgroundColor: '#31997d', color: '#FFFFFF' }}>
+            <a href="https://www.mortgagenewsdaily.com/mortgage-rates/" target="_blank" style={{ color: '#FFFFFF', textDecoration: 'none' }}>Current Mortgage Rates</a>
+          </div>
+          <iframe src="//widgets.mortgagenewsdaily.com/widget/f/rates?t=large&sn=true&c=31997d&u=&cbu=&w=498&h=290" width="500" height="290" frameBorder="0" scrolling="no" style={{ border: 'solid 1px #31997d', borderWidth: '0 1px', boxSizing: 'border-box', width: '500px', height: '290px', display: 'block' }}></iframe>
+          <div className="w-footer" style={{ textAlign: 'center', padding: '4px 0', backgroundColor: '#31997d', color: '#FFFFFF' }}>
+            View More <a href="https://www.mortgagenewsdaily.com/mortgage-rates" target="_blank" style={{ color: '#FFFFFF', textDecoration: 'none' }}>Interest Rates</a>
+          </div>
+        </div>
         <LatestInvoices latestInvoices={latestInvoices} />
+
+
       </div>
     </main>
   );

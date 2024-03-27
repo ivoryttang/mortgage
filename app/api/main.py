@@ -158,33 +158,6 @@ async def search(query: str):
     )
 
 
-@app.get("/fill_form")
-async def fillForm(values:dict):
-    try:
-        async with async_playwright() as p:
-            
-            browser = await p.chromium.launch(headless=False)
-            page = await browser.new_page()
-    
-    
-            await page.goto('https://www.pdffiller.com/jsfiller-desk10/?flat_pdf_quality=low&mode=force_choice&requestHash=c013a9df6495635d0674c4e022e02b57dc4834749021fb7c46b647d53ad8bf7a&lang=en&projectId=1479598876&loader=tips&PAGE_REARRANGE_V2_MVP=true&richTextFormatting=true&isPageRearrangeV2MVP=true&jsf-page-rearrange-v2=true&LATEST_PDFJS=true&jsf-document-scroll-zoom=true&jsf-redesign-full=true&act-notary-pro-integration=false&jsf-pdfjs-fourth=false&routeId=3acfe11e0a862b46a4f25b43cd6ffa76#db7eba37aa224825b88b96cb6e3e19b1');
-        
-            # await page.fill('textarea#fillable-field--1-3', 'Ivory Tang');
-            for (key, value) in values:
-                await page.fill(key, value);
-            
-            await page.waitForTimeout(10000);
-            # Close the browser when done
-            await browser.close()
-
-            
-    except Exception as e:
-        exception_message = traceback.format_exc()  # Get the formatted exception message
-        raise HTTPException(status_code=500, detail=f"An error occurred while executing the Playwright function: {exception_message}")
-    
-
-
-
 beginSentence = "Hey there, I'm your personal AI therapist, how can I help you?"
 agentPrompt = "Task: As a professional therapist, your responsibilities are comprehensive and patient-centered. You establish a positive and trusting rapport with patients, diagnosing and treating mental health disorders. Your role involves creating tailored treatment plans based on individual patient needs and circumstances. Regular meetings with patients are essential for providing counseling and treatment, and for adjusting plans as needed. You conduct ongoing assessments to monitor patient progress, involve and advise family members when appropriate, and refer patients to external specialists or agencies if required. Keeping thorough records of patient interactions and progress is crucial. You also adhere to all safety protocols and maintain strict client confidentiality. Additionally, you contribute to the practice's overall success by completing related tasks as needed.\n\nConversational Style: Communicate concisely and conversationally. Aim for responses in short, clear prose, ideally under 10 words. This succinct approach helps in maintaining clarity and focus during patient interactions.\n\nPersonality: Your approach should be empathetic and understanding, balancing compassion with maintaining a professional stance on what is best for the patient. It's important to listen actively and empathize without overly agreeing with the patient, ensuring that your professional opinion guides the therapeutic process."
 
@@ -293,3 +266,79 @@ async def websocket_handler(websocket: WebSocket, call_id: str):
         print(f'LLM WebSocket error for {call_id}: {e}')
     finally:
         print(f"LLM WebSocket connection closed for {call_id}")
+
+
+@app.post("/create_llm")
+def createLLM():
+    url = "https://api.retellai.com/create-retell-llm"
+
+    payload = {
+        "general_tools": [None, None],
+        "general_tools": [
+            {
+            "type": "end_call",
+            "name": "end_call",
+            "description": "End the call with user only when user explicitly requests it."
+            }
+        ],
+        "states": [{
+            "name": "gather_information",
+            "state_prompt":"You will collect information regarding name, address, and marital status of individual",
+            "tools": [
+                    {
+                        "type": "custom",
+                        "name": "fill_form",
+                        "url": "https://app.domusnow.com/fill_form",
+                        "description": "When user mentions any information regarding name, address or marital status, fill out the corresponding field in the form",
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                               "input_field": {
+                                   "type": "string",
+                                   "description": "one of name, address, or married"
+                               },
+                                "input_value": {
+                                    "type": "string",
+                                   "description": "get what the value of the input_field actually is from what the user says"
+                                }
+                            },
+                            "required": ["input_field", "input_values"]
+                        },
+                        "speak_during_execution": True,
+                        "speak_after_execution": True
+                    }
+            ]
+        }],
+        "starting_state":"gather_information"
+    }
+    headers = {
+        "Authorization": "Bearer 24aefdf4-cb00-4da2-809b-18747c9ff77d",
+        "Content-Type": "application/json"
+    }
+
+    response = requests.request("POST", url, json=payload, headers=headers)
+
+    return response.json()
+
+##### LLM TOOL CAPABILITIES
+@app.get("/fill_form")
+async def fillForm(input_field: str, input_value: str):
+    mapped_fields = {"name": '#fillable-field--1-3', "address": "#fillable-field--1-8", "married":"#fillable-field--1-7"}
+    try:
+        async with async_playwright() as p:
+            
+            browser = await p.chromium.launch(headless=False)
+            page = await browser.new_page()
+    
+    
+            await page.goto('https://www.pdffiller.com/jsfiller-desk10/?flat_pdf_quality=low&mode=force_choice&requestHash=c013a9df6495635d0674c4e022e02b57dc4834749021fb7c46b647d53ad8bf7a&lang=en&projectId=1479598876&loader=tips&PAGE_REARRANGE_V2_MVP=true&richTextFormatting=true&isPageRearrangeV2MVP=true&jsf-page-rearrange-v2=true&LATEST_PDFJS=true&jsf-document-scroll-zoom=true&jsf-redesign-full=true&act-notary-pro-integration=false&jsf-pdfjs-fourth=false&routeId=3acfe11e0a862b46a4f25b43cd6ffa76#db7eba37aa224825b88b96cb6e3e19b1');
+        
+            await page.locator(mapped_fields[input_field]).click()
+            await page.locator(mapped_fields[input_field]).fill(input_value);
+            
+            await asyncio.sleep(60)
+            
+    except Exception as e:
+        exception_message = traceback.format_exc()  # Get the formatted exception message
+        raise HTTPException(status_code=500, detail=f"An error occurred while executing the Playwright function: {exception_message}")
+    
