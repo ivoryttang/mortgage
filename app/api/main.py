@@ -134,6 +134,27 @@ async def get_document(name: str):
     #     sample_blob.write(download_stream.readall())
 
 
+@app.get("/get_ratesheet")
+async def get_ratesheet(name: str):
+    container_name = 'ratesheets'
+    blob_name = name + ".pdf"
+
+    blob_service_client = BlobServiceClient(account_url=account_url, credential=credentials)
+    container_client = blob_service_client.get_container_client(container=container_name)
+    blob_client = container_client.get_blob_client(blob=blob_name)
+
+    try:
+        download_stream = blob_client.download_blob()
+    except Exception as e:
+        # Handle exceptions, such as BlobNotFound
+        raise HTTPException(status_code=404, detail=f"Ratesheet not found: {name}")
+
+    # Use the generator to create an iterable from the download stream
+    content = download_stream_generator(download_stream)
+
+    return StreamingResponse(content, media_type='application/pdf')
+
+
 # def list_documents():
 #     container_name = 'storagecommoncontainer'
 
@@ -288,7 +309,7 @@ def createLLM():
                     {
                         "type": "custom",
                         "name": "fill_form",
-                        "url": "https://app.domusnow.com/fill_form",
+                        "url": "http://127.0.0.1:8000/fill_form",
                         "description": "When user mentions any information regarding name, address or marital status, fill out the corresponding field in the form",
                         "parameters": {
                             "type": "object",
@@ -321,8 +342,9 @@ def createLLM():
     return response.json()
 
 ##### LLM TOOL CAPABILITIES
-@app.get("/fill_form")
-async def fillForm(input_field: str, input_value: str):
+@app.post("/fill_form")
+async def fillForm(input_value: str):
+    print("called")
     mapped_fields = {"name": '#fillable-field--1-3', "address": "#fillable-field--1-8", "married":"#fillable-field--1-7"}
     try:
         async with async_playwright() as p:
@@ -333,8 +355,8 @@ async def fillForm(input_field: str, input_value: str):
     
             await page.goto('https://www.pdffiller.com/jsfiller-desk10/?flat_pdf_quality=low&mode=force_choice&requestHash=c013a9df6495635d0674c4e022e02b57dc4834749021fb7c46b647d53ad8bf7a&lang=en&projectId=1479598876&loader=tips&PAGE_REARRANGE_V2_MVP=true&richTextFormatting=true&isPageRearrangeV2MVP=true&jsf-page-rearrange-v2=true&LATEST_PDFJS=true&jsf-document-scroll-zoom=true&jsf-redesign-full=true&act-notary-pro-integration=false&jsf-pdfjs-fourth=false&routeId=3acfe11e0a862b46a4f25b43cd6ffa76#db7eba37aa224825b88b96cb6e3e19b1');
         
-            await page.locator(mapped_fields[input_field]).click()
-            await page.locator(mapped_fields[input_field]).fill(input_value);
+            await page.locator(mapped_fields["name"]).click()
+            await page.locator(mapped_fields["name"]).fill(input_value);
             
             await asyncio.sleep(60)
             

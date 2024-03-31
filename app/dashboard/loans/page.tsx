@@ -1,11 +1,14 @@
 import LoanOptions from '@/app/ui/loans/loan-options';
 import {
-  fetchLatestInvoices
+  fetchLatestRatesheets
 } from '@/app/lib/data';
+import clsx from 'clsx';
+import { lusitana } from '@/app/ui/fonts';
 
 export default async function Page() {
-    const latestInvoices = await fetchLatestInvoices();
+    const latestRatesheets = await fetchLatestRatesheets();
     return (
-      <LoanOptions latestInvoices={latestInvoices} />
+      <LoanOptions latestRatesheets={latestRatesheets} />
+      
     )
   }

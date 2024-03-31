@@ -5,9 +5,9 @@ import { lusitana } from '@/app/ui/fonts';
 import { LatestInvoice } from '@/app/lib/definitions';
 
 export default async function LatestInvoices({
-  latestInvoices,
+  latestRatesheets,
 }: {
-  latestInvoices: LatestInvoice[];
+  latestRatesheets: LatestInvoice[];
 }) {
 
   return (
@@ -19,10 +19,10 @@ export default async function LatestInvoices({
         {/* NOTE: comment in this code when you get to this point in the course */}
 
         <div className="bg-white px-6">
-          {latestInvoices.map((invoice, i) => {
+          {latestRatesheets.map((ratesheet, i) => {
             return (
               <div
-                key={invoice.id}
+                key={ratesheet.id}
                 className={clsx(
                   'flex flex-row items-center justify-between py-4',
                   {
@@ -30,28 +30,33 @@ export default async function LatestInvoices({
                   },
                 )}
               >
-                <div className="flex items-center">
+                <div className="flex items-center justify-center">
                   
                   <div className="min-w-0">
                     <p className="truncate text-sm font-semibold md:text-base">
-                      {invoice.lender}
-                    </p>
-                    <p className="hidden text-sm text-gray-500 sm:block">
-                      {invoice.rate}% | {invoice.term} year
+                      {ratesheet.lender}
                     </p>
                   </div>
                 </div>
+                <div className="flex items-center justify-center">
+                <p
+                  className={`${lusitana.className} max-w-[100px] truncate text-sm font-medium md:text-base`}
+                >
+                  {ratesheet.rate}%
+                </p>
+                </div>
+                <div className="flex items-center justify-center">
                 <p
                   className={`${lusitana.className} truncate text-sm font-medium md:text-base`}
                 >
-                  {invoice.amount}
+                  {ratesheet.term} year
                 </p>
+                </div>
               </div>
             );
           })}
         </div>
         <div className="flex items-center pb-2 pt-6">
-          <ArrowPathIcon className="h-5 w-5 text-gray-500" />
           <h3 className="ml-2 text-sm text-gray-500 ">Updated just now</h3>
         </div>
       </a>

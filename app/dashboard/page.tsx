@@ -6,14 +6,14 @@ import CompleteConsultationButton from '@/app/ui/dashboard/onboard';
 import { lusitana } from '@/app/ui/fonts';
 import {
   fetchRevenue,
-  fetchLatestInvoices,
+  fetchLatestRatesheets,
   fetchCardData,
 } from '@/app/lib/data';
 import './page.css';
  
 export default async function Page() {
   const revenue = await fetchRevenue();
-  const latestInvoices = await fetchLatestInvoices();
+  const latestRatesheets = await fetchLatestRatesheets();
   const {
     numberOfInvoices
   } = await fetchCardData();
@@ -44,7 +44,7 @@ export default async function Page() {
             View More <a href="https://www.mortgagenewsdaily.com/mortgage-rates" target="_blank" style={{ color: '#FFFFFF', textDecoration: 'none' }}>Interest Rates</a>
           </div>
         </div>
-        <LatestInvoices latestInvoices={latestInvoices} />
+        <LatestInvoices latestRatesheets={latestRatesheets} />
 
 
       </div>
