@@ -42,8 +42,7 @@ export async function fetchLatestRatesheets() {
     const data = await sql<LatestInvoiceRaw>`
       SELECT *
       FROM ratesheets
-      ORDER BY ratesheets.date DESC
-      LIMIT 5`;
+      ORDER BY ratesheets.date ASC`;
 
     const latestRatesheets = data.rows.map((ratesheet) => ({
       ...ratesheet
@@ -62,27 +61,18 @@ export async function fetchCardData() {
     // how to initialize multiple queries in parallel with JS.
     const invoiceCountPromise = sql`SELECT COUNT(*) FROM ratesheets`;
     const customerCountPromise = sql`SELECT COUNT(*) FROM customers`;
-    const invoiceStatusPromise = sql`SELECT
-         SUM(CASE WHEN status = 'paid' THEN amount ELSE 0 END) AS "paid",
-         SUM(CASE WHEN status = 'pending' THEN amount ELSE 0 END) AS "pending"
-         FROM ratesheets`;
 
     const data = await Promise.all([
       invoiceCountPromise,
-      customerCountPromise,
-      invoiceStatusPromise,
+      customerCountPromise
     ]);
 
     const numberOfInvoices = Number(data[0].rows[0].count ?? '0');
     const numberOfCustomers = Number(data[1].rows[0].count ?? '0');
-    const totalPaidInvoices = formatCurrency(data[2].rows[0].paid ?? '0');
-    const totalPendingInvoices = formatCurrency(data[2].rows[0].pending ?? '0');
 
     return {
       numberOfCustomers,
-      numberOfInvoices,
-      totalPaidInvoices,
-      totalPendingInvoices,
+      numberOfInvoices
     };
   } catch (error) {
     console.error('Database Error:', error);

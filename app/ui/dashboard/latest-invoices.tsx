@@ -13,13 +13,13 @@ export default async function LatestInvoices({
   return (
     <div className="flex w-full flex-col md:col-span-4" >
       <h2 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
-        Loan Options For You
+        Top Loan Options
       </h2>
       <a href='https://www.domusnow.com/dashboard/loans' className="flex grow flex-col justify-between rounded-xl bg-gray-50 p-4">
         {/* NOTE: comment in this code when you get to this point in the course */}
 
         <div className="bg-white px-6">
-          {latestRatesheets.map((ratesheet, i) => {
+          {latestRatesheets.slice(0,5).map((ratesheet, i) => {
             return (
               <div
                 key={ratesheet.id}
@@ -30,22 +30,20 @@ export default async function LatestInvoices({
                   },
                 )}
               >
-                <div className="flex items-center justify-center">
                   
-                  <div className="min-w-0">
+                  <div className="flex w-[250px]">
                     <p className="truncate text-sm font-semibold md:text-base">
                       {ratesheet.lender}
                     </p>
                   </div>
-                </div>
-                <div className="flex items-center justify-center">
+                  <div className="flex w-[50px]">
                 <p
                   className={`${lusitana.className} max-w-[100px] truncate text-sm font-medium md:text-base`}
                 >
                   {ratesheet.rate}%
                 </p>
                 </div>
-                <div className="flex items-center justify-center">
+                <div className="flex w-[50px]">
                 <p
                   className={`${lusitana.className} truncate text-sm font-medium md:text-base`}
                 >

@@ -1,0 +1,54 @@
+.table-container {
+    max-height: 1000px; /* Set a fixed height for the container */
+    overflow-y: auto; /* Enable vertical scrolling */
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    table-layout: fixed;
+}
+  
+th {
+    position: sticky;
+    top: 0;
+    background-color: rgb(211, 211, 211);
+    z-index: 1;
+}
+
+th:nth-last-child(1) {
+    right: 0;
+    border-left: 1px solid black; 
+}
+
+td:nth-last-child(1) {
+    position: sticky;
+    right: 0;
+    background-color: white;
+    border-left: 1px solid black; 
+}
+
+th:first-child {
+    left: 0;
+    border-left: 1px solid black; 
+}
+
+td:first-child {
+    position: sticky;
+    left: 0;
+    background-color: white;
+    border-left: 1px solid black; 
+}
+
+th:nth-child(2) {
+    position: sticky;
+    left: 0;
+    border-right: 1px solid black;
+}
+
+td:nth-child(2) {
+    position: sticky;
+    left: 0;
+    background-color: white;
+    border-right: 1px solid black;
+}
