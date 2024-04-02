@@ -17,7 +17,8 @@ export default async function Page() {
   // const url = await fetchUrl();
   const latestRatesheets = await fetchLatestRatesheets();
   const {
-    numberOfInvoices
+    numberOfDocuments,
+    numberOfRatesheets
   } = await fetchCardData();
   
   
@@ -25,19 +26,20 @@ export default async function Page() {
     <main>
 
       <ProgressBar />
-      <CompleteConsultationButton />
-      <div className="grid mt-10 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="flex"><CompleteConsultationButton /><i className="ml-10 w-[1100px]">The recommendations here are placeholders for now. Please complete your consultation and upload requested documents for your full borrower profile and tailored loan options to show up. In the meantime, feel free to browse the lenders and loan products <a className="text-blue" href="https://www.domusnow.com/dashboard/loans"><u>here</u></a></i></div>
+      <div className="grid mt-10 gap-6 sm:grid-cols-2 lg:grid-cols-4">
         <Card title="Income" value="$120,300" type="collected" />
         <Card title="Credit" value={680} type="pending" />
         <a href="https://www.domusnow.com/dashboard/documents">
-        <Card title="Documents" value={numberOfInvoices} type="invoices" />
+        <Card title="Documents" value={numberOfDocuments} type="invoices" />
       </a>
+      <Card title="Debt-to-Income" value="30%" type="customers" />
       </div>
       <div className="mt-6 flex">
         {/* <RevenueChart revenue={revenue} /> */}
         
-        <div className="mr-10 mnd-rates-widget" style={{ width: '500px', height: '340px', fontSize: '12px' }}>
-          <h1 className="text-xl">Market Rates</h1>
+        <div className="mr-10 mnd-rates-widget" style={{ width: '500px', height: '340px' }}>
+          <h1 className={`${lusitana.className} text-sm font-medium md:text-base mb-10`} style={{fontSize: '26px'}}>Market Rates</h1>
           <div className="w-header" style={{ textAlign: 'center', padding: '4px 0', backgroundColor: '#31997d', color: '#FFFFFF' }}>
             <a href="https://www.mortgagenewsdaily.com/mortgage-rates/" target="_blank" style={{ color: '#FFFFFF', textDecoration: 'none' }}>Current Mortgage Rates</a>
           </div>

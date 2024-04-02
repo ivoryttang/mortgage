@@ -46,20 +46,20 @@ export async function fetchLatestRatesheets() {
 
 export async function fetchCardData() {
   try {
-    const invoiceCountPromise = sql`SELECT COUNT(*) FROM ratesheets`;
-    const customerCountPromise = sql`SELECT COUNT(*) FROM customers`;
+    const ratesheetCountPromise = sql`SELECT COUNT(*) FROM ratesheets`;
+    const documentCountPromise = sql`SELECT COUNT(*) FROM documents`;
 
     const data = await Promise.all([
-      invoiceCountPromise,
-      customerCountPromise
+      ratesheetCountPromise,
+      documentCountPromise
     ]);
 
-    const numberOfInvoices = Number(data[0].rows[0].count ?? '0');
-    const numberOfCustomers = Number(data[1].rows[0].count ?? '0');
+    const numberOfRatesheets = Number(data[0].rows[0].count ?? '0');
+    const numberOfDocuments = Number(data[1].rows[0].count ?? '0');
 
     return {
-      numberOfCustomers,
-      numberOfInvoices
+      numberOfRatesheets,
+      numberOfDocuments
     };
   } catch (error) {
     console.error('Database Error:', error);

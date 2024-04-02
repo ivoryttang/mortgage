@@ -24,7 +24,7 @@ const links = [
   },
   { name: 'Learn', href: '/dashboard/learn', icon: AcademicCapIcon },
   { name: 'Documents', href: '/dashboard/documents', icon: DocumentDuplicateIcon },
-  { name: 'Reports', href: '/dashboard/reports', icon: FlagIcon },
+  { name: 'Reports (admin only)', href: '/dashboard/reports', icon: FlagIcon },
   { name: 'Messages', href: '/dashboard/messages', icon: ChatBubbleLeftEllipsisIcon },
   // { name: 'Settings', href: '/dashboard/settings', icon: Cog8ToothIcon },
 ];

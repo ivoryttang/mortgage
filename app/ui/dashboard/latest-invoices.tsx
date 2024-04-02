@@ -3,17 +3,22 @@ import clsx from 'clsx';
 import Image from 'next/image';
 import { lusitana } from '@/app/ui/fonts';
 import { LatestInvoice } from '@/app/lib/definitions';
+import {
+  fetchCardData,
+} from '@/app/lib/data';
 
 export default async function LatestInvoices({
   latestRatesheets,
 }: {
   latestRatesheets: LatestInvoice[];
 }) {
-
+  const {
+    numberOfRatesheets
+  } = await fetchCardData();
   return (
     <div className="flex w-full flex-col md:col-span-4" >
       <h2 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
-        Top Loan Options
+        Top Loan Options ({numberOfRatesheets})
       </h2>
       <a href='https://www.domusnow.com/dashboard/loans' className="flex grow flex-col justify-between rounded-xl bg-gray-50 p-4">
         {/* NOTE: comment in this code when you get to this point in the course */}
@@ -31,7 +36,7 @@ export default async function LatestInvoices({
                 )}
               >
                   
-                  <div className="flex w-[250px]">
+                  <div className="flex w-[150px]">
                     <p className="truncate text-sm font-semibold md:text-base">
                       {ratesheet.lender}
                     </p>
@@ -43,11 +48,24 @@ export default async function LatestInvoices({
                   {ratesheet.rate}%
                 </p>
                 </div>
-                <div className="flex w-[50px]">
+                <div className="flex w-[150px] wrap">
                 <p
                   className={`${lusitana.className} truncate text-sm font-medium md:text-base`}
                 >
-                  {ratesheet.term} year
+                  {ratesheet.loan_type.map((type, index) => (
+    <div key={index}>
+        {type}{index !== ratesheet.loan_type.length - 1 && ','}
+    </div>
+))}
+                </p>
+                </div>
+                <div className="flex w-[100px]">
+                <p
+                  className={`${lusitana.className} truncate text-sm font-medium md:text-base`}
+                >
+                  {ratesheet.term.map((term, index) => (
+                      <>{term}{index !== ratesheet.term.length - 1 && ','}</> 
+                  ))} year
                 </p>
                 </div>
               </div>
