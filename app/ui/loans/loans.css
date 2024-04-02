@@ -28,7 +28,8 @@ td:nth-last-child(1) {
     border-left: 1px solid black; 
 }
 
-th:first-child {
+/* th:first-child {
+    position: sticky;
     left: 0;
     border-left: 1px solid black; 
 }
@@ -38,7 +39,7 @@ td:first-child {
     left: 0;
     background-color: white;
     border-left: 1px solid black; 
-}
+} */
 
 th:nth-child(2) {
     position: sticky;

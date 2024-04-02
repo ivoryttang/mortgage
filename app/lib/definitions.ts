@@ -36,11 +36,11 @@ export type LatestInvoice = {
   status: boolean;
   lender: string;
   lender_type: string;
-  loan_type: string;
-  term: number;
+  loan_type: string[];
+  term: number[];
   rate: number;
-  upfront: number;
-  amount: number;
+  upfront: number[];
+  amount: number[];
   rating: number;
   time_to_close: number;
   lender_info: string;
@@ -49,7 +49,7 @@ export type LatestInvoice = {
 
 // The database returns a number for amount, but we later format it to a string with the formatCurrency function
 export type LatestInvoiceRaw = Omit<LatestInvoice, 'amount'> & {
-  amount: number;
+  amount: number[];
 };
 
 export type InvoicesTable = {

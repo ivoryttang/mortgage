@@ -5,14 +5,16 @@ import ProgressBar from '@/app/ui/dashboard/progress-bar';
 import CompleteConsultationButton from '@/app/ui/dashboard/onboard';
 import { lusitana } from '@/app/ui/fonts';
 import {
-  fetchRevenue,
+  // fetchRevenue,
+  // fetchUrl,
   fetchLatestRatesheets,
   fetchCardData,
 } from '@/app/lib/data';
 import './page.css';
  
 export default async function Page() {
-  const revenue = await fetchRevenue();
+  // const revenue = await fetchRevenue();
+  // const url = await fetchUrl();
   const latestRatesheets = await fetchLatestRatesheets();
   const {
     numberOfInvoices
@@ -21,7 +23,6 @@ export default async function Page() {
   
   return (
     <main>
-      
 
       <ProgressBar />
       <CompleteConsultationButton />
@@ -36,6 +37,7 @@ export default async function Page() {
         {/* <RevenueChart revenue={revenue} /> */}
         
         <div className="mr-10 mnd-rates-widget" style={{ width: '500px', height: '340px', fontSize: '12px' }}>
+          <h1 className="text-xl">Market Rates</h1>
           <div className="w-header" style={{ textAlign: 'center', padding: '4px 0', backgroundColor: '#31997d', color: '#FFFFFF' }}>
             <a href="https://www.mortgagenewsdaily.com/mortgage-rates/" target="_blank" style={{ color: '#FFFFFF', textDecoration: 'none' }}>Current Mortgage Rates</a>
           </div>

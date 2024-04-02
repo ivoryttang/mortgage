@@ -88,28 +88,44 @@ def click_until_not_found(page, selector):
         except:
             break
 def test_scrape(page: Page):
-    print("began")
     page.goto('https://www.findwholesalelenders.com/lenders-listing-page'); 
    
 
-# Call the function to click on the specified element until it is not found
+    # Call the function to click on the specified element until it is not found
     click_until_not_found(page, '#w-node-eaf110c3-f7de-94ac-265f-00bc579fb277-9270b3eb > div.w-dyn-list > div.w-pagination-wrapper > a.w-pagination-next.next-button')
     elements = page.query_selector_all('.card-job-title-wrapper')
-    specialty = page.query_selector_all(".link-3") # Replace '.your-selector' with the correct selector
+    # specialty = page.query_selector_all(".link-3") # Replace '.your-selector' with the correct selector
     final = []
     for element in elements:
         text = element.inner_text()
         final += [text]
 
-    final2 = []
-    for element in specialty:
-        text = element.inner_text()
-        final2 += [text]
+    # final2 = []
+    # for element in specialty:
+    #     text = element.inner_text()
+    #     final2 += [text]
 
 
     with open('output.txt', 'w') as file:
         for item in final:
             file.write("%s\n" % item)
-        for item in final2:
-            file.write("%s\n" % item)
+        # for item in final2:
+        #     file.write("%s\n" % item)
 
+# def test_url(page: Page):
+#     final = []
+#     with open("output.txt", "r") as file:
+#         for line in file:
+#             transformed = re.sub(r'[^a-zA-Z0-9 ]', '', line).replace(" ", "-").lower()
+#             page.goto('https://www.findwholesalelenders.com/lenders-list/' + transformed)
+
+#             #Select the <a> element using a CSS selector
+#             link_element_wait = page.wait_for_selector('body > div.page-wrapper > div:nth-child(3) > div.container-default.width-tablet > div > div.scenario-form_items.lender-lict > div:nth-child(1) > div.job-post-wrapper.max-width.display-none > div > div > div.card-job-post-content > div.card-job-post-content-top > div > div.div-block-18 > a:nth-child(1)')
+#             link_element = page.query_selector('body > div.page-wrapper > div:nth-child(3) > div.container-default.width-tablet > div > div.scenario-form_items.lender-lict > div:nth-child(1) > div.job-post-wrapper.max-width.display-none > div > div > div.card-job-post-content > div.card-job-post-content-top > div > div.div-block-18 > a:nth-child(1)')
+
+#             # Get the value of the href attribute
+#             href_value = link_element.get_attribute('href')
+#             final += [href_value]
+#     with open('url.txt', 'w') as file:
+#         for item in final:
+#             file.write("%s\n" % item)

@@ -1,3 +1,4 @@
+"use server"
 import { unstable_noStore as noStore } from 'next/cache';
 import { sql,db } from '@vercel/postgres';
 import {
@@ -10,24 +11,13 @@ import {
   Revenue,
 } from './definitions';
 import { formatCurrency } from './utils';
-
-
-
+import * as fs from 'fs';
 
 export async function fetchRevenue() {
-  // Add noStore() here to prevent the response from being cached.
-  // This is equivalent to in fetch(..., {cache: 'no-store'}).
   noStore();
   try {
-    // Artificially delay a response for demo purposes.
-    // Don't do this in production :)
-
-    // console.log('Fetching revenue data...');
-    // await new Promise((resolve) => setTimeout(resolve, 3000));
 
     const data = await sql<Revenue>`SELECT * FROM revenue`;
-
-    // console.log('Data fetch completed after 3 seconds.');
 
     return data.rows;
   } catch (error) {
@@ -56,9 +46,6 @@ export async function fetchLatestRatesheets() {
 
 export async function fetchCardData() {
   try {
-    // You can probably combine these into a single SQL query
-    // However, we are intentionally splitting them to demonstrate
-    // how to initialize multiple queries in parallel with JS.
     const invoiceCountPromise = sql`SELECT COUNT(*) FROM ratesheets`;
     const customerCountPromise = sql`SELECT COUNT(*) FROM customers`;
 
