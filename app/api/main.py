@@ -20,6 +20,9 @@ from exa_py import Exa
 from playwright.async_api import async_playwright
 import traceback
 import asyncio
+#agent
+from crewai_tools import PDFSearchTool
+from crewai import Crew, Process, Agent, Task
 
 #selenium
 # service = Service(executable_path="chromedriver.exe")
@@ -364,3 +367,65 @@ async def fillForm(input_value: str):
         exception_message = traceback.format_exc()  # Get the formatted exception message
         raise HTTPException(status_code=500, detail=f"An error occurred while executing the Playwright function: {exception_message}")
     
+# process all documents in documents folder to extract borrower information
+@app.get("/process_documents")
+async def process_documents():
+    container_name = 'documents'
+    blob_name = "w-2"
+
+    blob_service_client = BlobServiceClient(account_url=account_url, credential=credentials)
+    container_client = blob_service_client.get_container_client(container=container_name)
+    blob_client = container_client.get_blob_client(blob=blob_name)
+
+    try:
+        download_stream = blob_client.download_blob()
+    except Exception as e:
+        # Handle exceptions, such as BlobNotFound
+        raise HTTPException(status_code=404, detail=f"Document not found")
+
+    # Use the generator to create an iterable from the download stream
+    content = download_stream_generator(download_stream)
+
+    return StreamingResponse(content, media_type='application/pdf')
+
+
+@app.post("/agent_rate_analysis")
+async def agent_rate_analysis():
+    # Initialize the tool with a specific PDF path for exclusive search within that document
+    tool = PDFSearchTool(pdf='Rocket Mortgage.pdf')
+    # Define your agents with roles, goals, and tools
+    researcher = Agent(
+    role='Ratesheet Analyzer',
+    goal='Analyze ratesheet to derive keep insights',
+    backstory=(
+        "You are an experience loan officer who understands mortgage terms and can understand rate sheets"
+        "Your expertise lies in providing the correct rate given a borrower's situation."
+        "You have a knack for dissecting complex data many in the form of tables and presenting actionable insights."
+    ),
+    verbose=True,
+    allow_delegation=False,
+    tools=[tool]
+    )
+
+    # Create tasks for your agents
+    task1 = Task(
+    description=(
+        "Find 30 year conventional loan rate with a 15 day lock for a person with a 700 credit score and $100,000 annual income with no debts, looking for a single family home in San Francisco with loan-to-value of 20%."
+    ),
+    expected_output='The rate for the given loan product and borrower.',
+    agent=researcher,
+    human_input=True, # setting the flag on for human input in this task
+    )
+
+    # Instantiate your crew with a sequential process
+    crew = Crew(
+    agents=[researcher],
+    tasks=[task1],
+    verbose=2
+    )
+
+    # Get your crew to work!
+    result = crew.kickoff()
+
+    print("######################")
+    return result

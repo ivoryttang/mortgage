@@ -2,7 +2,8 @@
 "use client"
 import CallRecord from "../components/call-record";
 import {useState, useEffect} from "react";
-import {useTranscriptStore} from "../../lib/storage";
+import {useTranscriptStore, useRecordingStore} from "../../lib/storage";
+import Waveform from "./Waveform";
 
 export default function Messages(){
 
@@ -10,9 +11,12 @@ export default function Messages(){
     const [messageHistory, setMessageHistory] = useState<string[]>([]);
     const [callRecords, setCallRecords] = useState<[]>([]);
     const {transcript, setTranscript} = useTranscriptStore() as { transcript: { [key: string]: any }, setTranscript: (id: { [key: string]: any }) => void };
+    const {recording, setRecording} = useRecordingStore() as { recording: string, setRecording: (id: string) => void };
+
+
 
     async function getCalls(){
-        const url = 'https://api.retellai.com/list-calls';
+        const url = 'https://api.retellai.com/list-calls?agent_id=aea880571942adaecca1af2f509ae5fd&after_start_timestamp=1712105105470';
     
         const response = await fetch(`${url}`, {
             method: 'GET',
@@ -100,6 +104,7 @@ return (
     <div className="mt-5 w-[1000px]">
         <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }} className="mb-3">
             <b><h1 className="text-xl">Call Log</h1></b>
+            {recording != "" ? <Waveform audio={recording}/> : <></>}
         </div>
         <div
             // ref={(ref) => setScrollContainerRef(ref)}

@@ -12,6 +12,7 @@
     "@types/node": "^20.11.30"
   },
   "dependencies": {
-    "retell-client-js-sdk": "^1.3.2"
+    "retell-client-js-sdk": "^1.3.2",
+    "wavesurfer": "^1.3.4"
   }
 }

@@ -1,11 +1,12 @@
 import React from 'react';
 import {useState} from 'react';
-import {useClickedConversationStore, useTranscriptStore} from "../../lib/storage";
+import {useClickedConversationStore, useTranscriptStore, useRecordingStore} from "../../lib/storage";
 
 const CallRecord = ({ call_id, caption, topic, time }: { call_id: string, caption: string, topic: string, time: string }) => {
     const [isHovered, setIsHovered] = useState(false);
   const {clicked, setClicked} = useClickedConversationStore() as { clicked: string, setClicked: (id: string) => void };
   const {transcript, setTranscript} = useTranscriptStore() as { transcript: { [key: string]: any }, setTranscript: (id: { [key: string]: any }) => void };
+  const {recording, setRecording} = useRecordingStore() as { recording: string, setRecording: (id: string) => void };
 
   const handleHover = () => {
     setIsHovered(true);
@@ -21,6 +22,7 @@ const CallRecord = ({ call_id, caption, topic, time }: { call_id: string, captio
         }
     });
     const transcript_obj = await response.json()
+    setRecording(transcript_obj.recording_url)
     setTranscript(transcript_obj.transcript_object)
   };
   return (

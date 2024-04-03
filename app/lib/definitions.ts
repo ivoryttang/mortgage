@@ -34,6 +34,7 @@ export type Revenue = {
 export type LatestInvoice = {
   id: string;
   status: boolean;
+  date: string;
   lender: string;
   lender_type: string;
   loan_type: string[];

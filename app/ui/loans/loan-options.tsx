@@ -61,9 +61,10 @@ export default function LoanOptions({
                 ></iframe>
               </div>
         )}
-        <div className="mt-6">
+        <div className="mt-6 mb-5">
         <Search  placeholder="Search loans..." />
         </div>
+        <i>Once you input your information and we create a borrower profile for you, we'll be able to show you the loan products you're best suited for.</i>
         <div className="table-container">
           <table className="w-full mt-5 border-collapse" style={{ position: 'relative', overflowX: 'auto' }}>
               <thead>
@@ -121,7 +122,7 @@ export default function LoanOptions({
                     <td className="w-[120px]" 
                     onMouseEnter={(e) => (e.target as HTMLElement).style.color = 'blue'} // Change color to blue on hover
                     onMouseLeave={(e) => (e.target as HTMLElement).style.color = 'black'} // Change color back to lightgray on mouse leave
-                    onClick={() => handleOpen(ratesheet.lender)}><u>{ratesheet.lender == 'Provident Funding' || ratesheet.lender == 'EMET' || ratesheet.lender == 'Rocket Mortgage' || ratesheet.lender == 'Preferred Rate'   ? <>View Details</>: <>Coming Soon</>}</u></td>
+                    onClick={() => handleOpen(ratesheet.lender)}><u>{ratesheet.date != null  ? <>View Details</>: <>Coming Soon</>}</u></td>
                   </tr>
                 ))}
               </tbody>

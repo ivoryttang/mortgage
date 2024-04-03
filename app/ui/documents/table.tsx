@@ -151,6 +151,7 @@ export default function DocumentsTable({
   const [showPopup, setShowPopup] = useState(false);
 
   const handleOpen = (document_uploaded:string) => {
+    setSelectedPdfType(document_uploaded)
     var requestOptions = {
         method: 'GET',
         headers: {

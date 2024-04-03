@@ -4,7 +4,7 @@ import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import { RetellWebClient } from "retell-client-js-sdk";
 
 
-const agentId = "7380bb9b192df411387421bd034a8237"
+const agentId = "aea880571942adaecca1af2f509ae5fd"
 interface RegisterCallResponse {
     callId?: string;
     sampleRate: number;

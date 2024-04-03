@@ -15,3 +15,8 @@ export const useTranscriptStore = create((set) => ({
     transcript: [],
     setTranscript: (transcript) => set({ transcript })
 }));
+
+export const useRecordingStore = create((set) => ({
+    recording: "",
+    setRecording: (recording) => set({ recording })
+}));

@@ -4,7 +4,6 @@ uvicorn==0.20.0
 openai~=1.10.0
 supabase
 sendgrid~=6.10.0
-langchain~=0.0.337
 pandas~=2.1.4
 azure-storage-blob
 azure-identity
@@ -16,3 +15,5 @@ playwright
 unstructured
 langchain-openai
 faiss-cpu
+crewai-tools
+crewai

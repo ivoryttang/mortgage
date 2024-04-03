@@ -17,6 +17,9 @@ export default function Page() {
 <br></br>
 GDS: <b>{((( (396+100)*12 + purchasePrice * ((0.0715) * (1 + (0.0715)) ** 0.0715) / (((1 + (0.0715)) ** 30) - 1)))*12/income).toFixed(2)}%</b>
 <br></br>
+
+
+
 <br></br>
 <h5>Calculate your GDS and TDS</h5>
 <br></br>

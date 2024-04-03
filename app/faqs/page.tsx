@@ -1,7 +1,12 @@
 //@ts-nocheck
+"use client"
+import {useState} from "react"
 import Navbar from "../ui/Navbar"
 export default function Page() {
-  
+  const [activeFaq, setActiveFaq] = useState(null);
+  const handleFaqClick = (id) => {
+    setActiveFaq(activeFaq === id ? null : id);
+  };
   const faqData = [
     { id: 1, question: 'Can I get a residential mortgage with Domus?', answer: 'Yes, at Domus, we specialize in getting you the best residential mortgage rates and help you along the way.' },
     { id: 2, question: 'Can I remortgage and borrow more?', answer: 'Yes! You will be able to borrow more than your current balance, subject to meeting our eligibility criteria. Please be aware that in this case, we will only be able to lend up to 75% of the property value.' },
@@ -12,17 +17,24 @@ export default function Page() {
   return (
     <div>
       <nav style={{ marginBottom: '100px' }}><Navbar /></nav>
-    
-      <div className="text-center" style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center',}}>
-        <h2>Frequently Asked Questions</h2>
-        <div className="faq-list">
-          {faqData.map((faq) => (
-            <div key={faq.id} className="faq-item bg-gray items-center" style={{ border: '1px solid #ccc', borderRadius: '5px', padding: '10px', marginLeft:'100px',marginBottom: '10px' ,width:'90%'}}>
-              <h5 className="faq-question">{faq.question}</h5>
-              <p className="faq-answer">{faq.answer}</p>
-            </div>
-          ))}
+      <div className="text-center justify-center item-center w-[1000px]" style={{ marginTop: '20px', margin: '0 auto', justifyContent: 'center' }}>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <h2>FAQs</h2>
         </div>
+        {faqData.map((faq) => (
+          <div key={faq.id} className="faq-item items-center" style={{ borderRadius: '5px', padding: '10px', margin: '10px', width: '90%', boxShadow: '0 2px 4px rgba(0,0,0,0.1)', cursor: 'pointer' }}>
+            <h5 className="faq-question" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              {faq.question}
+              <span onClick={() => handleFaqClick(faq.id)} style={{ color: 'black', cursor: 'pointer' }}>▼</span>
+            
+            </h5>
+            <p className="faq-answer" style={{ display: faq.id === activeFaq ? 'block' : 'none' }}>{faq.answer}</p>
+          
+
+          
+          </div>
+        ))}
+      
       </div>
     </div>
   );
