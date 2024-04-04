@@ -25,6 +25,7 @@ from crewai_tools import PDFSearchTool,SerperDevTool
 from crewai import Crew, Process, Agent, Task
 
 
+
 #selenium
 # service = Service(executable_path="chromedriver.exe")
 # driver = webdriver.Chrome(service=service)
@@ -33,6 +34,8 @@ from crewai import Crew, Process, Agent, Task
 
 # time.sleep(10)
 # driver.quit()
+
+
 
 account_url = "https://mortgageb7d8.blob.core.windows.net/"
 
@@ -391,67 +394,76 @@ async def process_documents():
     return StreamingResponse(content, media_type='application/pdf')
 
 
+
+
+
+
 @app.post("/agent_rate_analysis")
-async def agent_rate_analysis():
+async def agent_rate_analysis(request: Request):
+    response = request.json()
+    crew = Crew()
+    result = crew.run()
     # Define your agents with roles, goals, and tools
-    search_tool = SerperDevTool()
-    researcher = Agent(
-    role='Senior Research Analyst',
-    goal='Uncover cutting-edge developments in AI and data science',
-    backstory=(
-        "You are a Senior Research Analyst at a leading tech think tank."
-        "Your expertise lies in identifying emerging trends and technologies in AI and data science."
-        "You have a knack for dissecting complex data and presenting actionable insights."
-    ),
-    verbose=True,
-    allow_delegation=False,
-    tools=[search_tool]
-    )
-    writer = Agent(
-    role='Tech Content Strategist',
-    goal='Craft compelling content on tech advancements',
-    backstory=(
-        "You are a renowned Tech Content Strategist, known for your insightful and engaging articles on technology and innovation."
-        "With a deep understanding of the tech industry, you transform complex concepts into compelling narratives."
-    ),
-    verbose=True,
-    allow_delegation=True
-    )
+    # search_tool = SerperDevTool()
+    # researcher = Agent(
+    # role='Senior Research Analyst',
+    # goal='Uncover cutting-edge developments in AI and data science',
+    # backstory=(
+    #     "You are a Senior Research Analyst at a leading tech think tank."
+    #     "Your expertise lies in identifying emerging trends and technologies in AI and data science."
+    #     "You have a knack for dissecting complex data and presenting actionable insights."
+    # ),
+    # verbose=True,
+    # allow_delegation=False,
+    # tools=[search_tool]
+    # )
+    # writer = Agent(
+    # role='Tech Content Strategist',
+    # goal='Craft compelling content on tech advancements',
+    # backstory=(
+    #     "You are a renowned Tech Content Strategist, known for your insightful and engaging articles on technology and innovation."
+    #     "With a deep understanding of the tech industry, you transform complex concepts into compelling narratives."
+    # ),
+    # verbose=True,
+    # allow_delegation=True
+    # )
 
-    # Create tasks for your agents
-    task1 = Task(
-    description=(
-        "Conduct a comprehensive analysis of the latest advancements in AI in 2024."
-        "Identify key trends, breakthrough technologies, and potential industry impacts."
-        "Compile your findings in a detailed report."
-        "Make sure to check with a human if the draft is good before finalizing your answer."
-    ),
-    expected_output='A comprehensive full report on the latest AI advancements in 2024, leave nothing out',
-    agent=researcher,
-    human_input=True, # setting the flag on for human input in this task
-    )
+    # # Create tasks for your agents
+    # task1 = Task(
+    # description=(
+    #     "Conduct a comprehensive analysis of the latest advancements in AI in 2024."
+    #     "Identify key trends, breakthrough technologies, and potential industry impacts."
+    #     "Compile your findings in a detailed report."
+    #     "Make sure to check with a human if the draft is good before finalizing your answer."
+    # ),
+    # expected_output='A comprehensive full report on the latest AI advancements in 2024, leave nothing out',
+    # agent=researcher,
+    # human_input=True, # setting the flag on for human input in this task
+    # )
 
-    task2 = Task(
-    description=(
-        "Using the insights from the researcher's report, develop an engaging blog post that highlights the most significant AI advancements."
-        "Your post should be informative yet accessible, catering to a tech-savvy audience."
-        "Aim for a narrative that captures the essence of these breakthroughs and their implications for the future."
-    ),
-    expected_output='A compelling 3 paragraphs blog post formatted as markdown about the latest AI advancements in 2024',
-    agent=writer
-    )
+    # task2 = Task(
+    # description=(
+    #     "Using the insights from the researcher's report, develop an engaging blog post that highlights the most significant AI advancements."
+    #     "Your post should be informative yet accessible, catering to a tech-savvy audience."
+    #     "Aim for a narrative that captures the essence of these breakthroughs and their implications for the future."
+    # ),
+    # expected_output='A compelling 3 paragraphs blog post formatted as markdown about the latest AI advancements in 2024',
+    # agent=writer
+    # )
 
-    # Instantiate your crew with a sequential process
-    crew = Crew(
-    agents=[researcher, writer],
-    tasks=[task1, task2],
-    verbose=2
-    )
+    # # Instantiate your crew with a sequential process
+    # crew = Crew(
+    # agents=[researcher, writer],
+    # tasks=[task1, task2],
+    # verbose=2
+    # )
 
-    # Get your crew to work!
-    result = crew.kickoff()
+    # # Get your crew to work!
+    # result = crew.kickoff()
 
-    return result
+    # return result
+
+
     # # Initialize the tool with a specific PDF path for exclusive search within that document
     # tool = PDFSearchTool(pdf='https://drive.google.com/file/d/1LjuJ44K_OCZaGoo_eWxCE0eoiC3yqHKe/view')
     # # Define your agents with roles, goals, and tools
@@ -491,3 +503,5 @@ async def agent_rate_analysis():
 
     # print("######################")
     # return result
+
+
