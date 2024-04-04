@@ -15,5 +15,3 @@ playwright
 unstructured
 langchain-openai
 faiss-cpu
-crewai-tools
-crewai

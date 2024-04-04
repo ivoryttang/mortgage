@@ -1,5 +1,5 @@
 # Choose our version of Python
-FROM python:3.9
+FROM python:3.10
 
 # Set up a working directory
 WORKDIR /code
@@ -9,7 +9,9 @@ COPY ./api/requirements.txt /code/requirements.txt
 
 # Install the dependencies from the requirements file
 RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
-RUN pip install crewai-tools
+RUN pip install 'crewai[tools]'
+RUN pip install crewai-tools==0.0.15
+RUN pip install crewai[tools]
 
 # Copy the code into the working directory
 COPY ./api /code/api
