@@ -1,7 +1,7 @@
-from crewai_tools import ScrapeWebsiteTool
+# from crewai_tools import ScrapeWebsiteTool
 
 # To enable scrapping any website it finds during it's execution
-tool = ScrapeWebsiteTool()
+# tool = ScrapeWebsiteTool()
 
 import json
 
@@ -16,10 +16,11 @@ class BrowserTools():
   @tool("Scrape website content")
   def scrape_and_summarize_website(website):
     """Useful to scrape and summarize a website content"""
-    tool = ScrapeWebsiteTool(website_url=website)
+    # tool = ScrapeWebsiteTool(website_url=website)
 
     # Extract the text from the site
-    text = tool.run()
+    # text = tool.run()
+    text = ""
     content = [text[i:i + 8000] for i in range(0, len(text), 8000)]
     summaries = []
     for chunk in content:

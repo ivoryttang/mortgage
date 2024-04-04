@@ -3,7 +3,7 @@ from textwrap import dedent
 from datetime import date
 
 
-class TripTasks():
+class Tasks():
 
     def identify_task(self, agent, origin, cities, interests, range):
         return Task(description=dedent(f"""
@@ -81,6 +81,3 @@ class TripTasks():
           """),
             expected_output="A complete 7-day travel plan, formatted as markdown, with a daily schedule and budget.",
             agent=agent)
-
-    def __tip_section(self):
-        return "If you do your BEST WORK, I'll tip you $100 and grant you any wish you want!"

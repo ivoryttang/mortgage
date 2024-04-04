@@ -14,7 +14,6 @@ export default function Messages(){
     const {recording, setRecording} = useRecordingStore() as { recording: string, setRecording: (id: string) => void };
 
 
-
     async function getCalls(){
         const url = 'https://api.retellai.com/list-calls?agent_id=aea880571942adaecca1af2f509ae5fd&after_start_timestamp=1712105105470';
     

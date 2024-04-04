@@ -5,7 +5,9 @@ from langchain_community.llms import OpenAI
 from tools.browser_tools import BrowserTools
 from tools.calculator_tools import CalculatorTools
 from tools.search_tools import SearchTools
+import openai
 
+openai.api_key = "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"
 
 def streamlit_callback(step_output):
     # This function will be called after each step of the agent's execution
@@ -46,13 +48,13 @@ def streamlit_callback(step_output):
             st.markdown(step)
 
 
-class TripAgents():
+class Agents():
 
-    def city_selection_agent(self):
+    def borrower_profile_analyzer(self):
         return Agent(
-            role='City Selection Expert',
-            goal='Select the best city based on weather, season, and prices',
-            backstory='An expert in analyzing travel data to pick ideal destinations',
+            role='Loan officer',
+            goal='Gather Borrower information and summarize important points',
+            backstory='An expert in analyzing borrower information to help assess loan qualification',
             tools=[
                 SearchTools.search_internet,
                 BrowserTools.scrape_and_summarize_website,
@@ -61,27 +63,39 @@ class TripAgents():
             step_callback=streamlit_callback,
         )
 
-    def local_expert(self):
+    def ratesheet_expert(self):
         return Agent(
-            role='Local Expert at this city',
-            goal='Provide the BEST insights about the selected city',
-            backstory="""A knowledgeable local guide with extensive information
-        about the city, it's attractions and customs""",
+            role='Ratesheet Expert',
+            goal='Understand complex ratesheets to find best rates for borrower',
+            backstory="""A knowledgeable loan processor who knows how to understand ratesheets and find rates that make sense for each borrower""",
             tools=[
                 SearchTools.search_internet,
-                BrowserTools.scrape_and_summarize_website,
+                BrowserTools.scrape_and_summarize_website
+                # ratesheet analyzer tool
             ],
             verbose=True,
             step_callback=streamlit_callback,
         )
 
-    def travel_concierge(self):
+    def loan_processor(self):
         return Agent(
-            role='Amazing Travel Concierge',
-            goal="""Create the most amazing travel itineraries with budget and 
-        packing suggestions for the city""",
-            backstory="""Specialist in travel planning and logistics with 
-        decades of experience""",
+            role='Loan Processor',
+            goal="""Calculate the rate and terms and conditions for the loan product suited for this borrower""",
+            backstory="""Specialist in taking ratesheet and borrower information and making a loan assessment""",
+            tools=[
+                SearchTools.search_internet,
+                BrowserTools.scrape_and_summarize_website,
+                CalculatorTools.calculate,
+            ],
+            verbose=True,
+            step_callback=streamlit_callback,
+        )
+    
+    def loan_advisor(self):
+        return Agent(
+            role='Loan Advisor',
+            goal="""Explain the loan decision to the borrower, including and caveats and specific terms.""",
+            backstory="""Specialized in giving relevant loan advice and summarizing loan processing results to the borrower.""",
             tools=[
                 SearchTools.search_internet,
                 BrowserTools.scrape_and_summarize_website,

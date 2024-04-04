@@ -14,6 +14,7 @@ RUN pip install crewai-tools==0.0.15
 RUN pip install crewai[tools]
 
 # Copy the code into the working directory
+
 COPY ./api /code/api
 
 # Tell uvicorn to start spin up our code, which will be running inside the container now

@@ -394,15 +394,9 @@ async def process_documents():
     return StreamingResponse(content, media_type='application/pdf')
 
 
-
-
-
-
 @app.post("/agent_rate_analysis")
 async def agent_rate_analysis(request: Request):
-    response = request.json()
-    crew = Crew()
-    result = crew.run()
+    pass
     # Define your agents with roles, goals, and tools
     # search_tool = SerperDevTool()
     # researcher = Agent(
