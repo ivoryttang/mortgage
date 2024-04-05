@@ -5,6 +5,7 @@ from langchain_community.llms import OpenAI
 from tools.browser_tools import BrowserTools
 from tools.calculator_tools import CalculatorTools
 from tools.search_tools import SearchTools
+from tools.ratesheet_tools import RatesheetTools
 import openai
 
 openai.api_key = "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"
@@ -69,9 +70,13 @@ class Agents():
             goal='Understand complex ratesheets to find best rates for borrower',
             backstory="""A knowledgeable loan processor who knows how to understand ratesheets and find rates that make sense for each borrower""",
             tools=[
-                SearchTools.search_internet,
-                BrowserTools.scrape_and_summarize_website
-                # ratesheet analyzer tool
+                RatesheetTools.scrape_and_summarize_EMET_ratesheet,
+                RatesheetTools.scrape_and_summarize_provident_funding_ratesheet,
+                RatesheetTools.scrape_and_summarize_NMSI_ratesheet,
+                RatesheetTools.scrape_and_summarize_pacific_bay_ratesheet,
+                RatesheetTools.scrape_and_summarize_preferred_rate_ratesheet,
+                RatesheetTools.scrape_and_summarize_rocket_mortgage_ratesheet,
+                RatesheetTools.scrape_and_summarize_PRMG_ratesheet
             ],
             verbose=True,
             step_callback=streamlit_callback,

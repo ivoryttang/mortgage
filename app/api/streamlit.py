@@ -19,7 +19,7 @@ def icon(emoji: str):
     )
 
 
-class Crew:
+class LoanCrew:
 
     def __init__(self, borrower_profile, ratesheets, date_range, background):
         self.borrower_profile = borrower_profile
@@ -40,37 +40,45 @@ class Crew:
         identify_task = tasks.identify_task(
             borrower_profile_analyzer,
             self.borrower_profile,
-            self.ratesheets,
             self.background,
             self.date_range
         )
 
-        gather_task = tasks.gather_task(
+        gather_task_0 = tasks.gather_task_0(
             ratesheet_expert,
-            self.ratesheets,
-            self.borrower_profile,
-            self.date_range
+            self.borrower_profile, 
+            self.background, 
+            self.date_range, 
+            self.ratesheets
+        )
+        gather_task_1 = tasks.gather_task_1(
+            ratesheet_expert,
+            self.borrower_profile, 
+            self.background, 
+            self.date_range, 
+            self.ratesheets
+        )
+        gather_task_2 = tasks.gather_task_2(
+            ratesheet_expert,
+            self.borrower_profile, 
+            self.background, 
+            self.date_range, 
+            self.ratesheets
         )
 
         plan_task = tasks.plan_task(
             loan_processor,
-            self.ratesheets,
-            self.borrower_profile,
-            self.date_range
-        )
-
-        plan_task = tasks.plan_task(
-            loan_advisor,
-            self.ratesheets,
-            self.borrower_profile,
-            self.date_range
+            self.borrower_profile, 
+            self.background, 
+            self.date_range, 
+            self.ratesheets
         )
 
         crew = Crew(
             agents=[
                 borrower_profile_analyzer, ratesheet_expert, loan_processor, loan_advisor
             ],
-            tasks=[identify_task, gather_task, plan_task],
+            tasks=[identify_task, gather_task_0, gather_task_1, gather_task_2, plan_task],
             verbose=True
         )
 
@@ -97,17 +105,15 @@ if __name__ == "__main__":
     )
     transcript = retell_client.call.list()[0].transcript
     # get documents
-    
+
     # get ratesheets
 
     with st.sidebar:
         st.header("👇 Confirm your details")
         st.markdown("We will use your consultation notes and uploaded documents to generate your loan recommendation.")
         with st.form("my_form"):
-            credit_score = st.text_input(
-                "What's your credit score?", placeholder="700")
-            income = st.text_input(
-                "What's your annual income?", placeholder="150000")
+            borrower_profile = ""
+            ratesheets = ["Rocket Mortgage", "EMET", "NMSI", "Pacific Bay", "Preferred Rate", "PRMG", "Provident Funding"]
             date_range = st.date_input(
                 "When do you need your loan by?",
                 min_value=today,
@@ -115,7 +121,7 @@ if __name__ == "__main__":
                 format="MM/DD/YYYY",
             )
             background = st.text_area("High level description of your financial situation and goals?",
-                                     placeholder=transcript)
+                                     placeholder=transcript, height=400)
             if background == "":
                 background = transcript
             
@@ -126,13 +132,13 @@ if __name__ == "__main__":
         st.divider()
 
 
-        if submitted:
-            with st.status("🤖 **Agents at work...**", state="running", expanded=True) as status:
-                with st.container(height=500, border=False):
-                    crew = Crew(credit_score, income, date_range, background)
-                    result = crew.run()
-                status.update(label="✅ Mortgage Plan Ready!",
-                            state="complete", expanded=False)
+    if submitted:
+        with st.status("🤖 **Agents at work...**", state="running", expanded=True) as status:
+            with st.container(height=500, border=False):
+                crew = LoanCrew(borrower_profile, ratesheets, date_range, background)
+                result = crew.run()
+            status.update(label="✅ Mortgage Plan Ready!",
+                        state="complete", expanded=False)
 
-            st.subheader("Here is your loan recommendation", anchor=False, divider="rainbow")
-            st.markdown(result)
+        st.subheader("Here is your loan recommendation", anchor=False, divider="rainbow")
+        st.markdown(result)

@@ -5,79 +5,105 @@ from datetime import date
 
 class Tasks():
 
-    def identify_task(self, agent, origin, cities, interests, range):
+    def identify_task(self, agent, borrower_profile, background, date_range):
         return Task(description=dedent(f"""
-            Analyze and select the best city for the trip based
-            on specific criteria such as weather patterns, seasonal
-            events, and travel costs. This task involves comparing
-            multiple cities, considering factors like current weather
-            conditions, upcoming cultural or seasonal events, and
-            overall travel expenses.
+            Analyze and select the information provided by the borrower. 
 
             Your final answer must be a detailed
-            report on the chosen city, and everything you found out
-            about it, including the actual flight costs, weather
-            forecast and attractions.
+            report on the borrower and everything you found out
+            about them, including their personal information (name, marital status, social security number, date of birth, dependents), financial information
+            (income, bank statements, employment history, investment accounts, debts, credit report and score, monthly expenses), property information (property type and details, current property ownership),
+            additional document information (Down Payment: Source of the down payment, including savings, gifts, or grants, and documentation proving the source.
+            Proof of , homeowners Insurance: To ensure the property will be insured, identification: Government-issued ID (driver's license or passport) for identity verification,
+            Rental History: Rental payment history and landlord contact information, if applicable. Explanation Letters: For any anomalies in credit history, employment gaps, or income variances),
+            Special Situations: (Self-Employment Documentation,
+            Divorce Decrees: If applicable, to verify alimony or child support obligations or income.
+            Bankruptcy or Foreclosure Documentation)
             {self.__tip_section()}
 
-            Traveling from: {origin}
-            City Options: {cities}
-            Trip Date: {range}
-            Traveler Interests: {interests}
+            Borrower documents provided: {borrower_profile}
+            Loan Secured Date (determine lock number of days): {date_range}
+            Borrower information: {background}
           """),
-            expected_output="A detailed report on the chosen city with flight costs, weather forecast, and attractions.",
+            expected_output="A detailed report on the borrower with financial situation and goals outlined.",
             agent=agent)
 
-    def gather_task(self, agent, origin, interests, range):
+    def gather_task_0(self, agent, borrower_profile, background, date_range, ratesheets):
         return Task(description=dedent(f"""
-            As a local expert on this city you must compile an
-            in-depth guide for someone traveling there and wanting
-            to have THE BEST trip ever!
-            Gather information about  key attractions, local customs,
-            special events, and daily activity recommendations.
-            Find the best spots to go to, the kind of place only a
-            local would know.
-            This guide should provide a thorough overview of what
-            the city has to offer, including hidden gems, cultural
-            hotspots, must-visit landmarks, weather forecasts, and
-            high level costs.
+            Gather information from each of the ratesheets to determine the rate the borrower would get.
+            Gather information about loan product that fits the borrower, the base rate, any adjustments, and any terms and conditions.
+            Then provide a thorough overview of what
+            the best ratesheet for this borrower is amongst all the ratesheets you have analyzed.
 
-            The final answer must be a comprehensive city guide,
-            rich in cultural insights and practical tips,
-            tailored to enhance the travel experience.
+            The final answer include a summary of the loan product information on all the ratesheets that is relevant for this borrower.
             {self.__tip_section()}
 
-            Trip Date: {range}
-            Traveling from: {origin}
-            Traveler Interests: {interests}
+            Borrower documents provided: {borrower_profile}
+            Loan Secured Date (determine lock number of days): {date_range}
+            Borrower information: {background}
+            Ratesheets: {ratesheets[0]}
           """),
-            expected_output="A comprehensive city guide with cultural insights and practical tips.",
+            expected_output="A comprehensive summary of the different ratesheets and relevant information to the borrower.",
             agent=agent)
-
-    def plan_task(self, agent, origin, interests, range):
+    def gather_task_1(self, agent, borrower_profile, background, date_range, ratesheets):
         return Task(description=dedent(f"""
-            Expand this guide into a a full 7-day travel
-            itinerary with detailed per-day plans, including
-            weather forecasts, places to eat, packing suggestions,
-            and a budget breakdown.
+            Gather information from each of the ratesheets to determine the rate the borrower would get.
+            Gather information about loan product that fits the borrower, the base rate, any adjustments, and any terms and conditions.
+            Then provide a thorough overview of what
+            the best ratesheet for this borrower is amongst all the ratesheets you have analyzed.
 
-            You MUST suggest actual places to visit, actual hotels
-            to stay and actual restaurants to go to.
+            The final answer include a summary of the loan product information on all the ratesheets that is relevant for this borrower.
+            {self.__tip_section()}
 
-            This itinerary should cover all aspects of the trip,
-            from arrival to departure, integrating the city guide
-            information with practical travel logistics.
-
-            Your final answer MUST be a complete expanded travel plan,
-            formatted as markdown, encompassing a daily schedule,
-            anticipated weather conditions, recommended clothing and
-            items to pack, and a detailed budget, ensuring THE BEST
-            TRIP EVER, Be specific and give it a reason why you picked
-            # up each place, what make them special! {self.__tip_section()}
-
-            Trip Date: {range}
-            Traveling from: {origin}
-            Traveler Interests: {interests}
+            Borrower documents provided: {borrower_profile}
+            Loan Secured Date (determine lock number of days): {date_range}
+            Borrower information: {background}
+            Ratesheets: {ratesheets[1]}
           """),
-            expected_output="A complete 7-day travel plan, formatted as markdown, with a daily schedule and budget.",
+            expected_output="A comprehensive summary of the different ratesheets and relevant information to the borrower.",
             agent=agent)
+    def gather_task_2(self, agent, borrower_profile, background, date_range, ratesheets):
+        return Task(description=dedent(f"""
+            Gather information from each of the ratesheets to determine the rate the borrower would get.
+            Gather information about loan product that fits the borrower, the base rate, any adjustments, and any terms and conditions.
+            Then provide a thorough overview of what
+            the best ratesheet for this borrower is amongst all the ratesheets you have analyzed.
+
+            The final answer include a summary of the loan product information on all the ratesheets that is relevant for this borrower.
+            {self.__tip_section()}
+
+            Borrower documents provided: {borrower_profile}
+            Loan Secured Date (determine lock number of days): {date_range}
+            Borrower information: {background}
+            Ratesheets: {ratesheets[2]}
+          """),
+            expected_output="A comprehensive summary of the different ratesheets and relevant information to the borrower.",
+            agent=agent)
+
+    def plan_task(self, agent, borrower_profile, background, date_range, ratesheets):
+        return Task(description=dedent(f"""
+            Provide a plan of the loan a borrower should apply for and detail any
+            things they must look out for. 
+
+            You MUST suggest actual rates that exist in the ratesheets.
+
+            This loan advice should cover all aspects of the loan,
+            including lender, base rate, any adjustments to the rate, points, lock days and price.
+
+            Your final answer MUST be a complete mortgage loan recommendation,
+            formatted as markdown, encompassing a rate quote,
+            anticipated adjustments, lender summary, and any unclear terms and conditions include on the rate sheet, ensuring THE BEST
+            LOAN EVER THAT WILL LIKELY GET APPROVED, Be specific and give it a reason why you picked
+            each loan option, what makes them special and unique to the borrower! 
+            {self.__tip_section()}
+
+            Borrower documents provided: {borrower_profile}
+            Loan Secured Date (determine lock number of days): {date_range}
+            Borrower information: {background}
+            Ratesheets: {ratesheets}
+          """),
+            expected_output="A complete mortgage plan, similar to what a loan advisor would provide including likelihood of loan getting approved and how borrower might improve their chances.",
+            agent=agent)
+    
+    def __tip_section(self):
+       pass
