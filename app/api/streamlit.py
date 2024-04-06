@@ -37,28 +37,56 @@ class LoanCrew:
         loan_processor = agents.loan_processor()
         loan_advisor = agents.loan_advisor()
 
-        identify_task = tasks.identify_task(
+        identify_borrower = tasks.identify_borrower(
             borrower_profile_analyzer,
             self.borrower_profile,
             self.background,
             self.date_range
         )
 
-        gather_task_0 = tasks.gather_task_0(
+        gather_ratesheet_0 = tasks.gather_ratesheet_0(
             ratesheet_expert,
             self.borrower_profile, 
             self.background, 
             self.date_range, 
             self.ratesheets
         )
-        gather_task_1 = tasks.gather_task_1(
+        gather_ratesheet_1 = tasks.gather_ratesheet_1(
             ratesheet_expert,
             self.borrower_profile, 
             self.background, 
             self.date_range, 
             self.ratesheets
         )
-        gather_task_2 = tasks.gather_task_2(
+        gather_ratesheet_2 = tasks.gather_ratesheet_2(
+            ratesheet_expert,
+            self.borrower_profile, 
+            self.background, 
+            self.date_range, 
+            self.ratesheets
+        )
+        gather_ratesheet_3 = tasks.gather_ratesheet_3(
+            ratesheet_expert,
+            self.borrower_profile, 
+            self.background, 
+            self.date_range, 
+            self.ratesheets
+        )
+        gather_ratesheet_4 = tasks.gather_ratesheet_4(
+            ratesheet_expert,
+            self.borrower_profile, 
+            self.background, 
+            self.date_range, 
+            self.ratesheets
+        )
+        gather_ratesheet_5 = tasks.gather_ratesheet_5(
+            ratesheet_expert,
+            self.borrower_profile, 
+            self.background, 
+            self.date_range, 
+            self.ratesheets
+        )
+        gather_ratesheet_6 = tasks.gather_ratesheet_6(
             ratesheet_expert,
             self.borrower_profile, 
             self.background, 
@@ -78,7 +106,7 @@ class LoanCrew:
             agents=[
                 borrower_profile_analyzer, ratesheet_expert, loan_processor, loan_advisor
             ],
-            tasks=[identify_task, gather_task_0, gather_task_1, gather_task_2, plan_task],
+            tasks=[identify_borrower, gather_ratesheet_0, gather_ratesheet_1, gather_ratesheet_2, gather_ratesheet_3, gather_ratesheet_4, gather_ratesheet_5, gather_ratesheet_6, plan_task],
             verbose=True
         )
 

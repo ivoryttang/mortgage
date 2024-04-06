@@ -5,7 +5,7 @@ from datetime import date
 
 class Tasks():
 
-    def identify_task(self, agent, borrower_profile, background, date_range):
+    def identify_borrower(self, agent, borrower_profile, background, date_range):
         return Task(description=dedent(f"""
             Analyze and select the information provided by the borrower. 
 
@@ -28,56 +28,103 @@ class Tasks():
             expected_output="A detailed report on the borrower with financial situation and goals outlined.",
             agent=agent)
 
-    def gather_task_0(self, agent, borrower_profile, background, date_range, ratesheets):
+    def gather_ratesheet_0(self, agent, borrower_profile, background, date_range, ratesheets):
         return Task(description=dedent(f"""
-            Gather information from each of the ratesheets to determine the rate the borrower would get.
+            Gather information from the ratesheet {ratesheets[0]} to determine the rate the borrower would get.
             Gather information about loan product that fits the borrower, the base rate, any adjustments, and any terms and conditions.
-            Then provide a thorough overview of what
-            the best ratesheet for this borrower is amongst all the ratesheets you have analyzed.
-
-            The final answer include a summary of the loan product information on all the ratesheets that is relevant for this borrower.
+            
+            The final answer include a summary of the loan product that is relevant for this borrower.
             {self.__tip_section()}
 
             Borrower documents provided: {borrower_profile}
             Loan Secured Date (determine lock number of days): {date_range}
             Borrower information: {background}
-            Ratesheets: {ratesheets[0]}
           """),
-            expected_output="A comprehensive summary of the different ratesheets and relevant information to the borrower.",
+            expected_output="A brief summary of the ratesheet and relevant information to the borrower.",
             agent=agent)
-    def gather_task_1(self, agent, borrower_profile, background, date_range, ratesheets):
+    def gather_ratesheet_1(self, agent, borrower_profile, background, date_range, ratesheets):
         return Task(description=dedent(f"""
-            Gather information from each of the ratesheets to determine the rate the borrower would get.
+            Gather information from the ratesheet {ratesheets[1]} to determine the rate the borrower would get.
             Gather information about loan product that fits the borrower, the base rate, any adjustments, and any terms and conditions.
-            Then provide a thorough overview of what
-            the best ratesheet for this borrower is amongst all the ratesheets you have analyzed.
-
-            The final answer include a summary of the loan product information on all the ratesheets that is relevant for this borrower.
+            
+            The final answer include a summary of the loan product that is relevant for this borrower.
             {self.__tip_section()}
 
             Borrower documents provided: {borrower_profile}
             Loan Secured Date (determine lock number of days): {date_range}
             Borrower information: {background}
-            Ratesheets: {ratesheets[1]}
           """),
-            expected_output="A comprehensive summary of the different ratesheets and relevant information to the borrower.",
+            expected_output="A brief summary of the ratesheet and relevant information to the borrower.",
             agent=agent)
-    def gather_task_2(self, agent, borrower_profile, background, date_range, ratesheets):
+    def gather_ratesheet_2(self, agent, borrower_profile, background, date_range, ratesheets):
         return Task(description=dedent(f"""
-            Gather information from each of the ratesheets to determine the rate the borrower would get.
+            Gather information from the ratesheet {ratesheets[2]} to determine the rate the borrower would get.
             Gather information about loan product that fits the borrower, the base rate, any adjustments, and any terms and conditions.
-            Then provide a thorough overview of what
-            the best ratesheet for this borrower is amongst all the ratesheets you have analyzed.
-
-            The final answer include a summary of the loan product information on all the ratesheets that is relevant for this borrower.
+            
+            The final answer include a summary of the loan product that is relevant for this borrower.
             {self.__tip_section()}
 
             Borrower documents provided: {borrower_profile}
             Loan Secured Date (determine lock number of days): {date_range}
             Borrower information: {background}
-            Ratesheets: {ratesheets[2]}
           """),
-            expected_output="A comprehensive summary of the different ratesheets and relevant information to the borrower.",
+            expected_output="A brief summary of the ratesheet and relevant information to the borrower.",
+            agent=agent)
+    def gather_ratesheet_3(self, agent, borrower_profile, background, date_range, ratesheets):
+        return Task(description=dedent(f"""
+            Gather information from the ratesheet {ratesheets[3]} to determine the rate the borrower would get.
+            Gather information about loan product that fits the borrower, the base rate, any adjustments, and any terms and conditions.
+            
+            The final answer include a summary of the loan product that is relevant for this borrower.
+            {self.__tip_section()}
+
+            Borrower documents provided: {borrower_profile}
+            Loan Secured Date (determine lock number of days): {date_range}
+            Borrower information: {background}
+          """),
+            expected_output="A brief summary of the ratesheet and relevant information to the borrower.",
+            agent=agent)
+    def gather_ratesheet_4(self, agent, borrower_profile, background, date_range, ratesheets):
+        return Task(description=dedent(f"""
+            Gather information from the ratesheet {ratesheets[4]} to determine the rate the borrower would get.
+            Gather information about loan product that fits the borrower, the base rate, any adjustments, and any terms and conditions.
+            
+            The final answer include a summary of the loan product that is relevant for this borrower.
+            {self.__tip_section()}
+
+            Borrower documents provided: {borrower_profile}
+            Loan Secured Date (determine lock number of days): {date_range}
+            Borrower information: {background}
+          """),
+            expected_output="A brief summary of the ratesheet and relevant information to the borrower.",
+            agent=agent)
+    def gather_ratesheet_5(self, agent, borrower_profile, background, date_range, ratesheets):
+        return Task(description=dedent(f"""
+            Gather information from the ratesheet {ratesheets[5]} to determine the rate the borrower would get.
+            Gather information about loan product that fits the borrower, the base rate, any adjustments, and any terms and conditions.
+            
+            The final answer include a summary of the loan product that is relevant for this borrower.
+            {self.__tip_section()}
+
+            Borrower documents provided: {borrower_profile}
+            Loan Secured Date (determine lock number of days): {date_range}
+            Borrower information: {background}
+          """),
+            expected_output="A brief summary of the ratesheet and relevant information to the borrower.",
+            agent=agent)
+    def gather_ratesheet_6(self, agent, borrower_profile, background, date_range, ratesheets):
+        return Task(description=dedent(f"""
+            Gather information from the ratesheet {ratesheets[6]} to determine the rate the borrower would get.
+            Gather information about loan product that fits the borrower, the base rate, any adjustments, and any terms and conditions.
+            
+            The final answer include a summary of the loan product that is relevant for this borrower.
+            {self.__tip_section()}
+
+            Borrower documents provided: {borrower_profile}
+            Loan Secured Date (determine lock number of days): {date_range}
+            Borrower information: {background}
+          """),
+            expected_output="A brief summary of the ratesheet and relevant information to the borrower.",
             agent=agent)
 
     def plan_task(self, agent, borrower_profile, background, date_range, ratesheets):

@@ -88,8 +88,6 @@ class Agents():
             goal="""Calculate the rate and terms and conditions for the loan product suited for this borrower""",
             backstory="""Specialist in taking ratesheet and borrower information and making a loan assessment""",
             tools=[
-                SearchTools.search_internet,
-                BrowserTools.scrape_and_summarize_website,
                 CalculatorTools.calculate,
             ],
             verbose=True,
@@ -103,8 +101,7 @@ class Agents():
             backstory="""Specialized in giving relevant loan advice and summarizing loan processing results to the borrower.""",
             tools=[
                 SearchTools.search_internet,
-                BrowserTools.scrape_and_summarize_website,
-                CalculatorTools.calculate,
+                BrowserTools.scrape_and_summarize_website
             ],
             verbose=True,
             step_callback=streamlit_callback,
