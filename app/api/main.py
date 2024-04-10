@@ -8,9 +8,6 @@ from fastapi.responses import Response, JSONResponse, PlainTextResponse
 from fastapi.websockets import WebSocketState, WebSocketDisconnect
 import requests
 import json
-from azure.storage.blob import BlobServiceClient
-from azure.core.exceptions import ResourceExistsError
-from azure.identity import DefaultAzureCredential
 from dotenv import load_dotenv
 from fastapi.responses import StreamingResponse
 from selenium import webdriver
@@ -23,9 +20,17 @@ import asyncio
 #agent
 from crewai_tools import PDFSearchTool,SerperDevTool
 from crewai import Crew, Process, Agent, Task
-
-
-
+# document processing
+import os
+import base64
+from azure.cosmos import exceptions, CosmosClient, PartitionKey
+from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
+from azure.core.credentials import AzureKeyCredential
+from azure.ai.documentintelligence import DocumentIntelligenceClient
+from azure.ai.documentintelligence.models import AnalyzeResult
+from azure.storage.blob import BlobServiceClient
+from azure.core.exceptions import ResourceExistsError
+from azure.identity import DefaultAzureCredential
 #selenium
 # service = Service(executable_path="chromedriver.exe")
 # driver = webdriver.Chrome(service=service)
@@ -35,14 +40,27 @@ from crewai import Crew, Process, Agent, Task
 # time.sleep(10)
 # driver.quit()
 
-
-
 account_url = "https://mortgageb7d8.blob.core.windows.net/"
-
 # create a credential 
 credentials = "KPnwrykAKqxo2oJBt2KNqU+TPafM2pn28rYzxwMO8D4LV1/0ZRMwyGBY/8/wBKUjlNeuYgxeAAaA+AStzlb7Gg=="
 
-openai.api_key = "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"
+cosmos_url = "https://mortgageprocessing.documents.azure.com:443/"
+cosmos_key = "ma6woOUbsw2g8dxsHWP5sjF7xrU9IuW1dIrv27T6ZTzGPZvY2W3PXtQpDX3QRH8PepC85TtRaarbACDbvlpruQ=="
+fr_endpoint = "https://eastus.api.cognitive.microsoft.com/"
+fr_key = "1aa0e05637154da989378613bf1ceaa2"
+cosmos_db = "borrower_data"
+cosmos_container = "borrower_docs"
+
+# set client to access azure storage container
+blob_service_client = BlobServiceClient(account_url=account_url, credential=credentials)
+client = CosmosClient(cosmos_url, cosmos_key)
+document_analysis_client = DocumentIntelligenceClient(
+    endpoint=fr_endpoint, credential=AzureKeyCredential(fr_key)
+)
+# document_model_client = DocumentModelAdministrationClient(endpoint=fr_endpoint, credential=AzureKeyCredential(fr_key))
+database = client.get_database_client(cosmos_db)
+container = database.get_container_client(cosmos_container)
+
 
 
 exa = Exa("921e8f7b-2af9-41eb-a138-dfc5d418d547")
@@ -51,7 +69,8 @@ exa = Exa("921e8f7b-2af9-41eb-a138-dfc5d418d547")
 
 # storage_connection_string = 'DefaultEndpointsProtocol=https;AccountName=mortgageb7d8;AccountKey=XOJYRtpeuW3q+VT2bmYJ6mD5b6vS+akqQ3LIJEMYMep/U+ZE4uMtCDRFtCXbY8DJITA0rdGesJi7+AStQAloJA=='
 
-os.environ["OPENAI_API_KEY"] = "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"
+openai.api_key = "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"
+# os.environ["OPENAI_API_KEY"] = "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"
 
 app = FastAPI()
 app.add_middleware(
@@ -101,17 +120,42 @@ async def rate_sheet_analysis(all_summaries: str):
 @app.post("/upload_document")
 async def uploadDocument(name: str, file_data: UploadFile = File(...)):
     container_name = 'documents'
-
-    # set client to access azure storage container
-    blob_service_client = BlobServiceClient(account_url=account_url, credential=credentials)
-
     # get the container client
     container_client = blob_service_client.get_container_client(container=container_name)
-
     # upload the file data to the blob storage container
     file_bytes = file_data.file.read()
     container_client.upload_blob(name=name, data=file_bytes)
 
+    model_id_mapping = {"Personal Identification":"prebuilt-idDocument"}
+
+    ref = account_url + container_name + '/' + name
+
+    poller = document_analysis_client.begin_analyze_document(
+        model_id_mapping[name], analyze_request=file_bytes, content_type="application/pdf"
+    )
+    result = poller.result()
+    ref = account_url + container_name + '/' + name
+    #project results into dict and save to cosmos db
+
+    if len(result.documents) > 0:
+        fields = []
+        for key, value in result.documents[0].fields.items():
+            if type(value) != "list":
+                fields.append({"key":key, "value":value.content, "score":value.confidence})
+            else:
+                count = 0
+                for v in value.value:
+                    cols = []
+                    for col, cell in v.value.items():
+                        cols.append({"key":col, "value": cell.content})
+                    fields.append({"key": "row-"+str(count),"value":cols})
+                    count = count + 1
+        f = fields
+    else:
+        f = None
+    #save results in cosmos db
+    result = {"id": "prebuilt-idDocument", "ref":ref, "fields":f}
+    container.create_item(body=result)
 
 
 def download_stream_generator(download_stream):
@@ -174,17 +218,6 @@ async def get_ratesheet(name: str):
 
 #     for blob in container_client.list_blobs():
 #         print(blob.name)
-
-
-
-
-@app.post("/search")
-async def search(query: str):
-    response = exa.search(
-        query,
-        num_results=10,
-        use_autoprompt=True,
-    )
 
 
 beginSentence = "Hey there, I'm your personal AI therapist, how can I help you?"
@@ -392,5 +425,6 @@ async def process_documents():
     content = download_stream_generator(download_stream)
 
     return StreamingResponse(content, media_type='application/pdf')
+
 
 

@@ -6,8 +6,6 @@ openai
 supabase
 sendgrid
 pandas
-azure-storage-blob
-azure-identity
 python-dotenv
 python-multipart
 selenium
@@ -19,3 +17,8 @@ streamlit
 crewai
 crewai[tools]
 retell-sdk
+azure-storage-blob
+azure-identity
+azure-cosmos
+azure-core
+azure-ai-documentintelligence
