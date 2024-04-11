@@ -117,6 +117,23 @@ async def rate_sheet_analysis(all_summaries: str):
     return response["choices"][0]["message"].get("content", "")
 
 
+model_id_mapping = {"id":"prebuilt-idDocument",
+                        "paystub":"prebuilt-invoice",
+                        "bank-statements":"prebuilt-invoice",
+                        "w-2":"prebuilt-tax.us.w2",
+                        "credit":"",
+                        "social-security":"prebuilt-idDocument",
+                        "tax":"prebuilt-tax.us.1040",
+                        "investments":"",
+                        "debt":"",
+                        "rental":"",
+                        "gift":""}
+
+@app.get("/get_processed_document")
+async def getProcessedDocument(doc_id: str):
+    response = container.read_item(item=model_id_mapping[doc_id], partition_key=model_id_mapping[doc_id])
+    return response.get("fields")
+
 @app.post("/upload_document")
 async def uploadDocument(name: str, file_data: UploadFile = File(...)):
     container_name = 'documents'
@@ -125,8 +142,6 @@ async def uploadDocument(name: str, file_data: UploadFile = File(...)):
     # upload the file data to the blob storage container
     file_bytes = file_data.file.read()
     container_client.upload_blob(name=name, data=file_bytes)
-
-    model_id_mapping = {"Personal Identification":"prebuilt-idDocument"}
 
     ref = account_url + container_name + '/' + name
 
@@ -154,7 +169,7 @@ async def uploadDocument(name: str, file_data: UploadFile = File(...)):
     else:
         f = None
     #save results in cosmos db
-    result = {"id": "prebuilt-idDocument", "ref":ref, "fields":f}
+    result = {"id": model_id_mapping[name], "ref":ref, "fields":f}
     container.create_item(body=result)
 
 

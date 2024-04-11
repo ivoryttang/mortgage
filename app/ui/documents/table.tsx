@@ -5,8 +5,8 @@ import {
   DocumentsTableType,
   FormattedDocumentsTable,
 } from '@/app/lib/definitions';
-import {TrashIcon} from '@heroicons/react/24/outline';
-
+import {TrashIcon, EyeIcon, ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
+import './table.css';
 
 export default function DocumentsTable({
   documents,
@@ -15,7 +15,10 @@ export default function DocumentsTable({
 }) {
   const [selectedPdfType, setSelectedPdfType] = useState("paystub")
   const [uploadedFile, setUploadedFile] = useState<undefined | File>(undefined)
-  
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [data, setData] = useState<{ key: string, value: string, score: number }[]>([]);
+  const [current, setCurrent] = useState("")
+
   const [currDocuments, setCurrDocuments] = useState<FormattedDocumentsTable[]>(documents);
   var url = ""
   // Function to fetch and update documents
@@ -86,6 +89,27 @@ export default function DocumentsTable({
         console.log("upload azure error: ", error);
     });
     
+  }
+
+  async function getProcessed(name: string){
+    console.log(name)
+    if (!dropdownOpen) {
+      var requestOptions = {
+          method: 'GET',
+          headers: {
+              'Access-Control-Allow-Origin': '*',
+          }
+      };
+      fetch(`https://app.domusnow.com/get_processed_document?doc_id=${name}`, requestOptions)
+      .then(response => response.json())
+      .then(data => {setData(data);console.log(data)})
+      .catch(error => {
+          alert('Get processed document failed. Please try again.');
+      });
+      setCurrent(name)
+    } else {
+      setCurrent("")
+    }
   }
 
   async function addDocument(){
@@ -320,11 +344,25 @@ onMouseLeave={(e: React.MouseEvent<HTMLButtonElement>) => e.currentTarget.style.
                   </tr>
                 </thead>
 
-                <tbody className="divide-y divide-gray-200 text-gray-900">
+                <tbody className="divide-y text-gray-900">
                   {currDocuments.map((document) => (
-                    <tr key={document.id} onClick={() => handleOpen(document.name)}>
-                      <td className="whitespace-nowrap bg-white py-5 pl-4 pr-3 text-sm text-black group-first-of-type:rounded-md group-last-of-type:rounded-md sm:pl-6">
+                    <tr key={document.id} className="dropdown">
+                      
+                      <td className="flex whitespace-nowrap bg-white py-5 pl-4 pr-3 text-sm text-black group-first-of-type:rounded-md group-last-of-type:rounded-md sm:pl-6">
+                      <button 
+                          onClick={() => {getProcessed(document.name); setDropdownOpen(!dropdownOpen)}}
+                          className="dropbtn mr-5" 
+                          style={{ color: 'black', padding: '2px', borderRadius: '10%', transition: 'background-color 0.3s' }}>{dropdownOpen && document.name === current ? <ChevronUpIcon className="w-5 text-black" /> : <ChevronDownIcon className="w-5 text-black" />}</button>
                           {document.name}
+                          <div
+                          onClick={() => handleOpen(document.name)}
+                          className="ml-3"
+                        style={{ backgroundColor: 'lightgray', padding: '2px', borderRadius: '10%' , transition: 'background-color 0.3s'}}
+                        onMouseEnter={(e) => (e.target as HTMLElement).style.backgroundColor = 'gray'}
+                        onMouseLeave={(e) => (e.target as HTMLElement).style.backgroundColor = 'lightgray'}
+                        >
+                            <EyeIcon className="w-5 text-white" />
+                        </div>
                       </td>
                       <td className="whitespace-nowrap bg-white px-4 py-5 text-sm">
                         {document.description}
@@ -337,13 +375,38 @@ onMouseLeave={(e: React.MouseEvent<HTMLButtonElement>) => e.currentTarget.style.
                       </td>
                       <td className="whitespace-nowrap bg-white px-4 py-5 text-sm group-first-of-type:rounded-md group-last-of-type:rounded-md">
                         {document.status}
+                        
                       </td>
                       <td className="whitespace-nowrap bg-white px-4 py-5">
                         <button onClick={(e) => {e.stopPropagation(); deleteDocument(document.name)}}><TrashIcon className="w-[15px] " /></button>
                       </td>
                     </tr>
+                    
                   ))}
+                  
                 </tbody>
+                {dropdownOpen && (
+                    <div className="dropdown-content">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Key</th>
+                                    <th>Value</th>
+                                    <th>Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {data.map((item, index) => (
+                                    <tr key={index}>
+                                        <td>{item.key}</td>
+                                        <td>{item.value}</td>
+                                        <td>{item.score}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                )}
               </table>
               
             </div>
