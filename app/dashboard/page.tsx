@@ -11,7 +11,7 @@ import {
   fetchCardData,
 } from '@/app/lib/data';
 import './page.css';
- 
+
 export default async function Page() {
   // const revenue = await fetchRevenue();
   // const url = await fetchUrl();
@@ -20,11 +20,10 @@ export default async function Page() {
     numberOfDocuments,
     numberOfRatesheets
   } = await fetchCardData();
-  
+
   
   return (
     <main>
-
       <ProgressBar />
       <div className="flex"><CompleteConsultationButton />
       {<i className="ml-10 w-[1100px]">The recommendations here are placeholders for now. Please complete your consultation and upload requested <a className="text-blue" href="https://www.domusnow.com/dashboard/documents"><u>documents</u></a> for your full borrower profile and tailored loan options to show up. In the meantime, feel free to browse the lenders and loan products <a className="text-blue" href="https://www.domusnow.com/dashboard/loans"><u>here</u></a></i>}

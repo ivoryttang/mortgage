@@ -1,9 +1,9 @@
 // @ts-nocheck
 import SideNav from '@/app/ui/dashboard/sidenav';
-import Header from '../ui/dashboard/header';
+import Header from '../ui/components/header';
 
- 
 export default function Layout({ children }: { children: React.ReactNode }) {
+    
   
     return (
       <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">

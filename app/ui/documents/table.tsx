@@ -346,6 +346,7 @@ onMouseLeave={(e: React.MouseEvent<HTMLButtonElement>) => e.currentTarget.style.
 
                 <tbody className="divide-y text-gray-900">
                   {currDocuments.map((document) => (
+                    <>
                     <tr key={document.id} className="dropdown">
                       
                       <td className="flex whitespace-nowrap bg-white py-5 pl-4 pr-3 text-sm text-black group-first-of-type:rounded-md group-last-of-type:rounded-md sm:pl-6">
@@ -381,32 +382,34 @@ onMouseLeave={(e: React.MouseEvent<HTMLButtonElement>) => e.currentTarget.style.
                         <button onClick={(e) => {e.stopPropagation(); deleteDocument(document.name)}}><TrashIcon className="w-[15px] " /></button>
                       </td>
                     </tr>
+                    {dropdownOpen && document.name === current &&  (
+                      <div className="dropdown-content">
+                          <table>
+                              <thead>
+                                  <tr>
+                                      <th>Key</th>
+                                      <th>Value</th>
+                                      <th>Score</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  {data.map((item, index) => (
+                                      <tr key={index}>
+                                          <td>{item.key}</td>
+                                          <td>{item.value}</td>
+                                          <td>{item.score}</td>
+                                      </tr>
+                                  ))}
+                              </tbody>
+                          </table>
                     
+                      </div>
+                  )}
+                  </>
                   ))}
                   
                 </tbody>
-                {dropdownOpen && (
-                    <div className="dropdown-content">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Key</th>
-                                    <th>Value</th>
-                                    <th>Score</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {data.map((item, index) => (
-                                    <tr key={index}>
-                                        <td>{item.key}</td>
-                                        <td>{item.value}</td>
-                                        <td>{item.score}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                )}
+                
               </table>
               
             </div>

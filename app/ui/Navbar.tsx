@@ -1,17 +1,23 @@
 import React from "react";
 import "./navbar.css";
+import Link from 'next/link';
+import { usePathname } from 'next/navigation'
+
 const Navbar = () => {
+  const pathname = usePathname()
     return (
         <header className="navbar navbar-expand-lg fixed-top z-20 bg-white">
         <div className="container">
-          <a className="flex navbar-brand pe-sm-3" href="/">
+          <a className="flex navbar-brand pe-sm-3" href="landing_page.html">
             <span className="text-primary flex-shrink-0">
               <img src="assets/img/logo.png" alt="Logo" style={{ height: '30px', width: 'auto' }} />
             </span>
             omus
           </a>
-          <a className="btn btn-primary btn-sm fs-sm order-lg-3 d-none d-sm-inline-flex" href="/dashboard">Start applying</a>
           
+<Link target="_blank" className={`link btn btn-primary btn-sm fs-sm order-lg-3 d-none d-sm-inline-flex ${pathname === '/dashboard' ? 'active' : ''}`} href="/dashboard">
+            Get Started
+          </Link>
           <ul className="text-black navbar-nav navbar-nav-scroll me-auto" >
             
             <li className="nav-item dropdown"><a className="nav-link active" href="#" data-bs-toggle="dropdown" aria-expanded="false">Mortgage <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-2 w-5 h-5">
@@ -79,7 +85,7 @@ const Navbar = () => {
                 <ul className="dropdown-menu">
                   <li className="dropdown"><a className="dropdown-item" href="#">Join as an agent</a>
                   </li>
-                  <li><a className="dropdown-item" href="account-signin.html">Login as an agent</a></li>
+                  <li><a className="dropdown-item" href="/sign-in">Login as an agent</a></li>
                 </ul>
               </li>
             <li className="nav-item "><a className="nav-link" href="/blog">Blog</a></li>
