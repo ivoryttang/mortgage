@@ -26,7 +26,7 @@ import { authMiddleware } from "@clerk/nextjs";
 
 // }
 export default authMiddleware({
-  publicRoutes: ['/','/sign-in','/sign-up','/preapproval','/closing-costs','/document-processing','/faqs','/gds-tds','/heloc','/housing-market','/mortgage-affordability','/mortgage-calc','/mortgage-pricing','/private-mortgage','/refinance','/renewal','/rent-to-own','/second-mortgage','/taxes','/why-domus','/ai-agent','/ai-origination','/blog']
+  publicRoutes: ['/','/sign-in','/sign-up','/preapproval','/closing-costs','/document-processing','/borrower','/faqs','/gds-tds','/heloc','/housing-market','/mortgage-affordability','/mortgage-calc','/mortgage-pricing','/private-mortgage','/refinance','/renewal','/rent-to-own','/second-mortgage','/taxes','/why-domus','/ai-agent','/ai-origination','/blog']//,'/dashboard','/dashboard/messages','/dashboard/loans','/dashboard/lenders','/dashboard/learn','/dashboard/documents','/dashboard/reports']
 });
 // export const config = {
 //   matcher: ["/((?!.+\\.[\\w]+$|_next).*)","/","/(api|trpc)(.*)"],
