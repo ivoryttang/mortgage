@@ -2,6 +2,7 @@ import React from "react";
 import "./navbar.css";
 import Link from 'next/link';
 import { usePathname } from 'next/navigation'
+import { DocumentCheckIcon, ChatBubbleOvalLeftIcon, ClipboardDocumentCheckIcon} from '@heroicons/react/24/outline';
 
 const Navbar = () => {
   const pathname = usePathname()
@@ -21,32 +22,32 @@ const Navbar = () => {
           <ul className="text-black navbar-nav navbar-nav-scroll me-auto" >
             
             
-            <li className="nav-item dropdown"><a className="nav-link" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Why Domus? <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-2 w-5 h-5">
+            <li className="nav-item dropdown"><a className="nav-link" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Products <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-2 w-5 h-5">
   <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
 </svg></a>
-                <ul className="dropdown-menu">
+                {/* <ul className="dropdown-menu">
                   <li className="dropdown"><a className="dropdown-item" href="/why-domus">How Domus Works <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-4 h-4"  style={{ display: 'inline-block' }}>
   <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
 </svg>
-</a>
+</a> */}
                     {/* <ul className="dropdown-menu">
                       <li><a className="dropdown-item" href="">Application Process</a></li>
                       <li><a className="dropdown-item" href="">Underwriting</a></li>
                       <li><a className="dropdown-item" href="">Mortgage Education</a></li>
                       <li><a className="dropdown-item" href="">Rate Locking</a></li>
                     </ul> */}
-                  </li>
-                  <li className="dropdown"><a className="dropdown-item" href="#" data-bs-toggle="dropdown" aria-expanded="false">Products <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-4 h-4"  style={{ display: 'inline-block' }}>
+                  {/* </li> */}
+                  {/* <li className="dropdown"><a className="dropdown-item" href="#" data-bs-toggle="dropdown" aria-expanded="false">Products <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-4 h-4"  style={{ display: 'inline-block' }}>
   <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-</svg></a>
+</svg></a> */}
                     <ul className="dropdown-menu">
-                    <li><a className="dropdown-item" href="/ai-agent">24/7 AI Loan Agent</a></li>
-                      <li><a className="dropdown-item" href="/document-processing">Intelliget Document Processing</a></li>
-                      <li><a className="dropdown-item" href="/mortgage-pricing">Advanced Mortgage Pricing</a></li>
+                    <li className="flex"><ChatBubbleOvalLeftIcon className="ml-5 w-[25px]"/><a className="dropdown-item" href="/ai-agent">Homie</a></li>
+                      <li className="flex"><DocumentCheckIcon className="ml-5 w-[25px]"/><a className="dropdown-item" href="/document-processing">Docta</a></li>
+                      <li className="flex"><ClipboardDocumentCheckIcon className="ml-5 w-[25px]"/><a className="dropdown-item" href="/mortgage-pricing">Reggie</a></li>
                     </ul>
-                  </li>
+                 {/*  </li>
                   
-                </ul>
+                </ul> */}
             </li>
             <li className="nav-item dropdown"><a className="nav-link" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Lenders <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-2 w-5 h-5">
   <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />

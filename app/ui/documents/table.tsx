@@ -290,6 +290,7 @@ export default function DocumentsTable({
       <Search placeholder="Search documents..." />
       <br></br>
       <div className='flex'><select className="rounded" value={selectedPdfType} onChange={handlePdfTypeChange}>
+      <option value="loan-app">Loan Application (Form 1003)</option>
       <option value="paystub">Pay Stubs</option>
       <option value="bank-statements">Bank Statements</option>
       <option value="w-2">W-2</option>

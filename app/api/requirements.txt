@@ -22,3 +22,4 @@ azure-identity
 azure-cosmos
 azure-core
 azure-ai-documentintelligence
+pymupdf

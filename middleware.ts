@@ -26,7 +26,7 @@ import { authMiddleware } from "@clerk/nextjs";
 
 // }
 export default authMiddleware({
-  publicRoutes: ['/','/sign-in','/sign-up','/preapproval','/closing-costs','/document-processing','/borrower','/faqs','/gds-tds','/heloc','/housing-market','/mortgage-affordability','/mortgage-calc','/mortgage-pricing','/private-mortgage','/refinance','/renewal','/rent-to-own','/second-mortgage','/taxes','/why-domus','/ai-agent','/ai-origination','/blog']//,'/dashboard','/dashboard/messages','/dashboard/loans','/dashboard/lenders','/dashboard/learn','/dashboard/documents','/dashboard/reports']
+  publicRoutes: ['/','/sign-in','/sign-up','/preapproval','/closing-costs','/document-processing','/borrower','/faqs','/gds-tds','/heloc','/housing-market','/mortgage-affordability','/mortgage-calc','/mortgage-pricing','/private-mortgage','/refinance','/renewal','/rent-to-own','/second-mortgage','/taxes','/why-domus','/ai-agent','/ai-origination','/blog']//,'/dashboard','/dashboard/messages','/dashboard/loans','/dashboard/lenders','/dashboard/learn','/dashboard/documents','/dashboard/reports','/dashboard/loan-application','/dashboard/loan-processing']
 });
 // export const config = {
 //   matcher: ["/((?!.+\\.[\\w]+$|_next).*)","/","/(api|trpc)(.*)"],

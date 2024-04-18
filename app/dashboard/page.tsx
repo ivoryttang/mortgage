@@ -29,10 +29,10 @@ export default async function Page() {
       {<i className="ml-10 w-[1100px]">The recommendations here are placeholders for now. Please complete your consultation and upload requested <a className="text-blue" href="https://www.domusnow.com/dashboard/documents"><u>documents</u></a> for your full borrower profile and tailored loan options to show up. In the meantime, feel free to browse the lenders and loan products <a className="text-blue" href="https://www.domusnow.com/dashboard/loans"><u>here</u></a></i>}
       </div>
       <div className="grid mt-10 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        <Card title="Income" value="$120,300" type="collected" />
-        <Card title="Credit" value={680} type="pending" />
+        <Card title="Annual Income" value="$120,300" type="collected" />
+        <Card title="Credit Score" value={680} type="pending" />
         <a href="https://www.domusnow.com/dashboard/documents">
-        <Card title="Documents" value={numberOfDocuments} type="invoices" />
+        <Card title="Loan-To-Value" value='50%' type="invoices" />
       </a>
       <Card title="Debt-to-Income" value="30%" type="customers" />
       </div>

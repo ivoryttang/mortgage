@@ -21,9 +21,7 @@ export default async function Page() {
     }
     return <div><ProgressBar />
     {/* <input id="test" placeholder=""/> */}
-    <head>
-        
-    </head>
+    
     <iframe 
         id="loan-app"
         title="PDF Viewer"

@@ -117,7 +117,8 @@ async def rate_sheet_analysis(all_summaries: str):
     return response["choices"][0]["message"].get("content", "")
 
 
-model_id_mapping = {"id":"prebuilt-idDocument",
+model_id_mapping = {    "loan-app":"prebuilt-mortgage.us.1003",
+                        "id":"prebuilt-idDocument",
                         "paystub":"prebuilt-invoice",
                         "bank-statements":"prebuilt-invoice",
                         "w-2":"prebuilt-tax.us.w2",
