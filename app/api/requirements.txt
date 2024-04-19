@@ -23,3 +23,12 @@ azure-cosmos
 azure-core
 azure-ai-documentintelligence
 pymupdf
+langgraph
+langchain_community 
+tiktoken 
+langchain-mistralai 
+langchainhub 
+chromadb 
+langchain 
+langgraph 
+tavily-python

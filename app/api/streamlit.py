@@ -77,7 +77,7 @@ def icon(emoji: str):
         unsafe_allow_html=True,
     )
 
-
+###### CREWAI #######
 class LoanCrew:
 
     def __init__(self, borrower_profile, ratesheets, date_range, background):
@@ -174,6 +174,11 @@ class LoanCrew:
 
         return result
 
+#### End of CREW AI ########
+
+##### Start of LangGraph  ########
+##### End of LangGraph  ########
+
 def load_pdf(file_path):
     with open(file_path, "rb") as pdf_file:
         return pdf_file.read()
@@ -193,7 +198,7 @@ def display_pdf_from_streaming_response(content):
         image = Image.open(io.BytesIO(image_bytes))
         st.image(image, caption=f"Page {page_num + 1}", use_column_width=True)
 
-def show_pdf(file_path):
+def show_pdf():
     container_name = 'documents'
     blob_name = 'loan-app'
 
@@ -251,7 +256,7 @@ if __name__ == "__main__":
         #     file_name="download.pdf",
         #     mime="application/octet-stream"
         # )
-        show_pdf("")
+        show_pdf()
 
     today = datetime.datetime.now().date()
     next_year = today.year + 1
