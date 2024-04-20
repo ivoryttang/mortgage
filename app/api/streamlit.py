@@ -1,3 +1,6 @@
+__import__('pysqlite3')
+import sys
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 from crewai import Crew
 from agents import Agents
 from tasks import Tasks
@@ -193,7 +196,7 @@ os.environ['LANGCHAIN_API_KEY'] = "ls__c1506344a66146b2b16a690143aafd21"
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import WebBaseLoader
 
-from langchain_community.vectorstores import Chroma
+from langchain_chroma import Chroma
 from langchain_mistralai import MistralAIEmbeddings
 
 

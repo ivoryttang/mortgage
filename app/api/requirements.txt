@@ -28,8 +28,8 @@ langchain-community
 tiktoken 
 langchain-mistralai 
 langchainhub 
-chromadb 
-langchain 
+chromadb
+langchain
 langgraph 
 tavily-python
 langchain-chroma
