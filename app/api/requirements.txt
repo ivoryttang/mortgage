@@ -24,7 +24,7 @@ azure-core
 azure-ai-documentintelligence
 pymupdf
 langgraph
-langchain_community 
+langchain-community 
 tiktoken 
 langchain-mistralai 
 langchainhub 
@@ -32,3 +32,4 @@ chromadb
 langchain 
 langgraph 
 tavily-python
+langchain-chroma
