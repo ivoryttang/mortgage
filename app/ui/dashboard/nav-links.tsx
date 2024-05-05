@@ -7,7 +7,9 @@ import {
   FlagIcon,
   ChatBubbleLeftEllipsisIcon,
   Cog8ToothIcon,
-  AcademicCapIcon
+  AcademicCapIcon,
+  LinkIcon,
+  CursorArrowRaysIcon
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -16,16 +18,18 @@ import clsx from 'clsx';
 // Map of links to display in the side navigation.
 // Depending on the size of the application, this would be stored in a database.
 const links = [
-  { name: 'Home', href: '/dashboard', icon: HomeIcon },
+  { name: 'Dashboard', href: '/dashboard', icon: HomeIcon },
   {
-    name: 'Lenders',
+    name: 'Lender Comparison',
     href: '/dashboard/loans',
     icon: CurrencyDollarIcon,
   },
-  { name: 'Learn', href: '/dashboard/learn', icon: AcademicCapIcon },
-  { name: 'Documents', href: '/dashboard/documents', icon: DocumentDuplicateIcon },
-  { name: 'Reports (admin only)', href: '/dashboard/reports', icon: FlagIcon },
-  { name: 'Messages', href: '/dashboard/messages', icon: ChatBubbleLeftEllipsisIcon },
+  { name: 'LoanGPT', href: '/dashboard/learn', icon: AcademicCapIcon },
+  { name: 'Automations', href: '/dashboard/automations', icon: CursorArrowRaysIcon },
+  { name: 'Document Processing', href: '/dashboard/documents', icon: DocumentDuplicateIcon },
+  { name: 'Integrations', href: '/dashboard/integrations', icon: LinkIcon },
+  { name: 'Compliance Reports', href: '/dashboard/reports', icon: FlagIcon },
+  { name: 'Customer Support', href: '/dashboard/messages', icon: ChatBubbleLeftEllipsisIcon },
   // { name: 'Settings', href: '/dashboard/settings', icon: Cog8ToothIcon },
 ];
 

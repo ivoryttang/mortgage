@@ -1,4 +1,4 @@
-#!/Users/ivorytang/Desktop/mortgage/mortgage-website/bin/python3.12
+#!/Users/ivorytang/Desktop/mortgage/mortgage-website/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys

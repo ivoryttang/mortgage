@@ -64,7 +64,7 @@ export default function LoanOptions({
         <div className="mt-6 mb-5">
         <Search  placeholder="Search loans..." />
         </div>
-        <i>Once you input your information and we create a borrower profile for you, we'll be able to show you the loan products you're best suited for.</i>
+        <i>See how your rates compare to other lenders who serve the same pool of borrowers.</i>
         <div className="table-container">
           <table className="w-full mt-5 border-collapse" style={{ position: 'relative', overflowX: 'auto' }}>
               <thead>

@@ -2,7 +2,7 @@ __import__('pysqlite3')
 import sys
 sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 from crewai import Crew
-from agents import Agents
+# from agents import Agents
 from tasks import Tasks
 import streamlit as st
 import datetime
@@ -82,103 +82,103 @@ def icon(emoji: str):
     )
 
 ###### CREWAI #######
-class LoanCrew:
+# class LoanCrew:
 
-    def __init__(self, borrower_profile, ratesheets, date_range, background):
-        self.borrower_profile = borrower_profile
-        self.ratesheets = ratesheets
-        self.background = background
-        self.date_range = date_range
-        self.output_placeholder = st.empty()
+#     def __init__(self, borrower_profile, ratesheets, date_range, background):
+#         self.borrower_profile = borrower_profile
+#         self.ratesheets = ratesheets
+#         self.background = background
+#         self.date_range = date_range
+#         self.output_placeholder = st.empty()
 
-    def run(self):
-        agents = Agents()
-        tasks = Tasks()
+#     def run(self):
+#         agents = Agents()
+#         tasks = Tasks()
 
-        borrower_profile_analyzer = agents.borrower_profile_analyzer()
-        ratesheet_expert = agents.ratesheet_expert()
-        loan_processor = agents.loan_processor()
-        loan_advisor = agents.loan_advisor()
+#         borrower_profile_analyzer = agents.borrower_profile_analyzer()
+#         ratesheet_expert = agents.ratesheet_expert()
+#         loan_processor = agents.loan_processor()
+#         loan_advisor = agents.loan_advisor()
 
-        identify_borrower = tasks.identify_borrower(
-            borrower_profile_analyzer,
-            self.borrower_profile,
-            self.background,
-            self.date_range
-        )
+#         identify_borrower = tasks.identify_borrower(
+#             borrower_profile_analyzer,
+#             self.borrower_profile,
+#             self.background,
+#             self.date_range
+#         )
 
-        gather_ratesheet_0 = tasks.gather_ratesheet_0(
-            ratesheet_expert,
-            self.borrower_profile, 
-            self.background, 
-            self.date_range, 
-            self.ratesheets
-        )
-        gather_ratesheet_1 = tasks.gather_ratesheet_1(
-            ratesheet_expert,
-            self.borrower_profile, 
-            self.background, 
-            self.date_range, 
-            self.ratesheets
-        )
-        gather_ratesheet_2 = tasks.gather_ratesheet_2(
-            ratesheet_expert,
-            self.borrower_profile, 
-            self.background, 
-            self.date_range, 
-            self.ratesheets
-        )
-        gather_ratesheet_3 = tasks.gather_ratesheet_3(
-            ratesheet_expert,
-            self.borrower_profile, 
-            self.background, 
-            self.date_range, 
-            self.ratesheets
-        )
-        gather_ratesheet_4 = tasks.gather_ratesheet_4(
-            ratesheet_expert,
-            self.borrower_profile, 
-            self.background, 
-            self.date_range, 
-            self.ratesheets
-        )
-        gather_ratesheet_5 = tasks.gather_ratesheet_5(
-            ratesheet_expert,
-            self.borrower_profile, 
-            self.background, 
-            self.date_range, 
-            self.ratesheets
-        )
-        gather_ratesheet_6 = tasks.gather_ratesheet_6(
-            ratesheet_expert,
-            self.borrower_profile, 
-            self.background, 
-            self.date_range, 
-            self.ratesheets
-        )
+#         gather_ratesheet_0 = tasks.gather_ratesheet_0(
+#             ratesheet_expert,
+#             self.borrower_profile, 
+#             self.background, 
+#             self.date_range, 
+#             self.ratesheets
+#         )
+#         gather_ratesheet_1 = tasks.gather_ratesheet_1(
+#             ratesheet_expert,
+#             self.borrower_profile, 
+#             self.background, 
+#             self.date_range, 
+#             self.ratesheets
+#         )
+#         gather_ratesheet_2 = tasks.gather_ratesheet_2(
+#             ratesheet_expert,
+#             self.borrower_profile, 
+#             self.background, 
+#             self.date_range, 
+#             self.ratesheets
+#         )
+#         gather_ratesheet_3 = tasks.gather_ratesheet_3(
+#             ratesheet_expert,
+#             self.borrower_profile, 
+#             self.background, 
+#             self.date_range, 
+#             self.ratesheets
+#         )
+#         gather_ratesheet_4 = tasks.gather_ratesheet_4(
+#             ratesheet_expert,
+#             self.borrower_profile, 
+#             self.background, 
+#             self.date_range, 
+#             self.ratesheets
+#         )
+#         gather_ratesheet_5 = tasks.gather_ratesheet_5(
+#             ratesheet_expert,
+#             self.borrower_profile, 
+#             self.background, 
+#             self.date_range, 
+#             self.ratesheets
+#         )
+#         gather_ratesheet_6 = tasks.gather_ratesheet_6(
+#             ratesheet_expert,
+#             self.borrower_profile, 
+#             self.background, 
+#             self.date_range, 
+#             self.ratesheets
+#         )
 
-        plan_task = tasks.plan_task(
-            loan_processor,
-            self.borrower_profile, 
-            self.background, 
-            self.date_range, 
-            self.ratesheets
-        )
+#         plan_task = tasks.plan_task(
+#             loan_processor,
+#             self.borrower_profile, 
+#             self.background, 
+#             self.date_range, 
+#             self.ratesheets
+#         )
 
-        crew = Crew(
-            agents=[
-                borrower_profile_analyzer, ratesheet_expert, loan_processor, loan_advisor
-            ],
-            tasks=[identify_borrower, gather_ratesheet_0, gather_ratesheet_1, gather_ratesheet_2, gather_ratesheet_3, gather_ratesheet_4, gather_ratesheet_5, gather_ratesheet_6, plan_task],
-            verbose=True
-        )
+#         crew = Crew(
+#             agents=[
+#                 borrower_profile_analyzer, ratesheet_expert, loan_processor, loan_advisor
+#             ],
+#             tasks=[identify_borrower, gather_ratesheet_0, gather_ratesheet_1, gather_ratesheet_2, gather_ratesheet_3, gather_ratesheet_4, gather_ratesheet_5, gather_ratesheet_6, plan_task],
+#             verbose=True
+#         )
 
-        result = crew.kickoff()
-        self.output_placeholder.markdown(result)
+#         result = crew.kickoff()
+#         self.output_placeholder.markdown(result)
 
-        return result
+#         return result
 
-#### End of CREW AI ########
+# #### End of CREW AI ########
 
 ##### Start of LangGraph  ########
 

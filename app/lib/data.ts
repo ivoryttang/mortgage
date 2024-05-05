@@ -13,6 +13,7 @@ import {
 import { formatCurrency } from './utils';
 import * as fs from 'fs';
 
+
 export async function fetchRevenue() {
   noStore();
   try {

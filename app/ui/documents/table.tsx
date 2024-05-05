@@ -65,6 +65,7 @@ export default function DocumentsTable({
     setUploadedFile(file ?? undefined)
   }
 
+  
   async function handleUpload(){
     console.log("handleUpload function called"); 
     console.log("upload clicked", uploadedFile); 

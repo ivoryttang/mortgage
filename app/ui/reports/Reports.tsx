@@ -13,7 +13,10 @@ return (
         <link rel="stylesheet" media="screen" href="assets/vendor/simplebar/dist/simplebar.min.css" />
         <link rel="stylesheet" media="screen" href="assets/css/theme.min.css" />
         
-        <h1 className="bold mt-5 mb-10 text-xl">Compliance Check Summary</h1>
+        <div className="flex justify-between items-center">
+            <h1 className="bold mt-5 mb-10 text-xl">Compliance Check Summary</h1>
+            <button className="mt-5 mb-10 bg-gray-100 p-2 border rounded">Generate New Report</button>
+        </div>
     <div className="flex ">
         
         <div className="mr-10 text-lg w-[150px]">

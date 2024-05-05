@@ -34,6 +34,7 @@
     "nodemailer": "^6.9.10",
     "nodemon": "^3.1.0",
     "openai": "^4.28.4",
+    "pdfjs-dist": "^4.2.67",
     "postcss": "8.4.31",
     "prettier-eslint": "^16.3.0",
     "radix-ui": "^1.0.1",
