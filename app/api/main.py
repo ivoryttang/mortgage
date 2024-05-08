@@ -1,27 +1,21 @@
-from fastapi import FastAPI, File, UploadFile, HTTPException, Request, WebSocket
+from fastapi import FastAPI, File, UploadFile, HTTPException, WebSocket
 from typing import List
+# import fitz
 import os
 import openai 
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi import Request
-from fastapi.responses import Response, JSONResponse, PlainTextResponse
-from fastapi.websockets import WebSocketState, WebSocketDisconnect
+from fastapi.websockets import WebSocketDisconnect
 import requests
 import json
 from dotenv import load_dotenv
 from fastapi.responses import StreamingResponse
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
 import time 
 from exa_py import Exa
 from playwright.async_api import async_playwright
 import traceback
 import asyncio
-#agent
-# from crewai_tools import PDFSearchTool,SerperDevTool
-# from crewai import Crew, Process, Agent, Task
 # document processing
-import os
+import io
 import base64
 from azure.cosmos import exceptions, CosmosClient, PartitionKey
 from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
@@ -31,6 +25,7 @@ from azure.ai.documentintelligence.models import AnalyzeResult
 from azure.storage.blob import BlobServiceClient
 from azure.core.exceptions import ResourceExistsError
 from azure.identity import DefaultAzureCredential
+
 #selenium
 # service = Service(executable_path="chromedriver.exe")
 # driver = webdriver.Chrome(service=service)
@@ -69,9 +64,8 @@ exa = Exa("921e8f7b-2af9-41eb-a138-dfc5d418d547")
 
 # storage_connection_string = 'DefaultEndpointsProtocol=https;AccountName=mortgageb7d8;AccountKey=XOJYRtpeuW3q+VT2bmYJ6mD5b6vS+akqQ3LIJEMYMep/U+ZE4uMtCDRFtCXbY8DJITA0rdGesJi7+AStQAloJA=='
 
-openai.api_key = "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"
-# os.environ["OPENAI_API_KEY"] = "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"
-
+openai.api_key = os.getenv("OPENAI_API_KEY")
+   
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
@@ -138,40 +132,63 @@ async def getProcessedDocument(doc_id: str):
 @app.post("/upload_document")
 async def uploadDocument(name: str, file_data: UploadFile = File(...)):
     container_name = 'documents'
-    # get the container client
     container_client = blob_service_client.get_container_client(container=container_name)
-    # upload the file data to the blob storage container
+    
     file_bytes = file_data.file.read()
-    container_client.upload_blob(name=name, data=file_bytes)
-
     ref = account_url + container_name + '/' + name
-
-    poller = document_analysis_client.begin_analyze_document(
-        model_id_mapping[name], analyze_request=file_bytes, content_type="application/pdf"
-    )
+    
+    try:
+        poller = document_analysis_client.begin_analyze_document(
+            model_id_mapping[name], analyze_request=file_bytes, content_type="application/pdf"
+        )
+    except:
+        poller = document_analysis_client.begin_analyze_document(
+            "prebuilt-mortgage.us.1003", analyze_request=file_bytes, content_type="application/pdf"
+        )
     result = poller.result()
-    ref = account_url + container_name + '/' + name
-    #project results into dict and save to cosmos db
-
+    
+    fields = []
+    
     if len(result.documents) > 0:
-        fields = []
         for key, value in result.documents[0].fields.items():
-            if type(value) != "list":
-                fields.append({"key":key, "value":value.content, "score":value.confidence})
+            if not isinstance(value, list):
+                bbox = []
+                if hasattr(value, 'polygon'):
+                    original_list = value.polygon
+                    bbox = [(original_list[i], original_list[i + 1]) for i in range(0, len(original_list), 2)]
+                fields.append({"key": key, "value": value.content, "score": value.confidence, "box":bbox})
             else:
                 count = 0
-                for v in value.value:
+                for v in value:
                     cols = []
-                    for col, cell in v.value.items():
-                        cols.append({"key":col, "value": cell.content})
-                    fields.append({"key": "row-"+str(count),"value":cols})
-                    count = count + 1
-        f = fields
+                    for col, cell in v.items():
+                        cols.append({"key": col, "value": cell.content})
+                        bbox = []
+                        if hasattr(cell, 'polygon'):
+                            original_list = cell.polygon
+                            bbox = [(original_list[i], original_list[i + 1]) for i in range(0, len(original_list), 2)]
+                    fields.append({"key": "row-" + str(count), "value": cols, "box":bbox})
+                    count += 1
     else:
-        f = None
-    #save results in cosmos db
-    result = {"id": model_id_mapping[name], "ref":ref, "fields":f}
+        fields = None
+    
+    result = {"id": model_id_mapping.get(name, name), "ref": ref, "fields": [result.documents[0].fields.items()]}
+    
     container.create_item(body=result)
+    
+    # Draw bounding boxes on the PDF
+    # pdf_document = fitz.open(stream=file_bytes, filetype="pdf")
+    # page = pdf_document[0]  # Assuming you are working with the first page
+    # for box in polygons:
+    #     page.draw_rects(rects=box, color=(1, 0, 0), fill=(0, 1, 0), width=2)
+    
+    # # Save the modified PDF
+    # modified_pdf_bytes = io.BytesIO()
+    # pdf_document.save(modified_pdf_bytes)
+    # pdf_document.close()
+    # file_bytes = modified_pdf_bytes.getvalue()
+    
+    container_client.upload_blob(name=name, data=file_bytes)
 
 
 def download_stream_generator(download_stream):

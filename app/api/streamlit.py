@@ -1,9 +1,9 @@
 __import__('pysqlite3')
 import sys
 sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
-from crewai import Crew
+# from crewai import Crew
 # from agents import Agents
-from tasks import Tasks
+# from tasks import Tasks
 import streamlit as st
 import datetime
 import openai
@@ -67,12 +67,11 @@ container = database.get_container_client(cosmos_container)
 
 
 
-openai.api_key = "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"
+api_key = os.getenv("OPENAI_API_KEY")
+if api_key is None:
+    raise ValueError("API key not set in environment variables")
 
-client = OpenAI(
-    # This is the default and can be omitted
-    api_key="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",
-)
+client = OpenAI(api_key=api_key)
 
 def icon(emoji: str):
     """Shows an emoji as a Notion-style page icon."""
@@ -783,15 +782,15 @@ if __name__ == "__main__":
                 st.warning('Please enter a prompt.')
         
 
-    if submitted:
-        with col2:
-            with st.status("🤖 **Agents generating preliminary underwriting...**", state="running", expanded=True) as status:
-                with st.container(height=500, border=False):
-                    crew = LoanCrew(borrower_profile, ratesheets, date_range, background)
-                    result = crew.run()
+    # if submitted:
+    #     with col2:
+    #         with st.status("🤖 **Agents generating preliminary underwriting...**", state="running", expanded=True) as status:
+    #             with st.container(height=500, border=False):
+    #                 crew = LoanCrew(borrower_profile, ratesheets, date_range, background)
+    #                 result = crew.run()
                     
-                status.update(label="✅ Mortgage Assessment Ready!",
-                            state="complete", expanded=False)
+    #             status.update(label="✅ Mortgage Assessment Ready!",
+    #                         state="complete", expanded=False)
 
-            st.subheader("Here is your processed loan", anchor=False, divider="grey")
-            st.markdown(result)
+    #         st.subheader("Here is your processed loan", anchor=False, divider="grey")
+    #         st.markdown(result)

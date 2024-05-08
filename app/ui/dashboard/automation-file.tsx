@@ -2,10 +2,10 @@
 import { useState, ChangeEvent } from 'react';
 export default function AutomationFile() {
     const [uploadedFile, setUploadedFile] = useState<undefined | File>(undefined)
-    const [data, setData] = useState<{ key: string, value: string, score: number }[]>([]);
+    const [data, setData] = useState<[]>([]);
     const [current, setCurrent] = useState("")
-
-    var url = ""
+    const [loading, setLoading] = useState(false);
+    const [url, setUrl] = useState("")
 
     function generateRandomString(length: number) {
         let result = '';
@@ -35,7 +35,7 @@ export default function AutomationFile() {
         .then(response => response.blob())
             .then(blob => {
               // Create a URL for the blob
-              url = URL.createObjectURL(blob);
+              setUrl(URL.createObjectURL(blob));
               
               // Display the PDF in an iframe or embed element
                 const pdfViewer = document.querySelector('#pdfViewer');
@@ -48,6 +48,8 @@ export default function AutomationFile() {
           });
       };
     function handleUpload(event: React.ChangeEvent<HTMLInputElement>) {
+        setLoading(true);
+
         const file = event.target.files ? event.target.files[0] : null;
         console.log("uploaded file", file)
         const pdfData = new FormData();
@@ -64,14 +66,18 @@ export default function AutomationFile() {
         };
         const name = generateRandomString(5)
         fetch(`https://app.domusnow.com/upload_document?name=${name}`, requestOptions)
-        .then(response => {response.text(); console.log("HERE",response.text())})
-        .then(data => alert("Successfully Uploaded Document"))
+        .then(response => {response.text();})
+        .then(data => console.log("Successfully Uploaded Document"))
+        .then(data => {
+        getProcessed(name);
+        handleOpen(name);
+    })
         .catch(error => {
-            alert('Upload failed. Please try again.');
             console.log("upload azure error: ", error);
-        });
-        // getProcessed(name)
-        // handleOpen(name)
+        })
+        .finally(() => {
+            setLoading(false); // Set loading to false when upload completes
+        });;
       }
     
       async function getProcessed(name: string){
@@ -86,7 +92,7 @@ export default function AutomationFile() {
           .then(response => response.json())
           .then(data => {setData(data);console.log(data)})
           .catch(error => {
-              alert('Get processed document failed. Please try again.');
+              console.log('Get processed document failed. Please try again.');
           });
       }
 
@@ -99,6 +105,12 @@ export default function AutomationFile() {
                 </label>
             <input type="file" id="pdfUpload" accept=".pdf" className="hidden" onChange={handleUpload}/>
             </div>
+            {loading && <>
+
+<div className="flex items-center justify-center w-full h-full border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
+    <div className="px-3 py-1 text-xs font-medium leading-none text-center text-blue-800 bg-blue-200 rounded-full animate-pulse dark:bg-blue-900 dark:text-blue-200">loading...</div>
+</div>
+</>}
             <iframe
                 id="pdfViewer"
                 title="PDF Viewer"
@@ -109,7 +121,16 @@ export default function AutomationFile() {
             ></iframe>
         </div>
         <div className="w-1/2 border">
-        
+        {data.map((item, index) => (
+                <input
+                    key={index}
+                    type="text"
+                    placeholder={item}
+                    className="block w-full border border-gray-300 rounded-md py-2 px-3 mt-1"
+                />
+        )
+            )}
+
         </div>
     </div>
 }
