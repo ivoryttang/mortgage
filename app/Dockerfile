@@ -11,9 +11,9 @@ EXPOSE 8501
 
 # Install the dependencies from the requirements file
 RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
-RUN pip install 'crewai[tools]'
-RUN pip install crewai-tools==0.0.15
-RUN pip install crewai[tools]
+# RUN pip install 'crewai[tools]'
+# RUN pip install crewai-tools==0.0.15
+# RUN pip install crewai[tools]
 
 # Copy the code into the working directory
 
