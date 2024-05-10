@@ -7,10 +7,10 @@ sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 import streamlit as st
 import datetime
 import openai
+import fitz
 from retell import Retell
 import datetime
 import streamlit.components.v1 as components
-import fitz  # PyMuPDF
 from PIL import Image
 import io
 import json
@@ -53,12 +53,12 @@ cosmos_container = "borrower_docs"
 
 # set client to access azure storage container
 blob_service_client = BlobServiceClient(account_url=account_url, credential=credentials)
-client = CosmosClient(cosmos_url, cosmos_key)
+cosmos_client = CosmosClient(cosmos_url, cosmos_key)
 document_analysis_client = DocumentIntelligenceClient(
     endpoint=fr_endpoint, credential=AzureKeyCredential(fr_key)
 )
 # document_model_client = DocumentModelAdministrationClient(endpoint=fr_endpoint, credential=AzureKeyCredential(fr_key))
-database = client.get_database_client(cosmos_db)
+database = cosmos_client.get_database_client(cosmos_db)
 container = database.get_container_client(cosmos_container)
 
 
@@ -67,11 +67,11 @@ container = database.get_container_client(cosmos_container)
 
 
 
-api_key = "sk-proj-WPtJVR3t5thbTx7ra82fT3BlbkFJWORXVHfXkDZheiCSdRLH"
+api_key = st.secrets["OPENAI_API_KEY"]
 if api_key is None:
     raise ValueError("API key not set in environment variables")
 
-client = OpenAI(api_key=api_key)
+openai_client = OpenAI(api_key=api_key)
 
 def icon(emoji: str):
     """Shows an emoji as a Notion-style page icon."""
@@ -622,7 +622,7 @@ def get_chat_response(content: str, user_input: str):
     #         {"role": "assistant", "content": user_input}],
     #     timeout=15,
     # )
-    return client.chat.completions.create(
+    return openai_client.chat.completions.create(
         model='gpt-4',
         messages=[{
             "role": "system",

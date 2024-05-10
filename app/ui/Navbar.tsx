@@ -58,16 +58,16 @@ const Navbar = () => {
                   <li><a className="dropdown-item" href="/sign-in">Login as an lender</a></li>
                 </ul>
               </li>
-              <li className="nav-item dropdown"><a className="nav-link" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Borrowers <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-2 w-5 h-5">
+              {/* <li className="nav-item dropdown"><a className="nav-link" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Borrowers <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-2 w-5 h-5">
   <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
 </svg></a>
                 <ul className="dropdown-menu">
-                  {/* <li className="dropdown"><a className="dropdown-item" href="#">Join as an agent</a>
-                  </li> */}
+                  <li className="dropdown"><a className="dropdown-item" href="#">Join as an agent</a>
+                  </li>
                   <li><a className="dropdown-item" href="/borrower">Get a Mortgage</a></li>
                 </ul>
-              </li>
-              <li className="nav-item dropdown"><a className="nav-link active" href="#" data-bs-toggle="dropdown" aria-expanded="false">Mortgage <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-2 w-5 h-5">
+              </li> */}
+              {/* <li className="nav-item dropdown"><a className="nav-link active" href="#" data-bs-toggle="dropdown" aria-expanded="false">Mortgage <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-2 w-5 h-5">
   <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
 </svg>
 </a>
@@ -98,10 +98,10 @@ const Navbar = () => {
                    
                   </div>
                 </div>
-            </li>
+            </li> */}
 
             <li className="nav-item "><a className="nav-link" href="/blog">Blog</a></li>
-            <li className="nav-item"><a className="nav-link" href="/faqs">FAQs</a></li>
+            {/* <li className="nav-item"><a className="nav-link" href="/faqs">FAQs</a></li> */}
             
             <div className="d-sm-none p-3 mt-n3">
                 <a className="btn btn-primary w-100 mb-1" href="/dashboard" target="_blank" rel="noopener">

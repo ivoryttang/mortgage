@@ -13,7 +13,7 @@ export default function Page() {
     <div style={{ display: 'flex' }} >
       <div style={{ flex: 1}} className="text-center mt-20 p-20 ml-20">
         <h1 className="text-center pb-sm-2 pb-md-3">AI-powered Loan Assistant to Supercharge Your Lending Practice</h1>
-        <p className="fs-lg text-center pb-xl-2 mx-auto mx-lg-0 mb-5 ">Make lending effortlessly <i>personalized</i> and <i>transparent</i>, with 90% less manual work</p>
+        <p className="fs-lg text-center pb-xl-2 mx-auto mx-lg-0 mb-5 ">Make lending effortlessly <i>personalized</i> and <i>transparent</i>, with 50% less manual work</p>
         <Link target="_blank" className={`link btn btn-primary btn-sm fs-sm order-lg-3 d-none d-sm-inline-flex`} href="https://calendly.com/ivoryttang/30min">
             Book a Demo
           </Link>
@@ -29,7 +29,7 @@ export default function Page() {
     {/* AI loan officer */}
     
     <div className="text-center mt-20">
-      <h1 className="display-5">AI Loan Officer</h1>
+      <h1 className="display-5">AI-enabled Loan Officer</h1>
     </div>
     <div className="px-20">
         <div className="p-10 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
@@ -41,7 +41,7 @@ export default function Page() {
     <div className="text-center">
         <img className="h-auto w-full rounded-lg" src="/assets/img/educate.png" alt="" />
         <h2 className="mt-3">Educate</h2>
-        <p>Veteran AI loan advisor at your service</p>
+        <p>Veteran AI loan advisor at your service offering borrowers 24/7 support</p>
     </div>
     <div className="text-center">
         <img className="h-auto w-full rounded-lg" src="/assets/img/leadgen.png" alt="" />
@@ -51,7 +51,7 @@ export default function Page() {
     <div className="text-center">
         <img className="h-auto w-full rounded-lg" src="/assets/img/underwrite.png" alt="" />
         <h2 className="mt-3">Assess</h2>
-        <p>Underwrite instead of pre-approve at POS</p>
+        <p>Fully assess each borrower and how they fit with your portfolio goals</p>
     </div>
     </div>
               
@@ -63,7 +63,7 @@ export default function Page() {
     {/* AI loan origination */}
     
     <div className="text-center mt-20">
-      <h1 className="display-5">AI-Native LOS</h1>
+      <h1 className="display-5">Workflow Automation</h1>
     </div>
     <div className="px-20">
     <div className="flex p-10 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
@@ -79,10 +79,10 @@ export default function Page() {
     </div>
   </div>
 
-  <div className="ml-4 p-10">
+  <div className="ml-4 p-10 text-xl">
     <ul>
     <br></br>
-      <li>Deploy any part of the system with your custom branding, integrated with your existing tech stack.</li>
+      <li>Automate workflows involving asking and requesting info from borrowers, making checklists, chasing down third-parties, and organizing and ingesting that data into the appropriate systems.</li>
       <br></br>
       <li>Advanced document processing and issue triaging to close every loan faster and with higher accuracy.</li>
       <br></br>

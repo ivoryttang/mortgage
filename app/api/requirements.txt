@@ -12,13 +12,16 @@ streamlit==1.34.0
 exa-py
 # crewai
 # crewai[tools]
+pymupdf
 retell-sdk
 azure-storage-blob
-# azure-identity
+azure-identity
 azure-cosmos
 azure-core
 azure-ai-documentintelligence
 langgraph==0.0.46
+beautifulsoup4
+langchainhub
 langchain-community==0.0.37 
 tiktoken 
 langchain-mistralai 
@@ -29,4 +32,3 @@ tavily-python
 langchain-chroma==0.1.0
 matplotlib
 supervision
-fitz

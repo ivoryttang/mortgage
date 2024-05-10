@@ -1,9 +1,7 @@
 "use client"
 import { useState, ChangeEvent } from 'react';
 export default function AutomationFile() {
-    const [uploadedFile, setUploadedFile] = useState<undefined | File>(undefined)
-    const [data, setData] = useState<[]>([]);
-    const [current, setCurrent] = useState("")
+    const [data, setData] = useState<{ key: string, value: string, score: number }[]>([]);
     const [loading, setLoading] = useState(false);
     const [url, setUrl] = useState("")
 
@@ -15,6 +13,11 @@ export default function AutomationFile() {
             result += characters.charAt(Math.floor(Math.random() * charactersLength));
         }
         return result;
+    }
+    function handleValueChange(event: React.ChangeEvent<HTMLInputElement>, index: number) {
+        const newData = [...data]; // Create a copy of the data array
+        newData[index] = { ...newData[index], value: event.target.value }; // Update the value for the specific index
+        setData(newData); // Set the new data array to state
     }
     const handleOpen = (document_uploaded:string) => {
         var requestOptions = {
@@ -48,6 +51,7 @@ export default function AutomationFile() {
           });
       };
     function handleUpload(event: React.ChangeEvent<HTMLInputElement>) {
+        console.log("arrived")
         setLoading(true);
 
         const file = event.target.files ? event.target.files[0] : null;
@@ -120,17 +124,26 @@ export default function AutomationFile() {
                 height="600px"
             ></iframe>
         </div>
+        
         <div className="w-1/2 border">
+        <table>
+        <tbody>
         {data.map((item, index) => (
-                <input
-                    key={index}
-                    type="text"
-                    placeholder={item}
-                    className="block w-full border border-gray-300 rounded-md py-2 px-3 mt-1"
-                />
-        )
-            )}
-
+                <tr key={index}>
+                    <td className='border-none'>{item.key}</td>
+                    <input
+        type="text"
+        value={item.value}
+        onChange={(e) => handleValueChange(e, index)}
+        className="border-2 border-gray-300 p-1 w-full"
+    />
+                </tr>
+            )
+        )}
+        </tbody>
+        </table>
+        {data.length > 0 && <button className="bg-gray-100 p-2 rounded-lg">Export Result</button>}
         </div>
+        
     </div>
 }

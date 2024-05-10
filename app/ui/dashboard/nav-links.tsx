@@ -19,17 +19,17 @@ import clsx from 'clsx';
 // Depending on the size of the application, this would be stored in a database.
 const links = [
   { name: 'Dashboard', href: '/dashboard', icon: HomeIcon },
-  {
-    name: 'Lender Comparison',
-    href: '/dashboard/loans',
-    icon: CurrencyDollarIcon,
-  },
+  // {
+  //   name: 'Lender Comparison',
+  //   href: '/dashboard/loans',
+  //   icon: CurrencyDollarIcon,
+  // },
   { name: 'LoanGPT', href: '/dashboard/learn', icon: AcademicCapIcon },
   { name: 'Automations', href: '/dashboard/automations', icon: CursorArrowRaysIcon },
-  { name: 'Document Processing', href: '/dashboard/documents', icon: DocumentDuplicateIcon },
-  { name: 'Integrations', href: '/dashboard/integrations', icon: LinkIcon },
-  { name: 'Compliance Reports', href: '/dashboard/reports', icon: FlagIcon },
-  { name: 'Customer Support', href: '/dashboard/messages', icon: ChatBubbleLeftEllipsisIcon },
+  { name: 'Reviewed Documents', href: '/dashboard/documents', icon: DocumentDuplicateIcon },
+  // { name: 'Integrations', href: '/dashboard/integrations', icon: LinkIcon },
+  { name: 'Compliance', href: '/dashboard/reports', icon: FlagIcon },
+  { name: 'Communications', href: '/dashboard/communications', icon: ChatBubbleLeftEllipsisIcon },
   // { name: 'Settings', href: '/dashboard/settings', icon: Cog8ToothIcon },
 ];
 

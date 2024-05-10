@@ -124,7 +124,10 @@ model_id_mapping = {    "closing":"prebuilt-mortgage.us.closingDisclosure",
 
 @app.get("/get_processed_document")
 async def getProcessedDocument(doc_id: str):
-    response = container.read_item(item=model_id_mapping[doc_id], partition_key=model_id_mapping[doc_id])
+    try:
+        response = container.read_item(item=model_id_mapping[doc_id], partition_key=model_id_mapping[doc_id])
+    except:
+        response = container.read_item(item=doc_id, partition_key=doc_id)
     return response.get("fields")
 
 @app.post("/upload_document")
@@ -141,7 +144,7 @@ async def uploadDocument(name: str, file_data: UploadFile = File(...)):
         )
     except:
         poller = document_analysis_client.begin_analyze_document(
-            "prebuilt-mortgage.us.1003", analyze_request=file_bytes, content_type="application/pdf", features=["queryFields"], query_fields=["Name","SocialSecurityNumber","Citizenship","DateofBirth","TypeofCredit","MaritalStatus","NumberofDependents","HomePhone","Street","City","State","ZIP","Country","HowLongatCurrentAddress","EmployerorBusinessName","PositionorTitle","StartDate","GrossMonthlyIncomeBase"]
+            "prebuilt-mortgage.us.1003", analyze_request=file_bytes, content_type="application/pdf", features=["queryFields"], query_fields=["Name","SocialSecurityNumber","DateofBirth","NumberofDependents","HomePhone","CurrentAddressStreet","CurrentAddressCity","CurrentAddressState","CurrentAddressZIP","CurrentAddressCountry","HowLongatCurrentAddress","EmployerBusinessName","EmployerStreet","EmployerCity","EmployerState","EmployerZIP","EmployerCountry","PositionorTitle","StartDate","GrossMonthlyIncomeBase"]
         )
         
     result = poller.result()
