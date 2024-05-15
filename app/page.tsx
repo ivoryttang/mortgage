@@ -11,20 +11,25 @@ export default function Page() {
     <br></br>
     {/* Front page */}
     <div style={{ display: 'flex' }} >
-      <div style={{ flex: 1}} className="text-center mt-20 p-20 ml-20">
+      <div style={{ flex: 2}} className="text-center mt-20 p-20 ml-20">
         <h1 className="text-center pb-sm-2 pb-md-3">AI-powered Loan Assistant to Supercharge Your Lending Practice</h1>
-        <p className="fs-lg text-center pb-xl-2 mx-auto mx-lg-0 mb-5 ">Make lending effortlessly <i>personalized</i> and <i>transparent</i>, with 50% less manual work</p>
-        <Link target="_blank" className={`link btn btn-primary btn-sm fs-sm order-lg-3 d-none d-sm-inline-flex`} href="https://calendly.com/ivoryttang/30min">
+        <p className="fs-lg text-center pb-xl-2 mx-auto mx-lg-0 mb-5">Make lending effortlessly <i>personalized</i> and <i>transparent</i>, with 50% less manual work</p>
+          <Link target="_blank" className={`link btn btn-primary btn-sm fs-sm order-lg-3 d-none d-sm-inline-flex`} href="https://calendly.com/ivoryttang/30min">
             Book a Demo
           </Link>
       </div>
-      <div style={{ flex: 1 }} className="p-20 mr-20">
+      <div style={{ flex: 3 }} className="w-[30%] mt-20 p-20 mr-20">
+        <video controls>
+          <source src="/assets/img/demo.mp4" type="video/mp4" />
+        </video>
+      </div>
+      {/* <div style={{ flex: 1 }} className="p-20 mr-20">
             <div className="parallax me-lg-n4 me-xl-n5">
                 <div className="parallax-layer" data-depth="-0.2"><img src="assets/img/landing/business-consulting/hero/family.png" alt="Layer" /></div>
                 <div className="parallax-layer" data-depth="0.1"><img src="assets/img/landing/business-consulting/hero/02.png" alt="Layer" /></div>
                 <div className="parallax-layer" data-depth="0.25"><img src="assets/img/landing/business-consulting/hero/saved.png" alt="Layer" /></div>
               </div>
-      </div>
+      </div> */}
     </div>
     {/* AI loan officer */}
     

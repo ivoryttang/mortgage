@@ -55,7 +55,7 @@ const Navbar = () => {
                 <ul className="dropdown-menu">
                   {/* <li className="dropdown"><a className="dropdown-item" href="#">Join as an agent</a>
                   </li> */}
-                  <li><a className="dropdown-item" href="/sign-in">Login as an lender</a></li>
+                  <li><a className="dropdown-item" href="/dashboard">Login as a lender</a></li>
                 </ul>
               </li>
               {/* <li className="nav-item dropdown"><a className="nav-link" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Borrowers <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-2 w-5 h-5">
@@ -101,6 +101,7 @@ const Navbar = () => {
             </li> */}
 
             <li className="nav-item "><a className="nav-link" href="/blog">Blog</a></li>
+            <li className="contact "><a className="nav-link" href="mailto:ivory@mit.edu?subject=Interest from Website">Contact</a></li>
             {/* <li className="nav-item"><a className="nav-link" href="/faqs">FAQs</a></li> */}
             
             <div className="d-sm-none p-3 mt-n3">
