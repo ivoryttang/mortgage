@@ -47,7 +47,7 @@ export default function Page() {
     <h2>Blog</h2>
     <br></br>
     {/* <div id="substack-feed-embed"></div> */}
-    <div className="flex justify-center item-center">
+    <div className="flex justify-center item-center md:flex-row flex-col">
     <a href="/ai-origination"><BlogCard image="/assets/img/blog/ai-origination.png" title="Statistical Methods and AI in Loan Origination" caption="From generating better priced loans to faster loan closing"/></a>
     <a href="/housing-market"><BlogCard image="/assets/img/blog/housing-market.png" title="Where is the US Housing Market Headed?" caption="Impact from the 2008 Crisis, Covid-19, and a Rapidly Changing World"/></a>
     </div>

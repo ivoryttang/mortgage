@@ -1,0 +1,8 @@
+.bubble-background {
+    background-image: radial-gradient(ellipse at bottom, rgba(180, 242, 180, 0.6) 50%, transparent 100%);
+    background-size: 100% 200%; /* Make the gradient taller */
+    padding-top: 10rem;
+    padding-bottom: 10rem; /* Adjust padding as needed */
+    border-radius: 50rem; /* Adjust border-radius for roundness */
+    margin: auto; /* Center the bubble if it's not full width */
+  }

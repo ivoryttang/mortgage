@@ -4,6 +4,11 @@
  * Copyright 2022 Createx Studio
  * Theme styles
 */
+#navbarDropdown:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
 :root {
   --ar-blue: #0d6efd;
   --ar-indigo: #6610f2;

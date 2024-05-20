@@ -3,11 +3,24 @@ import "./navbar.css";
 import Link from 'next/link';
 import { usePathname } from 'next/navigation'
 import { DocumentCheckIcon, ChatBubbleOvalLeftIcon, ClipboardDocumentCheckIcon} from '@heroicons/react/24/outline';
+import { useState } from "react";
 
 const Navbar = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(true)
   const pathname = usePathname()
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+  const [openProducts, setOpenProducts] = useState(false)
+  const toggleProducts = () => {
+    setOpenProducts(!openProducts);
+  };
     return (
         <header className="navbar navbar-expand-lg fixed-top z-20 bg-white">
+          <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+          <button className="navbar-toggler ml-5" onClick={toggleMenu}>
+      <span className="navbar-toggler-icon"></span>
+    </button>
         <div className="container">
           <a className="flex navbar-brand pe-sm-3" href="/">
             <span className="text-primary flex-shrink-0">
@@ -19,35 +32,21 @@ const Navbar = () => {
 <Link target="_blank" className={`link btn btn-primary btn-sm fs-sm order-lg-3 d-none d-sm-inline-flex ${pathname === '/dashboard' ? 'active' : ''}`} href="/dashboard">
             Get Started
           </Link>
-          <ul className="text-black navbar-nav navbar-nav-scroll me-auto" >
+          
+          {isMenuOpen && <ul className="text-black navbar-nav navbar-nav-scroll me-auto" >
             
             
-            <li className="nav-item dropdown"><a className="nav-link" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Products <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-2 w-5 h-5">
-  <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-</svg></a>
-                {/* <ul className="dropdown-menu">
-                  <li className="dropdown"><a className="dropdown-item" href="/why-domus">How Domus Works <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-4 h-4"  style={{ display: 'inline-block' }}>
-  <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-</svg>
-</a> */}
-                    {/* <ul className="dropdown-menu">
-                      <li><a className="dropdown-item" href="">Application Process</a></li>
-                      <li><a className="dropdown-item" href="">Underwriting</a></li>
-                      <li><a className="dropdown-item" href="">Mortgage Education</a></li>
-                      <li><a className="dropdown-item" href="">Rate Locking</a></li>
-                    </ul> */}
-                  {/* </li> */}
-                  {/* <li className="dropdown"><a className="dropdown-item" href="#" data-bs-toggle="dropdown" aria-expanded="false">Products <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-4 h-4"  style={{ display: 'inline-block' }}>
-  <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-</svg></a> */}
-                    <ul className="dropdown-menu">
+            <li className="nav-item dropdown">
+            <button onClick={toggleProducts}><a className="nav-link" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Products <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-2 w-5 h-5">
+    <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+    </svg>
+  </a></button>
+                    {openProducts && <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                     <li className="flex"><ChatBubbleOvalLeftIcon className="ml-5 w-[25px]"/><a className="dropdown-item" href="/ai-agent">Homie</a></li>
                       <li className="flex"><DocumentCheckIcon className="ml-5 w-[25px]"/><a className="dropdown-item" href="/document-processing">Docta</a></li>
                       <li className="flex"><ClipboardDocumentCheckIcon className="ml-5 w-[25px]"/><a className="dropdown-item" href="/mortgage-pricing">Reggie</a></li>
-                    </ul>
-                 {/*  </li>
-                  
-                </ul> */}
+                    </ul>}
             </li>
             <li className="nav-item dropdown"><a className="nav-link" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Lenders <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-2 w-5 h-5">
   <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
@@ -104,12 +103,8 @@ const Navbar = () => {
             <li className="contact "><a className="nav-link" href="mailto:ivory@mit.edu?subject=Interest from Website">Contact</a></li>
             {/* <li className="nav-item"><a className="nav-link" href="/faqs">FAQs</a></li> */}
             
-            <div className="d-sm-none p-3 mt-n3">
-                <a className="btn btn-primary w-100 mb-1" href="/dashboard" target="_blank" rel="noopener">
-                    <i className="ai-cart fs-xl me-2 ms-n1"></i>Start Applying
-                </a>
-            </div>
             </ul>
+}
         </div>
       </header>
     );

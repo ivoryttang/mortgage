@@ -4,7 +4,7 @@ import Navbar from "../ui/Navbar"
 import { useEffect } from "react"
 export default function Page() {
 
-    return <div className="p-20 w-[1200px] "><nav style={{ marginBottom: '100px' }}><Navbar /></nav>
+    return <div className="p-20 w-[1200px] md:flex-row flex-col"><nav style={{ marginBottom: '100px' }}><Navbar /></nav>
     <div style={{ display: 'flex', justifyContent: 'center' }}>
     <div className="text-center mr-10 w-[800px]" ><h2>Meet Homie</h2>
     Mortgages may be complex, but we have got you covered.</div>

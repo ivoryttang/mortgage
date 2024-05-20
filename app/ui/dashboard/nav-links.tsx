@@ -1,14 +1,11 @@
 'use client';
 
 import {
-  CurrencyDollarIcon,
   HomeIcon,
   DocumentDuplicateIcon,
   FlagIcon,
   ChatBubbleLeftEllipsisIcon,
-  Cog8ToothIcon,
   AcademicCapIcon,
-  LinkIcon,
   CursorArrowRaysIcon
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
